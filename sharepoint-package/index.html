@@ -42,15 +42,15 @@ li{margin:4px 0}
 </head>
 <body>
 <nav>
-<a href="#" onclick="showSection('home')" class="active" id="nav-home">🏠 ראשי</a>
-<a href="#" onclick="showSection('s1')" id="nav-s1">מפגש 1</a>
-<a href="#" onclick="showSection('s2')" id="nav-s2">מפגש 2</a>
-<a href="#" onclick="showSection('s3')" id="nav-s3">מפגש 3</a>
-<a href="#" onclick="showSection('s4')" id="nav-s4">מפגש 4</a>
-<a href="#" onclick="showSection('s5')" id="nav-s5">מפגש 5</a>
-<a href="#" onclick="showSection('tools')" id="nav-tools">🛠 כלים</a>
-<a href="#" onclick="showSection('prompts')" id="nav-prompts">📝 פרומפטים</a>
-<a href="#" onclick="showSection('demos')" id="nav-demos">💻 דמואים</a>
+<a href="#" class="active" id="nav-home">🏠 ראשי</a>
+<a href="#" id="nav-s1">מפגש 1</a>
+<a href="#" id="nav-s2">מפגש 2</a>
+<a href="#" id="nav-s3">מפגש 3</a>
+<a href="#" id="nav-s4">מפגש 4</a>
+<a href="#" id="nav-s5">מפגש 5</a>
+<a href="#" id="nav-tools">🛠 כלים</a>
+<a href="#" id="nav-prompts">📝 פרומפטים</a>
+<a href="#" id="nav-demos">💻 דמואים</a>
 </nav>
 <div class="container">
 <!-- HOME -->
@@ -640,13 +640,25 @@ coverages[], exclusions[], special_conditions[]}</pre></div>
 <!-- JAVASCRIPT -->
 </div>
 <script>
-function showSection(id){
-document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
-document.getElementById('sec-'+id).classList.add('active');
-document.getElementById('nav-'+id).classList.add('active');
-window.scrollTo(0,0);
-}
+document.addEventListener("DOMContentLoaded", function(){
+  function showSection(id){
+    var sections = document.querySelectorAll('.section');
+    for(var i=0; i<sections.length; i++) sections[i].classList.remove('active');
+    var links = document.querySelectorAll('nav a');
+    for(var j=0; j<links.length; j++) links[j].classList.remove('active');
+    document.getElementById('sec-'+id).classList.add('active');
+    document.getElementById('nav-'+id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  var navLinks = document.querySelectorAll('nav a');
+  for(var k=0; k<navLinks.length; k++){
+    navLinks[k].addEventListener('click', function(e){
+      e.preventDefault();
+      var id = this.id.replace('nav-','');
+      showSection(id);
+    });
+  }
+});
 </script>
 </body>
 </html>
