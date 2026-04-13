@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>דשבורד זיהוי הונאות</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;padding:16px;max-width:900px;margin:0 auto;line-height:1.6}
+h1{text-align:center;color:#ef4444;margin:16px 0;font-size:1.6em}
+h2{color:#fbbf24;margin:24px 0 10px;font-size:1.2em;border-bottom:2px solid #334155;padding-bottom:6px}
+h3{color:#34d399;margin:12px 0 6px}
+.card{background:#1e293b;border-radius:12px;padding:16px;margin:10px 0;border:1px solid #334155}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.stat{background:#1e293b;border-radius:10px;padding:14px;text-align:center;border:1px solid #334155}
+.stat .num{font-size:1.8em;font-weight:bold;color:#60a5fa;display:block}
+.stat .label{font-size:0.8em;color:#94a3b8}
+.alert{border-radius:10px;padding:14px;margin:8px 0;border-right:4px solid}
+.alert-high{background:#1c1917;border-color:#ef4444}
+.alert-med{background:#1c1917;border-color:#f59e0b}
+.alert h4{margin-bottom:4px}.alert p{font-size:0.85em;color:#94a3b8}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.75em}
+.tag-h{background:#991b1b;color:#fca5a5}.tag-m{background:#854d0e;color:#fde68a}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:0.85em}
+th{background:#334155;padding:6px;text-align:right}
+td{padding:6px;border-bottom:1px solid #334155}
+.bar{height:20px;border-radius:4px;display:inline-block;min-width:4px}
+.page{display:none}.page:target{display:block}
+#p-main{display:block}
+#p-main:target~#p-main{display:block}
+:target~#p-main{display:none}
+a.btn-back{display:inline-block;background:#334155;color:#94a3b8;padding:6px 14px;font-size:0.85em;border-radius:6px;text-decoration:none;margin:4px}
+nav{position:sticky;top:0;background:#1e293b;padding:8px;border-bottom:1px solid #334155;z-index:10;text-align:center}
+nav a{color:#94a3b8;text-decoration:none;padding:5px 10px;border-radius:6px;font-size:0.85em}
+nav a:hover{color:#ef4444;background:#334155}
+</style>
+</head>
+<body>
+<nav>
+<a href="#p-main">📊 סקירה</a>
+<a href="#p-alerts">🚨 התראות</a>
+<a href="#p-providers">🏥 נותני שירות</a>
+<a href="#p-monthly">📅 חודשי</a>
+</nav>
+
+<div class="page" id="p-main">
+<h1>🔍 דשבורד זיהוי הונאות - תביעות בריאות 2025</h1>
+<div class="card" style="text-align:center"><p>נתונים סינתטיים להדגמה | 1,870 תביעות</p></div>
+
+<div class="stat-grid">
+<div class="stat"><span class="num">1,870</span><span class="label">תביעות</span></div>
+<div class="stat"><span class="num">2,713,050₪</span><span class="label">סה"כ נתבע</span></div>
+<div class="stat"><span class="num">2,323,333₪</span><span class="label">סה"כ שולם</span></div>
+<div class="stat"><span class="num">467</span><span class="label">מבוטחים</span></div>
+<div class="stat"><span class="num">16</span><span class="label">נותני שירות</span></div>
+<div class="stat" style="border-color:#ef4444"><span class="num" style="color:#ef4444">6</span><span class="label">התראות גבוהות</span></div>
+</div>
+
+<h2>🚨 התראות חמורות</h2>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תדירות_חריגה</span> אברהם סבג - 50 תביעות</h4>
+<p>ממוצע: 4 תביעות. מבוטח זה: 50. סה"כ נתבע: 10,350 ₪</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> מרכז דיקור סיני - 150 תביעות (8.0%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (21 תביעות, 14%)</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> קליניקת שלום - 192 תביעות (10.3%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (96 תביעות, 50%)</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תביעה_מיידית</span> 77 תביעות תוך 60 יום מתחילת פוליסה</h4>
+<p>סה"כ סכום: 161,477 ₪. ממוצע: 2,097 ₪</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת סבג - 3 מבוטחים, 52 תביעות</h4>
+<p>עיר: תל אביב, נותן שירות: מרכז רפואה משלימה אור</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת גולדשטיין - 41 מבוטחים, 41 תביעות</h4>
+<p>עיר: הרצליה, נותן שירות: קליניקת טבע</p></div>
+
+<h2>📊 התפלגות כיסויים</h2>
+<table><tr><th>כיסוי</th><th>תביעות</th><th></th></tr>
+<tr><td>רפואה משלימה</td><td>421</td><td><div class="bar" style="width:200px;background:#3b82f6"></div></td></tr><tr><td>פיזיותרפיה</td><td>282</td><td><div class="bar" style="width:133px;background:#3b82f6"></div></td></tr><tr><td>התייעצות מומחה</td><td>257</td><td><div class="bar" style="width:122px;background:#3b82f6"></div></td></tr><tr><td>שיקום</td><td>253</td><td><div class="bar" style="width:120px;background:#3b82f6"></div></td></tr><tr><td>אביזרים רפואיים</td><td>224</td><td><div class="bar" style="width:106px;background:#3b82f6"></div></td></tr><tr><td>בדיקות אבחנתיות</td><td>222</td><td><div class="bar" style="width:105px;background:#3b82f6"></div></td></tr><tr><td>רפואת שיניים</td><td>211</td><td><div class="bar" style="width:100px;background:#3b82f6"></div></td></tr></table></div>
+<div class="page" id="p-alerts">
+<a href="#p-main" class="btn-back">← סקירה</a>
+<h1>🚨 כל ההתראות</h1>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תדירות_חריגה</span> אברהם סבג - 50 תביעות</h4>
+<p>ממוצע: 4 תביעות. מבוטח זה: 50. סה"כ נתבע: 10,350 ₪</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> מרכז דיקור סיני - 150 תביעות (8.0%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (21 תביעות, 14%)</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> קליניקת שלום - 192 תביעות (10.3%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (96 תביעות, 50%)</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תביעה_מיידית</span> 77 תביעות תוך 60 יום מתחילת פוליסה</h4>
+<p>סה"כ סכום: 161,477 ₪. ממוצע: 2,097 ₪</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת סבג - 3 מבוטחים, 52 תביעות</h4>
+<p>עיר: תל אביב, נותן שירות: מרכז רפואה משלימה אור</p></div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת גולדשטיין - 41 מבוטחים, 41 תביעות</h4>
+<p>עיר: הרצליה, נותן שירות: קליניקת טבע</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> ד"ר פרידמן אלי - 99 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת גב ומפרקים - 96 תביעות (5.1%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (15 תביעות, 16%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מרכז רפואה משלימה אור - 148 תביעות (7.9%)</h4>
+<p>מעסיק דומיננטי: עצמאי (60 תביעות, 41%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> ד"ר כהן יוסף - 100 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (18 תביעות, 18%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> ד"ר מזרחי רונית - 126 תביעות (6.7%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (20 תביעות, 16%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> ד"ר אברהם דוד - 106 תביעות (5.7%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (16 תביעות, 15%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת טבע - 135 תביעות (7.2%)</h4>
+<p>מעסיק דומיננטי: עצמאי (54 תביעות, 40%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת החלמה - 104 תביעות (5.6%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (19 תביעות, 18%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> ד"ר לוי שרה - 113 תביעות (6.0%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (17 תביעות, 15%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון MRI צפון - 110 תביעות (5.9%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (16 תביעות, 15%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון שיקום הדר - 119 תביעות (6.4%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (20 תביעות, 17%)</p></div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> פיזיו פלוס - 97 תביעות (5.2%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p></div>
+</div>
+<div class="page" id="p-providers">
+<a href="#p-main" class="btn-back">← סקירה</a>
+<h1>🏥 נותני שירות - מובילים</h1>
+<table><tr><th>נותן שירות</th><th>תביעות</th><th></th></tr>
+<tr><td>קליניקת שלום</td><td>192</td><td><div class="bar" style="width:200px;background:#ef4444"></div></td></tr><tr><td>מרכז דיקור סיני</td><td>150</td><td><div class="bar" style="width:156px;background:#ef4444"></div></td></tr><tr><td>מרכז רפואה משלימה אור</td><td>148</td><td><div class="bar" style="width:154px;background:#ef4444"></div></td></tr><tr><td>קליניקת טבע</td><td>135</td><td><div class="bar" style="width:140px;background:#3b82f6"></div></td></tr><tr><td>ד"ר מזרחי רונית</td><td>126</td><td><div class="bar" style="width:131px;background:#3b82f6"></div></td></tr><tr><td>מכון שיקום הדר</td><td>119</td><td><div class="bar" style="width:123px;background:#3b82f6"></div></td></tr><tr><td>ד"ר לוי שרה</td><td>113</td><td><div class="bar" style="width:117px;background:#3b82f6"></div></td></tr><tr><td>מכון MRI צפון</td><td>110</td><td><div class="bar" style="width:114px;background:#3b82f6"></div></td></tr><tr><td>ד"ר אברהם דוד</td><td>106</td><td><div class="bar" style="width:110px;background:#3b82f6"></div></td></tr><tr><td>קליניקת החלמה</td><td>104</td><td><div class="bar" style="width:108px;background:#3b82f6"></div></td></tr></table></div>
+<div class="page" id="p-monthly">
+<a href="#p-main" class="btn-back">← סקירה</a>
+<h1>📅 התפלגות חודשית</h1>
+<table><tr><th>חודש</th><th>תביעות</th><th></th></tr>
+<tr><td>2025-01</td><td>132</td><td><div class="bar" style="width:209px;background:#3b82f6"></div></td></tr><tr><td>2025-02</td><td>153</td><td><div class="bar" style="width:242px;background:#ef4444"></div></td></tr><tr><td>2025-03</td><td>166</td><td><div class="bar" style="width:263px;background:#ef4444"></div></td></tr><tr><td>2025-04</td><td>138</td><td><div class="bar" style="width:219px;background:#3b82f6"></div></td></tr><tr><td>2025-05</td><td>149</td><td><div class="bar" style="width:236px;background:#3b82f6"></div></td></tr><tr><td>2025-06</td><td>129</td><td><div class="bar" style="width:204px;background:#3b82f6"></div></td></tr><tr><td>2025-07</td><td>140</td><td><div class="bar" style="width:222px;background:#3b82f6"></div></td></tr><tr><td>2025-08</td><td>136</td><td><div class="bar" style="width:215px;background:#3b82f6"></div></td></tr><tr><td>2025-09</td><td>166</td><td><div class="bar" style="width:263px;background:#ef4444"></div></td></tr><tr><td>2025-10</td><td>189</td><td><div class="bar" style="width:300px;background:#ef4444"></div></td></tr><tr><td>2025-11</td><td>189</td><td><div class="bar" style="width:300px;background:#ef4444"></div></td></tr><tr><td>2025-12</td><td>183</td><td><div class="bar" style="width:290px;background:#ef4444"></div></td></tr></table></div></body></html>
