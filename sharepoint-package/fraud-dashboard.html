@@ -56,6 +56,10 @@ a.back:hover{background:#cbd5e1}
 <a href="#p-patterns">🔄 דפוסי טיפול</a>
 <a href="#p-monthly">📅 טרנדים</a>
 <a href="#p-financial">💰 כספי</a>
+<a href="#p-network">🕸️ רשתות</a>
+<a href="#p-receipts">🧾 קבלות</a>
+<a href="#p-personas">🎭 פרופילים</a>
+<a href="#p-watchlist">📋 מעקב</a>
 <a href="home.html">← פורטל</a>
 </nav>
 <div class="container">
@@ -405,6 +409,215 @@ a.back:hover{background:#cbd5e1}
 <tr><td>2,000-3,000₪</td><td>150</td><td><div class="bar" style="width:75px;background:#f59e0b"></div></td><td>8%</td></tr>
 <tr style="background:#fef2f2"><td><b>3,000+₪</b></td><td>80</td><td><div class="bar" style="width:40px;background:#dc2626"></div></td><td><b>4%</b></td></tr>
 </table>
+</div>
+
+<!-- NETWORK PAGE -->
+<div class="page" id="p-network">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🕸️ ניתוח רשתות וקשרים</h1>
+
+<h2>🔴 רשתות חשודות שזוהו</h2>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">רשת #1</span> קליניקת שלום ↔ חברת הייטק א (96 קשרים)</h4>
+<p>נותן שירות אחד מטפל ב-50% מעובדי מעסיק אחד. חשד להסדר/הפנייה מאורגנת. כל התביעות רפואה משלימה, סכום אחיד 350₪.</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">רשת #2</span> משפחת גולדשטיין ↔ קליניקת טבע (41 קשרים)</h4>
+<p>41 מבוטחים עם שם משפחה זהה, עיר זהה (הרצליה), נותן שירות זהה. חשד לקבלות פיקטיביות שמופצות במשפחה.</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">רשת #3</span> אברהם סבג ↔ מרכז רפואה משלימה אור (52 קשרים)</h4>
+<p>מבוטח אחד + 2 בני משפחה, כולם אצל אותו נותן שירות. 50 תביעות בשנה, כל 7 ימים בדיוק.</p>
+</div>
+
+<h2>סוגי קשרים שנבדקו</h2>
+<table>
+<tr><th>סוג קשר</th><th>נמצאו</th><th>חשודים</th><th>הסבר</th></tr>
+<tr style="background:#fef2f2"><td><b>מעסיק ↔ נותן שירות</b></td><td>45</td><td>3</td><td>ריכוז חריג של עובדי מעסיק אחד</td></tr>
+<tr style="background:#fef2f2"><td><b>משפחה ↔ נותן שירות</b></td><td>28</td><td>2</td><td>שם משפחה + עיר + נ.ש. זהה</td></tr>
+<tr style="background:#fffbeb"><td><b>כתובת משותפת</b></td><td>15</td><td>4</td><td>מבוטחים שונים, כתובת זהה</td></tr>
+<tr><td>הפניות הדדיות</td><td>8</td><td>1</td><td>מבוטח א תובע אצל נ.ש. X, מבוטח ב (קשור) גם</td></tr>
+</table>
+
+<h2>פירוט: כתובת משותפת</h2>
+<table>
+<tr><th>כתובת</th><th>מבוטחים</th><th>תביעות</th><th>נ.ש. משותף</th><th>חשד</th></tr>
+<tr style="background:#fef2f2"><td>הרצל 15, הרצליה</td><td>4</td><td>18</td><td>קליניקת טבע (100%)</td><td><span class="tag tag-h">🔴</span></td></tr>
+<tr style="background:#fffbeb"><td>ויצמן 8, ת"א</td><td>3</td><td>12</td><td>מרכז רפ. משלימה (83%)</td><td><span class="tag tag-m">🟡</span></td></tr>
+<tr><td>הנשיא 22, חיפה</td><td>2</td><td>6</td><td>מגוון</td><td><span class="tag tag-l">🟢</span></td></tr>
+</table>
+</div>
+
+<!-- RECEIPTS PAGE -->
+<div class="page" id="p-receipts">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🧾 ניתוח קבלות ומסמכים</h1>
+
+<h2>🔴 ממצאים חשודים</h2>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">מספור רציף</span> קליניקת שלום - קבלות 1201-1296</h4>
+<p>96 קבלות ממוספרות ברצף מאותו בית עסק, חלקן מאותו יום. חשד שהופקו בכמות מראש.</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">תאריך חשוד</span> 23 קבלות בימי שבת</h4>
+<p>נותני שירות שסגורים בשבת אבל יש קבלות מאותו יום. לבדוק שעות פעילות מוצהרות.</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">סכום זהה</span> מרכז דיקור סיני - 80% בכפולות 500₪</h4>
+<p>סכומים עגולים מדי. טיפולים אמיתיים בד"כ בסכומים לא עגולים (320₪, 475₪ וכו').</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">קבלות ללא פרטים</span> 8 קבלות ללא ח.פ./עוסק מורשה</h4>
+<p>קבלות שחסרים בהן פרטי עסק מזהים. ייתכן שאינן אמיתיות.</p>
+</div>
+
+<h2>בדיקות שבוצעו</h2>
+<table>
+<tr><th>בדיקה</th><th>נבדקו</th><th>ממצאים</th><th>חומרה</th></tr>
+<tr style="background:#fef2f2"><td><b>מספור רציף</b></td><td>1,870</td><td>96</td><td><span class="tag tag-h">🔴</span></td></tr>
+<tr style="background:#fef2f2"><td><b>תאריכי שבת/חג</b></td><td>1,870</td><td>23</td><td><span class="tag tag-h">🔴</span></td></tr>
+<tr style="background:#fffbeb"><td><b>סכום עגול (כפולות 500)</b></td><td>1,870</td><td>30</td><td><span class="tag tag-m">🟡</span></td></tr>
+<tr style="background:#fffbeb"><td><b>חסר ח.פ./עוסק</b></td><td>1,870</td><td>8</td><td><span class="tag tag-m">🟡</span></td></tr>
+<tr><td>כפילות קבלה (אותו מספר)</td><td>1,870</td><td>2</td><td><span class="tag tag-l">🟢</span></td></tr>
+<tr><td>סכום חורג מהמחירון</td><td>1,870</td><td>15</td><td><span class="tag tag-m">🟡</span></td></tr>
+</table>
+
+<h2>פירוט: קבלות בשבת</h2>
+<table>
+<tr><th>נותן שירות</th><th>קבלות בשבת</th><th>סגור בשבת?</th><th>חשד</th></tr>
+<tr style="background:#fef2f2"><td><b>קליניקת שלום</b></td><td>12</td><td>כן</td><td><span class="tag tag-h">🔴 חשוד מאוד</span></td></tr>
+<tr style="background:#fef2f2"><td><b>מרכז דיקור סיני</b></td><td>6</td><td>כן</td><td><span class="tag tag-h">🔴 חשוד</span></td></tr>
+<tr><td>קליניקת טבע</td><td>3</td><td>לא ידוע</td><td><span class="tag tag-m">🟡 לבדוק</span></td></tr>
+<tr><td>פיזיו פלוס</td><td>2</td><td>כן - פתוח בשבת</td><td><span class="tag tag-l">🟢 תקין</span></td></tr>
+</table>
+</div>
+
+<!-- PERSONAS PAGE -->
+<div class="page" id="p-personas">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🎭 פרופילי הונאה (Fraud Personas)</h1>
+<div class="card" style="background:#eff6ff;border-color:#bfdbfe"><p style="color:#1e40af">סיווג מבוטחים חשודים לפי דפוס התנהגות. כל פרופיל מייצג שיטת הונאה שונה.</p></div>
+
+<div class="card" style="border-right:5px solid #dc2626">
+<h2 style="border:none;margin:0;color:#dc2626">🏋️ "הממקסם" - Max Utilizer</h2>
+<p><b>מאפיינים:</b> מנצל כל כיסוי עד התקרה, כל שנה. מכיר את הפוליסה בעל פה.</p>
+<p><b>דגלים:</b> ניצול 90%+ מהתקרה · כל הכיסויים מנוצלים · תביעות שוטפות קבועות</p>
+<p><b>דוגמה בנתונים:</b></p>
+<table>
+<tr><th>מבוטח</th><th>תביעות</th><th>ניצול תקרה</th><th>כיסויים</th></tr>
+<tr style="background:#fef2f2"><td><b>אברהם סבג</b></td><td>50</td><td>95%</td><td>רפ. משלימה + פיזיו + התייעצות</td></tr>
+</table>
+<p><b>איך לטפל:</b> בקרה רפואית · אימות טיפולים בדיעבד · שיחת בירור</p>
+</div>
+
+<div class="card" style="border-right:5px solid #dc2626">
+<h2 style="border:none;margin:0;color:#dc2626">👥 "המארגן" - Ring Leader</h2>
+<p><b>מאפיינים:</b> מגייס חברים, משפחה, או עמיתים לתבוע דרך נותן שירות ספציפי. לפעמים מקבל עמלה.</p>
+<p><b>דגלים:</b> קבוצת מבוטחים מאותו מעסיק/משפחה · אותו נותן שירות · סכומים דומים</p>
+<p><b>דוגמאות בנתונים:</b></p>
+<table>
+<tr><th>רשת</th><th>מבוטחים</th><th>נ. שירות</th><th>תביעות</th></tr>
+<tr style="background:#fef2f2"><td><b>חברת הייטק א</b></td><td>96 עובדים</td><td>קליניקת שלום</td><td>96</td></tr>
+<tr style="background:#fef2f2"><td><b>משפחת גולדשטיין</b></td><td>41 בני משפחה</td><td>קליניקת טבע</td><td>41</td></tr>
+</table>
+<p><b>איך לטפל:</b> חקירת נותן השירות · בדיקת קשר לארגון · דגימת מבוטחים לאימות</p>
+</div>
+
+<div class="card" style="border-right:5px solid #f59e0b">
+<h2 style="border:none;margin:0;color:#b45309">🤝 "הצמוד" - Provider Collusion</h2>
+<p><b>מאפיינים:</b> קשר חשוד עם נותן שירות. הנותן מנפח סכומים או מנפיק קבלות פיקטיביות.</p>
+<p><b>דגלים:</b> 100% תביעות אצל נ.ש. אחד · סכום אחיד · מרווחים קבועים · קבלות בשבת</p>
+<p><b>דוגמאות בנתונים:</b></p>
+<table>
+<tr><th>מבוטח</th><th>נ. שירות</th><th>% תביעות שם</th><th>סכום קבוע</th></tr>
+<tr style="background:#fef2f2"><td><b>אברהם סבג</b></td><td>מרכז רפ. משלימה אור</td><td>100%</td><td>200₪</td></tr>
+<tr style="background:#fffbeb"><td>עובדי הייטק א</td><td>קליניקת שלום</td><td>100%</td><td>350₪</td></tr>
+</table>
+<p><b>איך לטפל:</b> ביקור פתע בקליניקה · דגימת קבלות · חקירת נותן השירות</p>
+</div>
+
+<div class="card" style="border-right:5px solid #f59e0b">
+<h2 style="border:none;margin:0;color:#b45309">🏃 "הרוכב" - Hit & Run</h2>
+<p><b>מאפיינים:</b> מצטרף לפוליסה, תובע מיד סכומים גבוהים, ומבטל אחרי כמה חודשים.</p>
+<p><b>דגלים:</b> תביעה תוך 60 יום · סכום גבוה מהממוצע · עצמאי · ביטול מוקדם</p>
+<p><b>בנתונים:</b> 77 תביעות מפוליסות ינואר 2025, ממוצע 2,097₪ (כפול מהרגיל)</p>
+<p><b>איך לטפל:</b> תקופת אכשרה · אישור מראש לתביעות בחודשים הראשונים · מעקב ביטולים</p>
+</div>
+
+<div class="card" style="border-right:5px solid #22c55e">
+<h2 style="border:none;margin:0;color:#16a34a">✂️ "המפצל" - Under the Radar</h2>
+<p><b>מאפיינים:</b> תביעות קטנות מתחת לסף בקרה. כל תביעה בודדת נראית תקינה, אבל הצטברות חריגה.</p>
+<p><b>דגלים:</b> הרבה תביעות קטנות · תמיד מתחת לסף · נותני שירות מתחלפים</p>
+<p><b>בנתונים:</b> 12 מבוטחים עם 8+ תביעות קטנות (עד 300₪ כל אחת)</p>
+<p><b>איך לטפל:</b> ניתוח מצטבר · הורדת סף בקרה · דגימה אקראית</p>
+</div>
+
+<h2>📊 סיכום פרופילים</h2>
+<table>
+<tr><th>פרופיל</th><th>מבוטחים</th><th>תביעות</th><th>סכום</th><th>סיכון</th></tr>
+<tr style="background:#fef2f2"><td>🏋️ הממקסם</td><td>1</td><td>50</td><td>10,350₪</td><td><span class="score-box score-high">92</span></td></tr>
+<tr style="background:#fef2f2"><td>👥 המארגן</td><td>137</td><td>137</td><td>46,250₪</td><td><span class="score-box score-high">88</span></td></tr>
+<tr style="background:#fffbeb"><td>🤝 הצמוד</td><td>3</td><td>52</td><td>10,750₪</td><td><span class="score-box score-med">72</span></td></tr>
+<tr style="background:#fffbeb"><td>🏃 הרוכב</td><td>30</td><td>77</td><td>161,477₪</td><td><span class="score-box score-med">65</span></td></tr>
+<tr><td>✂️ המפצל</td><td>12</td><td>96</td><td>24,800₪</td><td><span class="score-box score-low">45</span></td></tr>
+</table>
+</div>
+
+<!-- WATCHLIST PAGE -->
+<div class="page" id="p-watchlist">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>📋 Watchlist - רשימת מעקב</h1>
+
+<h2>🔴 מבוטחים תחת מעקב</h2>
+<table>
+<tr><th>#</th><th>מבוטח</th><th>ת.ז.</th><th>פרופיל</th><th>סיבה</th><th>סטטוס</th><th>ציון</th></tr>
+<tr style="background:#fef2f2"><td>1</td><td><b>אברהם סבג</b></td><td>111111111</td><td>🏋️ ממקסם + 🤝 צמוד</td><td>50 תביעות, נ.ש. קבוע, סכום אחיד</td><td><span class="tag tag-h">חקירה פעילה</span></td><td><span class="score-box score-high">92</span></td></tr>
+<tr style="background:#fef2f2"><td>2</td><td><b>רשת גולדשטיין</b></td><td>מרובים</td><td>👥 מארגן</td><td>41 מבוטחים, קליניקת טבע, הרצליה</td><td><span class="tag tag-h">חקירה פעילה</span></td><td><span class="score-box score-high">88</span></td></tr>
+<tr style="background:#fef2f2"><td>3</td><td><b>רשת הייטק א</b></td><td>מרובים</td><td>👥 מארגן</td><td>96 עובדים, קליניקת שלום, 50%</td><td><span class="tag tag-h">בבדיקה</span></td><td><span class="score-box score-high">85</span></td></tr>
+<tr style="background:#fffbeb"><td>4</td><td>פוליסות ינואר 25</td><td>מרובים</td><td>🏃 רוכב</td><td>77 תביעות תוך 60 יום</td><td><span class="tag tag-m">ממתין לבדיקה</span></td><td><span class="score-box score-med">65</span></td></tr>
+<tr style="background:#fffbeb"><td>5</td><td>דני פרץ</td><td>222222222</td><td>✂️ מפצל</td><td>שינוי דפוס: 1→9 תביעות</td><td><span class="tag tag-m">ממתין</span></td><td><span class="score-box score-med">55</span></td></tr>
+</table>
+
+<h2>🔴 נותני שירות תחת מעקב</h2>
+<table>
+<tr><th>#</th><th>נותן שירות</th><th>סיבה</th><th>תביעות</th><th>סטטוס</th></tr>
+<tr style="background:#fef2f2"><td>1</td><td><b>קליניקת שלום</b></td><td>ריכוז מעסיק 50%, סכום אחיד, קבלות בשבת</td><td>192</td><td><span class="tag tag-h">חקירה</span></td></tr>
+<tr style="background:#fef2f2"><td>2</td><td><b>קליניקת טבע</b></td><td>אשכול משפחתי גולדשטיין, ריכוז עצמאיים</td><td>135</td><td><span class="tag tag-h">חקירה</span></td></tr>
+<tr style="background:#fef2f2"><td>3</td><td><b>מרכז רפ. משלימה אור</b></td><td>ניצול מקסימלי סבג, ריכוז עצמאיים 41%</td><td>148</td><td><span class="tag tag-h">בבדיקה</span></td></tr>
+<tr style="background:#fffbeb"><td>4</td><td><b>מרכז דיקור סיני</b></td><td>סכומים עגולים 80%, 150 תביעות</td><td>150</td><td><span class="tag tag-m">ממתין</span></td></tr>
+</table>
+
+<h2>📊 סיכום מעקב</h2>
+<div class="stat-grid">
+<div class="stat stat-alert"><span class="num">5</span><span class="label">מבוטחים במעקב</span></div>
+<div class="stat stat-alert"><span class="num">4</span><span class="label">נ.ש. במעקב</span></div>
+<div class="stat"><span class="num">3</span><span class="label">חקירות פעילות</span></div>
+<div class="stat"><span class="num">253K₪</span><span class="label">סכום בסיכון</span></div>
+</div>
+
+<h2>🔔 התראות על תביעות חדשות מ-Watchlist</h2>
+<div class="alert alert-high">
+<h4>🔔 תביעה חדשה - אברהם סבג - 03/12/2025</h4>
+<p>תביעה #51 · 200₪ · מרכז רפואה משלימה אור · רפואה משלימה. מבוטח תחת חקירה פעילה!</p>
+</div>
+<div class="alert alert-med">
+<h4>🔔 תביעה חדשה - עובד הייטק א - 28/11/2025</h4>
+<p>יוסי כהן · 350₪ · קליניקת שלום · רפואה משלימה. נותן שירות תחת חקירה.</p>
+</div>
+<div class="alert alert-med">
+<h4>🔔 תביעה חדשה - משפחת גולדשטיין - 25/11/2025</h4>
+<p>ענת גולדשטיין · 300₪ · קליניקת טבע · רפואה משלימה. אשכול משפחתי תחת חקירה.</p>
+</div>
+
+<h2>פעולות מומלצות</h2>
+<div class="card">
+<p>1. ⚡ <b>דחוף:</b> ביקור פתע בקליניקת שלום - לאמת שהטיפולים מתבצעים</p>
+<p>2. ⚡ <b>דחוף:</b> שיחת בירור עם אברהם סבג - 50 תביעות בשנה</p>
+<p>3. 📞 <b>בינוני:</b> דגימת 10 מבוטחים ממשפחת גולדשטיין - אימות טיפולים</p>
+<p>4. 📞 <b>בינוני:</b> בדיקת קשר בין קליניקת שלום לחברת הייטק א</p>
+<p>5. 📋 <b>שוטף:</b> הוספת סף בקרה לתביעות מפוליסות חדשות (60 יום ראשונים)</p>
+<p>6. 📋 <b>שוטף:</b> בקרה מוגברת על רפואה משלימה בנוב-דצמ</p>
+</div>
 </div>
 
 </div><!-- end container -->
