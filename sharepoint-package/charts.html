@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>גרפים - זיהוי הונאות</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f1f5f9;color:#1e293b;padding:0}
+nav{background:#1e293b;padding:10px 16px;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{color:#94a3b8;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:0.85em;display:inline-block;margin:2px}
+nav a:hover{color:#fff;background:#334155}
+.container{max-width:1000px;margin:0 auto;padding:12px}
+h1{text-align:center;color:#1e293b;margin:16px;font-size:1.5em}
+h2{color:#0f172a;margin:20px 0 8px;font-size:1.15em}
+.card{background:#fff;border-radius:12px;padding:16px;margin:10px 0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.filter-bar{background:#fff;border-radius:10px;padding:10px 14px;margin:10px 0;border:1px solid #e2e8f0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-bar label{font-size:0.82em;color:#64748b;font-weight:600}
+select,button{padding:6px 12px;border-radius:6px;border:1px solid #cbd5e1;font-size:0.85em;background:#fff;cursor:pointer}
+button{background:#2563eb;color:#fff;border:none;font-weight:bold}
+button:hover{background:#1d4ed8}
+.chart-box{position:relative;height:300px}
+.stat-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.mini-stat{background:#fff;border-radius:8px;padding:10px 16px;border:1px solid #e2e8f0;text-align:center;flex:1;min-width:120px}
+.mini-stat .n{font-size:1.4em;font-weight:bold;color:#2563eb}
+.mini-stat .l{font-size:0.72em;color:#64748b}
+.mini-stat.alert .n{color:#dc2626}
+</style>
+</head>
+<body>
+<nav>
+<a href="fraud-dashboard.html">← דשבורד הונאות</a>
+<a href="#" id="nav-overview" class="active">📊 סקירה כללית</a>
+<a href="#" id="nav-monthly">📅 חודשי</a>
+<a href="#" id="nav-providers">🏥 נותני שירות</a>
+<a href="#" id="nav-coverage">📋 כיסויים</a>
+<a href="#" id="nav-risk">🎯 סיכון</a>
+</nav>
+<div class="container">
+<h1>📈 גרפים אינטראקטיביים - זיהוי הונאות</h1>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+<label>סינון:</label>
+<select id="f-coverage"><option value="all">כל הכיסויים</option><option value="comp">רפואה משלימה</option><option value="physio">פיזיותרפיה</option><option value="consult">התייעצות</option><option value="equip">אביזרים</option><option value="diag">בדיקות</option></select>
+<select id="f-city"><option value="all">כל הערים</option><option value="tlv">תל אביב</option><option value="jlm">ירושלים</option><option value="haifa">חיפה</option><option value="herzliya">הרצליה</option><option value="beer">באר שבע</option></select>
+<select id="f-risk"><option value="all">כל רמות הסיכון</option><option value="high">🔴 גבוה בלבד</option><option value="med">🟡 בינוני+</option></select>
+<button id="btn-apply">החל סינון</button>
+<button id="btn-reset" style="background:#64748b">איפוס</button>
+</div>
+
+<!-- STATS ROW -->
+<div class="stat-row">
+<div class="mini-stat"><div class="n" id="s-total">1,870</div><div class="l">תביעות</div></div>
+<div class="mini-stat"><div class="n" id="s-amount">2.7M₪</div><div class="l">סה"כ</div></div>
+<div class="mini-stat"><div class="n" id="s-avg">1,451₪</div><div class="l">ממוצע</div></div>
+<div class="mini-stat"><div class="n" id="s-insured">467</div><div class="l">מבוטחים</div></div>
+<div class="mini-stat alert"><div class="n" id="s-fraud">270</div><div class="l">🔴 חשודים</div></div>
+<div class="mini-stat alert"><div class="n" id="s-pct">14.4%</div><div class="l">% חשוד</div></div>
+</div>
+
+<!-- SECTION: OVERVIEW -->
+<div id="sec-overview">
+<div class="grid2">
+<div class="card"><h2>התפלגות תביעות לפי כיסוי</h2><div class="chart-box"><canvas id="ch-cov-pie"></canvas></div></div>
+<div class="card"><h2>תביעות רגילות vs חשודות</h2><div class="chart-box"><canvas id="ch-fraud-pie"></canvas></div></div>
+</div>
+<div class="card"><h2>תביעות לפי חודש - רגיל vs חשוד</h2><div class="chart-box"><canvas id="ch-monthly-stack"></canvas></div></div>
+<div class="grid2">
+<div class="card"><h2>Top 5 נותני שירות - לפי נפח</h2><div class="chart-box"><canvas id="ch-top-prov"></canvas></div></div>
+<div class="card"><h2>התפלגות סכומי תביעה</h2><div class="chart-box"><canvas id="ch-amount-hist"></canvas></div></div>
+</div>
+</div>
+
+<!-- SECTION: MONTHLY -->
+<div id="sec-monthly" style="display:none">
+<div class="card"><h2>מגמת תביעות חודשית</h2><div class="chart-box"><canvas id="ch-monthly-line"></canvas></div></div>
+<div class="grid2">
+<div class="card"><h2>סכום חודשי (₪)</h2><div class="chart-box"><canvas id="ch-monthly-amount"></canvas></div></div>
+<div class="card"><h2>תביעות חשודות לפי חודש</h2><div class="chart-box"><canvas id="ch-monthly-fraud"></canvas></div></div>
+</div>
+</div>
+
+<!-- SECTION: PROVIDERS -->
+<div id="sec-providers" style="display:none">
+<div class="card"><h2>נותני שירות - תביעות vs סכום ממוצע</h2><div class="chart-box" style="height:350px"><canvas id="ch-prov-scatter"></canvas></div></div>
+<div class="grid2">
+<div class="card"><h2>% תביעות חשודות לפי נ.ש.</h2><div class="chart-box"><canvas id="ch-prov-fraud"></canvas></div></div>
+<div class="card"><h2>ריכוז מעסיק דומיננטי</h2><div class="chart-box"><canvas id="ch-prov-employer"></canvas></div></div>
+</div>
+</div>
+
+<!-- SECTION: COVERAGE -->
+<div id="sec-coverage" style="display:none">
+<div class="card"><h2>סכום ממוצע לפי כיסוי</h2><div class="chart-box"><canvas id="ch-cov-avg"></canvas></div></div>
+<div class="grid2">
+<div class="card"><h2>% חשודים לפי כיסוי</h2><div class="chart-box"><canvas id="ch-cov-fraud"></canvas></div></div>
+<div class="card"><h2>פער נתבע vs שולם</h2><div class="chart-box"><canvas id="ch-cov-gap"></canvas></div></div>
+</div>
+</div>
+
+<!-- SECTION: RISK -->
+<div id="sec-risk" style="display:none">
+<div class="card"><h2>פיזור ציוני סיכון (מבוטחים)</h2><div class="chart-box"><canvas id="ch-risk-dist"></canvas></div></div>
+<div class="grid2">
+<div class="card"><h2>סיכון לפי פרופיל הונאה</h2><div class="chart-box"><canvas id="ch-risk-persona"></canvas></div></div>
+<div class="card"><h2>סיכון לפי עיר</h2><div class="chart-box"><canvas id="ch-risk-city"></canvas></div></div>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+var months=["ינו","פבר","מרץ","אפר","מאי","יוני","יולי","אוג","ספט","אוק","נוב","דצמ"];
+var mNorm=[130,140,148,130,132,120,125,118,128,135,150,170];
+var mFraud=[15,22,22,18,20,18,16,17,27,25,60,84];
+var covLabels=["רפואה משלימה","התייעצות","פיזיותרפיה","בדיקות","אביזרים","שיקום","שיניים"];
+var covData=[520,380,310,280,180,120,80];
+var covFraudPct=[28,5,15,3,18,4,2];
+var covAvg=[310,650,450,1200,850,600,400];
+var covClaimed=[161,247,140,336,153,72,32];
+var covPaid=[148,228,126,310,118,65,28];
+var provLabels=["קליניקת שלום","מרכז דיקור","רפ. משלימה אור","קליניקת טבע","ד\"ר מזרחי","שיקום הדר","ד\"ר לוי","MRI צפון"];
+var provCounts=[192,150,148,135,126,119,113,110];
+var provAvg=[350,780,200,310,1100,950,1200,1800];
+var provFraudPct=[48,20,35,30,4,3,2,1];
+var provEmpPct=[50,14,41,40,16,17,15,15];
+var cities=["תל אביב","ירושלים","הרצליה","חיפה","ראשון","באר שבע"];
+var cityRisk=[35,28,72,22,25,20];
+var C=Chart;var colors={blue:"#2563eb",red:"#dc2626",amber:"#f59e0b",green:"#22c55e",purple:"#7c3aed",pink:"#ec4899",cyan:"#06b6d4",slate:"#64748b"};
+var cArr=["#2563eb","#dc2626","#f59e0b","#22c55e","#7c3aed","#ec4899","#06b6d4"];
+
+// NAV
+var secs=["overview","monthly","providers","coverage","risk"];
+secs.forEach(function(s){
+document.getElementById("nav-"+s).addEventListener("click",function(e){
+e.preventDefault();
+secs.forEach(function(x){document.getElementById("sec-"+x).style.display="none";document.getElementById("nav-"+x).style.background="";document.getElementById("nav-"+x).style.color="#94a3b8";});
+document.getElementById("sec-"+s).style.display="block";
+this.style.background="#334155";this.style.color="#fff";
+});
+});
+
+// OVERVIEW CHARTS
+new C(document.getElementById("ch-cov-pie"),{type:"doughnut",data:{labels:covLabels,datasets:[{data:covData,backgroundColor:cArr}]},options:{plugins:{legend:{position:"right",rtl:true}}}});
+new C(document.getElementById("ch-fraud-pie"),{type:"doughnut",data:{labels:["רגיל","חשוד"],datasets:[{data:[1600,270],backgroundColor:[colors.blue,colors.red]}]},options:{plugins:{legend:{position:"right"}}}});
+new C(document.getElementById("ch-monthly-stack"),{type:"bar",data:{labels:months,datasets:[{label:"רגיל",data:mNorm,backgroundColor:colors.blue},{label:"חשוד",data:mFraud,backgroundColor:colors.red}]},options:{scales:{x:{stacked:true},y:{stacked:true}},plugins:{legend:{rtl:true}}}});
+new C(document.getElementById("ch-top-prov"),{type:"bar",data:{labels:provLabels.slice(0,5),datasets:[{label:"תביעות",data:provCounts.slice(0,5),backgroundColor:[colors.red,colors.amber,colors.red,colors.amber,colors.blue]}]},options:{indexAxis:"y",plugins:{legend:{display:false}}}});
+new C(document.getElementById("ch-amount-hist"),{type:"bar",data:{labels:["0-200","200-500","500-1K","1K-2K","2K-3K","3K+"],datasets:[{label:"תביעות",data:[380,520,410,330,150,80],backgroundColor:[colors.green,colors.green,colors.blue,colors.blue,colors.amber,colors.red]}]},options:{plugins:{legend:{display:false}}}});
+
+// MONTHLY
+new C(document.getElementById("ch-monthly-line"),{type:"line",data:{labels:months,datasets:[{label:"סה\"כ תביעות",data:mNorm.map(function(v,i){return v+mFraud[i]}),borderColor:colors.blue,tension:0.3,fill:false},{label:"ממוצע",data:Array(12).fill(156),borderColor:colors.slate,borderDash:[5,5],fill:false}]},options:{plugins:{legend:{rtl:true}}}});
+new C(document.getElementById("ch-monthly-amount"),{type:"bar",data:{labels:months,datasets:[{label:"סכום (אלפי ₪)",data:[195,240,255,210,215,190,185,180,225,235,330,410],backgroundColor:months.map(function(m,i){return i>=10?colors.red:colors.blue})}]},options:{plugins:{legend:{display:false}}}});
+new C(document.getElementById("ch-monthly-fraud"),{type:"bar",data:{labels:months,datasets:[{label:"תביעות חשודות",data:mFraud,backgroundColor:months.map(function(m,i){return i>=10?colors.red:colors.amber})}]},options:{plugins:{legend:{display:false}}}});
+
+// PROVIDERS
+new C(document.getElementById("ch-prov-scatter"),{type:"bubble",data:{datasets:[{label:"חשוד",data:[{x:192,y:350,r:25},{x:150,y:780,r:15},{x:148,y:200,r:20},{x:135,y:310,r:18}],backgroundColor:"rgba(220,38,38,0.5)"},{label:"רגיל",data:[{x:126,y:1100,r:8},{x:119,y:950,r:8},{x:113,y:1200,r:8},{x:110,y:1800,r:8}],backgroundColor:"rgba(37,99,235,0.5)"}]},options:{scales:{x:{title:{display:true,text:"מספר תביעות"}},y:{title:{display:true,text:"סכום ממוצע (₪)"}}}}});
+new C(document.getElementById("ch-prov-fraud"),{type:"bar",data:{labels:provLabels,datasets:[{label:"% חשודים",data:provFraudPct,backgroundColor:provFraudPct.map(function(v){return v>25?colors.red:v>10?colors.amber:colors.green})}]},options:{indexAxis:"y",plugins:{legend:{display:false}}}});
+new C(document.getElementById("ch-prov-employer"),{type:"bar",data:{labels:provLabels,datasets:[{label:"% מעסיק דומיננטי",data:provEmpPct,backgroundColor:provEmpPct.map(function(v){return v>30?colors.red:v>20?colors.amber:colors.blue})}]},options:{indexAxis:"y",plugins:{legend:{display:false}}}});
+// COVERAGE
+new C(document.getElementById("ch-cov-avg"),{type:"bar",data:{labels:covLabels,datasets:[{label:"סכום ממוצע (₪)",data:covAvg,backgroundColor:cArr}]},options:{plugins:{legend:{display:false}}}});
+new C(document.getElementById("ch-cov-fraud"),{type:"bar",data:{labels:covLabels,datasets:[{label:"% חשודים",data:covFraudPct,backgroundColor:covFraudPct.map(function(v){return v>20?colors.red:v>10?colors.amber:colors.green})}]},options:{plugins:{legend:{display:false}}}});
+new C(document.getElementById("ch-cov-gap"),{type:"bar",data:{labels:covLabels,datasets:[{label:"נתבע (K₪)",data:covClaimed,backgroundColor:colors.blue},{label:"שולם (K₪)",data:covPaid,backgroundColor:colors.green}]},options:{plugins:{legend:{rtl:true}}}});
+
+// RISK
+new C(document.getElementById("ch-risk-dist"),{type:"bar",data:{labels:["0-20","20-40","40-60","60-80","80-100"],datasets:[{label:"מבוטחים",data:[280,95,52,28,12],backgroundColor:[colors.green,colors.green,colors.amber,colors.red,colors.red]}]},options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:"ציון סיכון"}},y:{title:{display:true,text:"מספר מבוטחים"}}}}});
+new C(document.getElementById("ch-risk-persona"),{type:"radar",data:{labels:["תדירות","סכום","נ.ש. קבוע","עיתוי","אשכול","סכום עגול"],datasets:[{label:"הממקסם",data:[95,30,100,60,40,20],borderColor:colors.red,fill:false},{label:"המארגן",data:[40,50,90,30,100,60],borderColor:colors.purple,fill:false},{label:"הרוכב",data:[30,90,20,100,10,15],borderColor:colors.amber,fill:false}]},options:{scales:{r:{min:0,max:100}}}});
+new C(document.getElementById("ch-risk-city"),{type:"bar",data:{labels:cities,datasets:[{label:"ציון סיכון ממוצע",data:cityRisk,backgroundColor:cityRisk.map(function(v){return v>50?colors.red:v>30?colors.amber:colors.blue})}]},options:{plugins:{legend:{display:false}}}});
+
+// FILTER LOGIC
+document.getElementById("btn-apply").addEventListener("click",function(){
+var cov=document.getElementById("f-coverage").value;
+var city=document.getElementById("f-city").value;
+var risk=document.getElementById("f-risk").value;
+var t=1870,a="2.7M₪",avg="1,451₪",ins=467,fr=270,pct="14.4%";
+if(cov==="comp"){t=520;a="161K₪";avg="310₪";ins=185;fr=145;pct="27.9%";}
+if(cov==="physio"){t=310;a="140K₪";avg="450₪";ins=140;fr=47;pct="15.2%";}
+if(cov==="consult"){t=380;a="247K₪";avg="650₪";ins=210;fr=19;pct="5.0%";}
+if(cov==="equip"){t=180;a="153K₪";avg="850₪";ins=95;fr=32;pct="17.8%";}
+if(city==="herzliya"){t=165;a="52K₪";avg="315₪";ins=48;fr=45;pct="27.3%";}
+if(risk==="high"){t=270;a="253K₪";avg="937₪";ins=40;fr=270;pct="100%";}
+document.getElementById("s-total").textContent=t.toLocaleString();
+document.getElementById("s-amount").textContent=a;
+document.getElementById("s-avg").textContent=avg;
+document.getElementById("s-insured").textContent=ins;
+document.getElementById("s-fraud").textContent=fr;
+document.getElementById("s-pct").textContent=pct;
+});
+document.getElementById("btn-reset").addEventListener("click",function(){
+document.getElementById("f-coverage").value="all";
+document.getElementById("f-city").value="all";
+document.getElementById("f-risk").value="all";
+document.getElementById("s-total").textContent="1,870";
+document.getElementById("s-amount").textContent="2.7M₪";
+document.getElementById("s-avg").textContent="1,451₪";
+document.getElementById("s-insured").textContent="467";
+document.getElementById("s-fraud").textContent="270";
+document.getElementById("s-pct").textContent="14.4%";
+});
+});
+</script>
+</body></html>
