@@ -64,6 +64,105 @@ nav a:hover{color:#60a5fa;background:#334155}
 <button class="btn btn-back" onclick="goBack()">← חזרה</button>
 <h2>🧬 FMF - קדחת ים תיכונית משפחתית</h2>
 
+<!-- TABS -->
+<div style="display:flex;gap:6px;margin:12px 0">
+<button class="tab active" id="tab-quiz" onclick="switchTab('quiz')">📋 שאלון חיתום</button>
+<button class="tab" id="tab-tree" onclick="switchTab('tree')">🌳 עץ החלטות מלא</button>
+</div>
+
+<!-- FULL TREE VIEW -->
+<div id="view-tree" class="hidden">
+<div class="card" style="padding:20px">
+<div style="text-align:center;margin-bottom:16px">
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 24px;border-radius:10px;font-weight:bold;font-size:1.1em">
+האם נושא/חולה FMF?
+</div>
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap">
+<!-- NO branch -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#065f46;color:#6ee7b7;padding:10px 20px;border-radius:10px;font-weight:bold">
+חיתום רגיל
+</div>
+</div>
+
+<!-- YES branch -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 24px;border-radius:10px;font-weight:bold">
+האם מטופל?
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;margin-top:16px;flex-wrap:wrap">
+<!-- NOT TREATED -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#1e40af;color:#93c5fd;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 101
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">לא מטופל</p>
+</div>
+
+<!-- TREATED -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 20px;border-radius:10px;font-weight:bold">
+התקפים בשנה האחרונה?
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;margin-top:16px">
+<!-- NO ATTACKS -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#1e40af;color:#93c5fd;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 114
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">מטופל, ללא התקפים</p>
+</div>
+<!-- YES ATTACKS -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="background:#991b1b;color:#fca5a5;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 105
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">מטופל + התקפים</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TREE LEGEND -->
+<div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:0.85em">
+<div><span style="color:#3b82f6">■</span> שאלה</div>
+<div><span style="color:#1e40af">■</span> קוד החלטה</div>
+<div><span style="color:#065f46">■</span> רגיל</div>
+<div><span style="color:#991b1b">■</span> סיכון גבוה</div>
+<div><span style="color:#22c55e">✓</span> כן</div>
+<div><span style="color:#ef4444">✗</span> לא</div>
+</div>
+
+<!-- TREE - click to see details -->
+<h3 style="margin-top:20px">לחץ על קוד לפרטים:</h3>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+<button class="btn" style="background:#1e40af;color:#93c5fd" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'no');">FMF 101</button>
+<button class="btn" style="background:#1e40af;color:#93c5fd" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'yes');fmfAnswer(3,'no');">FMF 114</button>
+<button class="btn" style="background:#991b1b;color:#fca5a5" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'yes');fmfAnswer(3,'yes');">FMF 105</button>
+</div>
+</div>
+</div>
+
+<!-- QUIZ VIEW -->
+<div id="view-quiz">
 <div class="info">
 <b>רקע רפואי:</b> מחלה של התקפיים המוכיחים את התורשה, הנגרמת עקב הסתרותיות של מוטל בגליקו.
 המשפיעה בעיקר על אוכלוסיות של אזור הים התיכון.
@@ -191,8 +290,21 @@ nav a:hover{color:#60a5fa;background:#334155}
 </div>
 
 <button class="btn btn-back" onclick="resetFMF()" style="margin-top:16px">🔄 התחל מחדש</button>
-</div>
+</div><!-- end view-quiz -->
+</div><!-- end fmf-flow -->
 <script>
+function switchTab(tab){
+document.getElementById('tab-quiz').classList.remove('active');
+document.getElementById('tab-tree').classList.remove('active');
+document.getElementById('tab-'+tab).classList.add('active');
+if(tab==='tree'){
+document.getElementById('view-tree').classList.remove('hidden');
+document.getElementById('view-quiz').classList.add('hidden');
+}else{
+document.getElementById('view-tree').classList.add('hidden');
+document.getElementById('view-quiz').classList.remove('hidden');
+}
+}
 function startCondition(id){
 document.getElementById('selector').classList.add('hidden');
 document.getElementById(id+'-flow').classList.remove('hidden');
