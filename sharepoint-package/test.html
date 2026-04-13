@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>בדיקה</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;padding:20px;text-align:center}
+.btn{padding:15px 30px;border-radius:8px;border:none;font-size:1.1em;cursor:pointer;margin:10px;color:#fff}
+.green{background:#065f46}
+.red{background:#991b1b}
+#result{margin-top:20px;font-size:1.5em;color:#fbbf24}
+</style>
+</head>
+<body>
+<h1>בדיקת לחיצה</h1>
+<p>לחץ על אחד הכפתורים:</p>
+<button class="btn green" id="btn1">כפתור 1</button>
+<button class="btn red" id="btn2">כפתור 2</button>
+<div id="result"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  document.getElementById("btn1").addEventListener("click", function(){
+    document.getElementById("result").textContent = "לחצת על כפתור 1!";
+  });
+  document.getElementById("btn2").addEventListener("click", function(){
+    document.getElementById("result").textContent = "לחצת על כפתור 2!";
+  });
+});
+</script>
+</body>
+</html>
