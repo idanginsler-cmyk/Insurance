@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ספר חיתום אינטראקטיבי</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;padding:16px;max-width:800px;margin:0 auto}
+h1{text-align:center;color:#60a5fa;margin:16px 0;font-size:1.6em}
+h2{color:#fbbf24;margin:20px 0 10px;font-size:1.2em}
+.card{background:#1e293b;border-radius:12px;padding:16px;margin:10px 0;border:1px solid #334155}
+.q-card{background:#1e293b;border-radius:12px;padding:20px;margin:16px 0;border:2px solid #3b82f6;text-align:center}
+.q-card h3{color:#93c5fd;margin-bottom:12px;font-size:1.1em}
+.btn{padding:12px 32px;border-radius:8px;border:none;font-size:1em;cursor:pointer;margin:6px;font-weight:bold}
+.btn-yes{background:#065f46;color:#6ee7b7}.btn-yes:hover{background:#047857}
+.btn-no{background:#7c2d12;color:#fdba74}.btn-no:hover{background:#9a3412}
+.btn-back{background:#334155;color:#94a3b8;padding:8px 16px;font-size:0.85em}.btn-back:hover{background:#475569}
+.result{background:#1e293b;border-radius:12px;padding:20px;margin:16px 0;border:2px solid #fbbf24;display:none}
+.result h3{color:#fbbf24;margin-bottom:10px}
+.code{font-size:2em;font-weight:bold;color:#60a5fa;margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.8em}
+th{background:#334155;padding:6px;text-align:center}
+td{padding:5px;border:1px solid #334155;text-align:center;font-size:0.85em}
+.highlight{background:#854d0e;color:#fde68a;font-weight:bold}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.75em;margin:2px}
+.tag-s{background:#065f46;color:#6ee7b7}
+.tag-r{background:#7c2d12;color:#fdba74}
+.tag-d{background:#991b1b;color:#fca5a5}
+.tag-h{background:#1e40af;color:#93c5fd}
+.hidden{display:none}
+.flow-line{border-right:3px solid #3b82f6;margin-right:20px;padding-right:16px}
+.info{background:#172554;border:1px solid #1e40af;border-radius:8px;padding:12px;margin:10px 0;font-size:0.9em}
+nav{text-align:center;margin:10px 0}
+nav a{color:#94a3b8;text-decoration:none;padding:6px 12px;border-radius:6px;font-size:0.85em}
+nav a:hover{color:#60a5fa;background:#334155}
+</style>
+</head>
+<body>
+<nav><a href="index.html">← חזרה לדשבורד הדרכה</a></nav>
+<h1>📋 ספר חיתום אינטראקטיבי</h1>
+<div class="card" style="text-align:center">
+<p>בחר מחלה/מצב רפואי וענה על השאלות לקבלת החלטת חיתום</p>
+</div>
+<!-- CONDITION SELECTOR -->
+<div id="selector">
+<h2>בחר מצב רפואי:</h2>
+<div class="card" style="cursor:pointer" onclick="startCondition('fmf')">
+<h3 style="color:#60a5fa">🧬 Familial Mediterranean Fever - FMF</h3>
+<p>קדחת ים תיכונית משפחתית</p>
+</div>
+<div class="card" style="opacity:0.5">
+<h3 style="color:#60a5fa">🫀 יתר לחץ דם (Hypertension)</h3>
+<p style="color:#94a3b8">בקרוב...</p>
+</div>
+<div class="card" style="opacity:0.5">
+<h3 style="color:#60a5fa">🩸 סוכרת (Diabetes)</h3>
+<p style="color:#94a3b8">בקרוב...</p>
+</div>
+</div>
+
+<!-- FMF FLOW -->
+<div id="fmf-flow" class="hidden">
+<button class="btn btn-back" onclick="goBack()">← חזרה</button>
+<h2>🧬 FMF - קדחת ים תיכונית משפחתית</h2>
+
+<!-- TABS -->
+<div style="display:flex;gap:6px;margin:12px 0">
+<button class="tab active" id="tab-quiz" onclick="switchTab('quiz')">📋 שאלון חיתום</button>
+<button class="tab" id="tab-tree" onclick="switchTab('tree')">🌳 עץ החלטות מלא</button>
+</div>
+
+<!-- FULL TREE VIEW -->
+<div id="view-tree" class="hidden">
+<div class="card" style="padding:20px">
+<div style="text-align:center;margin-bottom:16px">
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 24px;border-radius:10px;font-weight:bold;font-size:1.1em">
+האם נושא/חולה FMF?
+</div>
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap">
+<!-- NO branch -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#065f46;color:#6ee7b7;padding:10px 20px;border-radius:10px;font-weight:bold">
+חיתום רגיל
+</div>
+</div>
+
+<!-- YES branch -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 24px;border-radius:10px;font-weight:bold">
+האם מטופל?
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;margin-top:16px;flex-wrap:wrap">
+<!-- NOT TREATED -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#1e40af;color:#93c5fd;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 101
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">לא מטופל</p>
+</div>
+
+<!-- TREATED -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="display:inline-block;background:#3b82f6;color:#fff;padding:10px 20px;border-radius:10px;font-weight:bold">
+התקפים בשנה האחרונה?
+</div>
+
+<div style="display:flex;justify-content:center;gap:40px;margin-top:16px">
+<!-- NO ATTACKS -->
+<div style="text-align:center">
+<div style="color:#ef4444;font-weight:bold;margin-bottom:8px">✗ לא</div>
+<div style="height:30px;border-right:3px solid #ef4444;width:0;margin:0 auto"></div>
+<div style="background:#1e40af;color:#93c5fd;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 114
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">מטופל, ללא התקפים</p>
+</div>
+<!-- YES ATTACKS -->
+<div style="text-align:center">
+<div style="color:#22c55e;font-weight:bold;margin-bottom:8px">✓ כן</div>
+<div style="height:30px;border-right:3px solid #22c55e;width:0;margin:0 auto"></div>
+<div style="background:#991b1b;color:#fca5a5;padding:10px 16px;border-radius:10px;font-weight:bold;font-size:1.2em">
+FMF 105
+</div>
+<p style="font-size:0.75em;color:#94a3b8;margin-top:4px">מטופל + התקפים</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TREE LEGEND -->
+<div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:0.85em">
+<div><span style="color:#3b82f6">■</span> שאלה</div>
+<div><span style="color:#1e40af">■</span> קוד החלטה</div>
+<div><span style="color:#065f46">■</span> רגיל</div>
+<div><span style="color:#991b1b">■</span> סיכון גבוה</div>
+<div><span style="color:#22c55e">✓</span> כן</div>
+<div><span style="color:#ef4444">✗</span> לא</div>
+</div>
+
+<!-- TREE - click to see details -->
+<h3 style="margin-top:20px">לחץ על קוד לפרטים:</h3>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+<button class="btn" style="background:#1e40af;color:#93c5fd" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'no');">FMF 101</button>
+<button class="btn" style="background:#1e40af;color:#93c5fd" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'yes');fmfAnswer(3,'no');">FMF 114</button>
+<button class="btn" style="background:#991b1b;color:#fca5a5" onclick="switchTab('quiz');fmfAnswer(1,'yes');fmfAnswer(2,'yes');fmfAnswer(3,'yes');">FMF 105</button>
+</div>
+</div>
+</div>
+
+<!-- QUIZ VIEW -->
+<div id="view-quiz">
+<div class="info">
+<b>רקע רפואי:</b> מחלה של התקפיים המוכיחים את התורשה, הנגרמת עקב הסתרותיות של מוטל בגליקו.
+המשפיעה בעיקר על אוכלוסיות של אזור הים התיכון.
+<br><b>טיפול:</b> קולכיצין, אילנוביס (Ilaris), אנקינרה (Anakinra)
+<br><b>סיכון:</b> עמילואידוזיס, דיאליזה דלת שינון, ופגיעה כלייתית
+</div>
+
+<!-- Question 1 -->
+<div id="fmf-q1" class="q-card">
+<h3>האם המבוטח נושא/חולה FMF?</h3>
+<p style="color:#94a3b8;margin-bottom:12px">על פי הצהרת הבריאות</p>
+<button class="btn btn-yes" onclick="fmfAnswer(1,'yes')">כן ✓</button>
+<button class="btn btn-no" onclick="fmfAnswer(1,'no')">לא ✗</button>
+</div>
+
+<!-- Question 2 -->
+<div id="fmf-q2" class="q-card hidden">
+<div class="flow-line">
+<p style="color:#6ee7b7;margin-bottom:8px">✓ המבוטח נושא/חולה FMF</p>
+</div>
+<h3>האם מטופל תרופתית?</h3>
+<button class="btn btn-yes" onclick="fmfAnswer(2,'yes')">כן - מטופל ✓</button>
+<button class="btn btn-no" onclick="fmfAnswer(2,'no')">לא - לא מטופל ✗</button>
+</div>
+
+<!-- Question 3 -->
+<div id="fmf-q3" class="q-card hidden">
+<div class="flow-line">
+<p style="color:#6ee7b7;margin-bottom:4px">✓ נושא/חולה FMF</p>
+<p style="color:#6ee7b7;margin-bottom:8px">✓ מטופל תרופתית</p>
+</div>
+<h3>האם היו התקפים בשנה האחרונה?</h3>
+<button class="btn btn-yes" onclick="fmfAnswer(3,'yes')">כן - היו התקפים ✓</button>
+<button class="btn btn-no" onclick="fmfAnswer(3,'no')">לא - ללא התקפים ✗</button>
+</div>
+
+<!-- RESULTS -->
+<div id="fmf-r-not-carrier" class="result hidden">
+<h3>החלטה: לא נושא FMF</h3>
+<p>המבוטח אינו נושא/חולה FMF - ממשיך בתהליך חיתום רגיל.</p>
+<div class="code">חיתום רגיל</div>
+</div>
+
+<div id="fmf-r-101" class="result hidden">
+<h3>🎯 החלטת חיתום</h3>
+<div class="code">FMF 101</div>
+<p><b>מסלול:</b> נושא FMF → לא מטופל</p>
+<div style="margin-top:12px">
+<b>החלטות לפי ענף ביטוח:</b>
+</div>
+<table>
+<tr><th>ענף</th><th>החלטה</th><th>פירוט</th></tr>
+<tr><td>חיים</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+<tr><td>בריאות</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+<tr><td>אכ"ע</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+<tr><td>סיעודי</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+</table>
+<div class="info">💡 <b>הערה:</b> נושא לא מטופל - סיכון נמוך. אין צורך בתוספת פרמיה או החרגה.</div>
+</div>
+
+<div id="fmf-r-114" class="result hidden">
+<h3>🎯 החלטת חיתום</h3>
+<div class="code">FMF 114</div>
+<p><b>מסלול:</b> חולה FMF → מטופל → ללא התקפים בשנה האחרונה</p>
+<table>
+<tr><th>ענף</th><th>החלטה</th><th>פירוט</th></tr>
+<tr><td>חיים</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+<tr><td>בריאות</td><td><span class="tag tag-h">ח׳</span></td><td>החרגת FMF</td></tr>
+<tr><td>אכ"ע</td><td><span class="tag tag-s">ר׳</span></td><td>רגיל</td></tr>
+<tr><td>סיעודי</td><td><span class="tag tag-r">ת׳</span></td><td>תוספת 25%</td></tr>
+</table>
+<div class="info">
+<b>מילולים/החרגות:</b><br>
+• החרגת כל מקרה הקשור ל-FMF<br>
+• קוד תחלואה: DIS 31<br>
+• שימוש בעילים: FMF<br>
+• 5200 - מכתב עידוד המופנה למומחה והנחיות מחלת FMF<br>
+• 5201 - הוצאות הדפסה של בדיקה תפקודי כליות ואורין לכלליות
+</div>
+</div>
+
+<div id="fmf-r-105" class="result hidden">
+<h3>🎯 החלטת חיתום</h3>
+<div class="code">FMF 105</div>
+<p><b>מסלול:</b> חולה FMF → מטופל → היו התקפים בשנה האחרונה</p>
+<table>
+<tr><th>ענף</th><th>החלטה</th><th>פירוט</th></tr>
+<tr><td>חיים</td><td><span class="tag tag-r">ת׳</span></td><td>תוספת פרמיה</td></tr>
+<tr><td>בריאות</td><td><span class="tag tag-h">ח׳</span></td><td>החרגת FMF</td></tr>
+<tr><td>אכ"ע</td><td><span class="tag tag-r">ת׳</span></td><td>תוספת פרמיה</td></tr>
+<tr><td>סיעודי</td><td><span class="tag tag-d">ד׳</span></td><td>דחייה</td></tr>
+</table>
+<div class="info">
+<b>מילולים/החרגות:</b><br>
+• החרגת כל מקרה הקשור ל-FMF ותוספת פרמיה<br>
+• קוד תחלואה: DIS 31<br>
+• 5200 - מכתב עידוד המופנה למומחה<br>
+• 5201 - הוצאות הדפסה של בדיקה תפקודי כליות<br>
+⚠️ <b>סיעודי: דחייה</b> - בשל התקפים פעילים
+</div>
+</div>
+
+<!-- FULL TABLE -->
+<div id="fmf-table" class="hidden" style="margin-top:20px">
+<h2>📊 טבלת החלטות מלאה - FMF</h2>
+<div style="overflow-x:auto">
+<table>
+<tr>
+<th>עלה</th>
+<th>חיים<br>ריסק</th><th>חיים<br>מעורב</th><th>אכ"ע</th>
+<th>בריאות<br>ניתוחים</th><th>בריאות<br>השתלות</th><th>בריאות<br>מחלות</th>
+<th>סיעודי</th><th>תאונות</th>
+</tr>
+<tr><td class="highlight">101</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ר׳</td></tr>
+<tr><td class="highlight">105</td><td>ת׳</td><td>ת׳</td><td>ת׳</td><td>ח׳</td><td>ח׳</td><td>ח׳</td><td>ד׳</td><td>ר׳</td></tr>
+<tr><td class="highlight">114</td><td>ר׳</td><td>ר׳</td><td>ר׳</td><td>ח׳</td><td>ח׳</td><td>ח׳</td><td>ת׳</td><td>ר׳</td></tr>
+</table>
+</div>
+<p style="margin-top:8px;font-size:0.8em;color:#94a3b8">
+<span class="tag tag-s">ר׳ = רגיל</span>
+<span class="tag tag-r">ת׳ = תוספת</span>
+<span class="tag tag-h">ח׳ = החרגה</span>
+<span class="tag tag-d">ד׳ = דחייה</span>
+</p>
+</div>
+
+<button class="btn btn-back" onclick="resetFMF()" style="margin-top:16px">🔄 התחל מחדש</button>
+</div><!-- end view-quiz -->
+</div><!-- end fmf-flow -->
+<script>
+function switchTab(tab){
+document.getElementById('tab-quiz').classList.remove('active');
+document.getElementById('tab-tree').classList.remove('active');
+document.getElementById('tab-'+tab).classList.add('active');
+if(tab==='tree'){
+document.getElementById('view-tree').classList.remove('hidden');
+document.getElementById('view-quiz').classList.add('hidden');
+}else{
+document.getElementById('view-tree').classList.add('hidden');
+document.getElementById('view-quiz').classList.remove('hidden');
+}
+}
+function startCondition(id){
+document.getElementById('selector').classList.add('hidden');
+document.getElementById(id+'-flow').classList.remove('hidden');
+}
+function goBack(){
+document.getElementById('fmf-flow').classList.add('hidden');
+document.getElementById('selector').classList.remove('hidden');
+resetFMF();
+}
+function fmfAnswer(q,a){
+if(q===1){
+if(a==='no'){showResult('fmf-r-not-carrier');document.getElementById('fmf-q1').classList.add('hidden');}
+else{document.getElementById('fmf-q1').classList.add('hidden');document.getElementById('fmf-q2').classList.remove('hidden');}
+}
+if(q===2){
+if(a==='no'){showResult('fmf-r-101');document.getElementById('fmf-q2').classList.add('hidden');}
+else{document.getElementById('fmf-q2').classList.add('hidden');document.getElementById('fmf-q3').classList.remove('hidden');}
+}
+if(q===3){
+document.getElementById('fmf-q3').classList.add('hidden');
+if(a==='no'){showResult('fmf-r-114');}
+else{showResult('fmf-r-105');}
+}
+}
+function showResult(id){
+document.getElementById(id).style.display='block';
+document.getElementById('fmf-table').classList.remove('hidden');
+}
+function resetFMF(){
+['fmf-q1','fmf-q2','fmf-q3'].forEach(function(id){
+var el=document.getElementById(id);
+if(id==='fmf-q1')el.classList.remove('hidden');
+else el.classList.add('hidden');
+});
+['fmf-r-not-carrier','fmf-r-101','fmf-r-114','fmf-r-105'].forEach(function(id){
+document.getElementById(id).style.display='none';
+});
+document.getElementById('fmf-table').classList.add('hidden');
+}
+</script>
+</body></html>

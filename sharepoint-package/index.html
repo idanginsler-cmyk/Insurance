@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>תכנית הדרכה - AI בביטוח</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:16px}
+nav{position:sticky;top:0;background:#1e293b;border-bottom:1px solid #334155;padding:8px 16px;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{color:#94a3b8;text-decoration:none;padding:6px 12px;border-radius:6px;font-size:0.85em;display:inline-block}
+nav a:hover,nav a.active{color:#60a5fa;background:#334155}
+h1{text-align:center;font-size:1.8em;margin:20px 0;color:#60a5fa}
+h2{color:#fbbf24;margin:32px 0 12px;font-size:1.4em;border-bottom:2px solid #334155;padding-bottom:8px}
+h3{color:#34d399;margin:20px 0 8px;font-size:1.15em}
+h4{color:#a78bfa;margin:14px 0 6px;font-size:1em}
+.card{background:#1e293b;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #334155}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:0.75em;margin:2px}
+.b1{background:#1e40af;color:#93c5fd}.b2{background:#065f46;color:#6ee7b7}.b3{background:#7c2d12;color:#fdba74}
+.b4{background:#581c87;color:#c4b5fd}.b5{background:#713f12;color:#fde68a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.tool{background:#1e293b;border-radius:8px;padding:10px;border:1px solid #334155;font-size:0.9em}
+.stars{color:#fbbf24}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85em}
+th{background:#334155;padding:6px 8px;text-align:right}
+td{padding:6px 8px;border-bottom:1px solid #1e293b}
+pre{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px;overflow-x:auto;font-size:0.8em;margin:8px 0;direction:ltr;text-align:left}
+code{font-family:monospace}
+.warn{background:#451a03;border:1px solid #92400e;border-radius:8px;padding:10px;margin:10px 0;color:#fbbf24;font-size:0.9em}
+.num{display:inline-flex;width:32px;height:32px;border-radius:50%;background:#3b82f6;color:#fff;align-items:center;justify-content:center;font-weight:bold;margin-left:8px}
+.section{display:none}.section.active{display:block}
+.tab-row{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.tab{padding:6px 14px;border-radius:8px;background:#334155;color:#94a3b8;cursor:pointer;font-size:0.85em;border:none}
+.tab.active{background:#3b82f6;color:#fff}
+ul{padding-right:20px;margin:6px 0}
+li{margin:4px 0}
+.collapse-btn{background:none;border:1px solid #334155;color:#60a5fa;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.85em;margin:4px 0}
+.collapse-content{display:none;margin-top:8px}
+.collapse-content.show{display:block}
+</style>
+</head>
+<body>
+<nav>
+<a href="#" onclick="showSection('home')" class="active" id="nav-home">🏠 ראשי</a>
+<a href="#" onclick="showSection('s1')" id="nav-s1">מפגש 1</a>
+<a href="#" onclick="showSection('s2')" id="nav-s2">מפגש 2</a>
+<a href="#" onclick="showSection('s3')" id="nav-s3">מפגש 3</a>
+<a href="#" onclick="showSection('s4')" id="nav-s4">מפגש 4</a>
+<a href="#" onclick="showSection('s5')" id="nav-s5">מפגש 5</a>
+<a href="#" onclick="showSection('tools')" id="nav-tools">🛠 כלים</a>
+<a href="#" onclick="showSection('prompts')" id="nav-prompts">📝 פרומפטים</a>
+<a href="#" onclick="showSection('demos')" id="nav-demos">💻 דמואים</a>
+</nav>
+<div class="container">
+<!-- HOME -->
+<div class="section active" id="sec-home">
+<h1>🎓 תכנית הדרכה - AI בביטוח חיים ובריאות</h1>
+<div class="card" style="text-align:center">
+<p><strong>5 מפגשים</strong> · <strong>38 תבניות פרומפט</strong> · <strong>7 דמואים</strong> · <strong>20+ כלי AI</strong></p>
+</div>
+<h2>🎯 מטרות</h2>
+<div class="card">
+<p>1. <b>הקניית ידע ופרקטיקה</b> - יצירת כלי עבודה מהירים באמצעות AI</p>
+<p>2. <b>הכשרת מובילי ידע</b> - המשתתפים יהפכו למובילי AI ביחידה</p>
+<p>3. <b>חיסכון בזמן</b> - אוטומציה של פעולות חוזרות בעבודה</p>
+</div>
+<h2>📅 סקירת מפגשים</h2>
+<div class="card"><h3><span class="num">1</span> מבוא והיכרות</h3><p>מה זה AI · דוגמאות מביטוח · סיכונים · דמו ראשון</p></div>
+<div class="card"><h3><span class="num">2</span> סקירת כלים</h3><p>ChatGPT · Claude · Gemini · Copilot · Perplexity · Prompt Engineering</p></div>
+<div class="card"><h3><span class="num">3</span> עיבוד מסמכים</h3><p>סיכום פוליסות · ניתוח רפואי · השוואה · תרגום</p></div>
+<div class="card"><h3><span class="num">4</span> בניית סוכנים</h3><p>Power Automate · LangChain · CrewAI · סוכני הונאות/חיתום/תביעות</p></div>
+<div class="card"><h3><span class="num">5</span> הטמעה בארגון</h3><p>שינוי תרבותי · מדיניות · רגולציה · תוכנית 90 יום</p></div>
+</div>
+
+<!-- SESSION 1 -->
+<div class="section" id="sec-s1">
+<h1><span class="num">1</span> מפגש 1 - מבוא והיכרות</h1>
+<div class="card"><b>משך:</b> 3 שעות · <b>דרישות:</b> אין</div>
+<h2>מטרות למידה</h2>
+<ul>
+<li>להבין מושגי יסוד: AI, ML, LLM</li>
+<li>לזהות הזדמנויות ליישום AI בביטוח</li>
+<li>להכיר סיכונים ומגבלות של AI</li>
+<li>לבצע אינטראקציה ראשונה עם מודל שפה</li>
+</ul>
+<h2>סדר יום</h2>
+<table>
+<tr><th>זמן</th><th>נושא</th><th>פורמט</th></tr>
+<tr><td>0:00-0:30</td><td>למה AI עכשיו?</td><td>הרצאה + דיון</td></tr>
+<tr><td>0:30-1:00</td><td>מושגי יסוד: AI, ML, LLM</td><td>הרצאה + דוגמאות</td></tr>
+<tr><td>1:00-1:30</td><td>AI בתעשיית הביטוח</td><td>מקרי בוחן</td></tr>
+<tr><td>1:30-1:45</td><td>הפסקה</td><td></td></tr>
+<tr><td>1:45-2:15</td><td>סיכונים ומגבלות</td><td>הרצאה + דיון</td></tr>
+<tr><td>2:15-2:45</td><td>דמו חי: שיחה עם AI</td><td>הדגמה + תרגול</td></tr>
+<tr><td>2:45-3:00</td><td>סיכום ומשימה</td><td></td></tr>
+</table>
+<h2>מושגי יסוד</h2>
+<div class="card">
+<p><b>בינה מלאכותית (AI):</b> מחשב שמבצע משימות שדורשות "חשיבה" - כמו מנהל מנוסה שקורא מסמך ומסכם</p>
+<p><b>למידת מכונה (ML):</b> המחשב לומד מדוגמאות - כמו חתם שמזהה דפוסים אחרי שנים</p>
+<p><b>מודל שפה גדול (LLM):</b> מחשב ש"קרא" מיליארדי מסמכים ולמד לכתוב ולהבין טקסט</p>
+<p><b>פרומפט:</b> ההוראה שכותבים ל-AI - כמו בריף לעובד חדש</p>
+</div>
+<h2>AI בביטוח - 6 דוגמאות</h2>
+<div class="card">
+<p>1. <b>חיתום מהיר:</b> ניתוח שאלוני בריאות בדקות במקום ימים</p>
+<p>2. <b>זיהוי הונאות:</b> איתור תביעות חשודות לפי דפוסים</p>
+<p>3. <b>עיבוד תביעות:</b> סיכום מסמכים רפואיים להערכת תביעה</p>
+<p>4. <b>שירות לקוחות:</b> מענה מהיר על שאלות נפוצות</p>
+<p>5. <b>תמחור:</b> ניתוח נתונים לחישוב פרמיות</p>
+<p>6. <b>ציות רגולטורי:</b> בדיקת מסמכים מול דרישות הפיקוח</p>
+</div>
+<h2>⚠️ סיכונים ומגבלות</h2>
+<div class="warn">
+<p><b>הזיות:</b> AI ממציא מידע משכנע - תמיד לבדוק!</p>
+<p><b>הטיות:</b> מודלים יכולים להפלות על בסיס נתוני אימון</p>
+<p><b>פרטיות:</b> אסור להזין נתוני לקוחות אמיתיים לכלי AI חיצוניים</p>
+<p><b>אחריות:</b> AI הוא כלי עזר - ההחלטה הסופית תמיד של אדם</p>
+</div>
+<h2>תרגילים</h2>
+<h3>תרגיל 1: זיהוי הזדמנויות AI (קבוצתי - 15 דק׳)</h3>
+<div class="card"><p>רשמו 5 תהליכים יומיומיים שלוקחים זמן. לכל אחד - דרגו: "האם AI יכול לעזור?" (כן/אולי/לא). הציגו 2 ההזדמנויות הטובות ביותר.</p></div>
+<h3>תרגיל 2: שיחה ראשונה עם AI (אישי - 20 דק׳)</h3>
+<div class="card">
+<p>נסו את השאלות הבאות ב-ChatGPT/Claude:</p>
+<pre>מה ההבדל בין ביטוח חיים ריסק לביטוח חיים מעורב?</pre>
+<pre>סכם ב-5 נקודות את הדברים החשובים בפוליסת ביטוח בריאות</pre>
+<pre>כתוב מכתב תשובה ללקוח ששואל למה התביעה נדחתה בגלל תקופת אכשרה</pre>
+</div>
+<h3>תרגיל 3: זיהוי הזיות (אישי - 10 דק׳)</h3>
+<div class="card"><p>שאלו שאלה מקצועית שאתם יודעים את התשובה. האם AI מדייק? נסו: "מה אומר חוק חוזה הביטוח על חובת הגילוי?"</p></div>
+</div>
+<!-- SESSION 2 -->
+<div class="section" id="sec-s2">
+<h1><span class="num">2</span> מפגש 2 - סקירת כלים והתאמה לביטוח</h1>
+<div class="card"><b>משך:</b> 3 שעות · <b>דרישות:</b> חשבון ChatGPT פתוח</div>
+<h2>סקירת כלי LLM</h2>
+<div class="card">
+<h4>ChatGPT (OpenAI) ⭐⭐⭐⭐⭐</h4>
+<p><b>חוזקות:</b> ידע רחב, עברית טובה, יצירת תמונות, ניתוח קבצים</p>
+<p><b>שימוש בביטוח:</b> כתיבת תכתובות, brainstorming, ניתוח בסיסי</p>
+<p><b>מחיר:</b> חינם / $20/חודש</p>
+</div>
+<div class="card">
+<h4>Claude (Anthropic) ⭐⭐⭐⭐⭐</h4>
+<p><b>חוזקות:</b> חלון הקשר הגדול ביותר (200K tokens ≈ 500 עמודים!), דיוק גבוה</p>
+<p><b>שימוש בביטוח:</b> ניתוח פוליסות שלמות, השוואת מסמכים, סיכום תביעות מורכבות</p>
+<p><b>מחיר:</b> חינם / $20/חודש</p>
+</div>
+<div class="card">
+<h4>Google Gemini ⭐⭐⭐⭐</h4>
+<p><b>חוזקות:</b> אינטגרציה עם Google Workspace, מולטימודלי</p>
+<p><b>שימוש בביטוח:</b> ניתוח Sheets, סיכום מיילים, חיפוש ב-Drive</p>
+<p><b>מחיר:</b> חינם / $20/חודש</p>
+</div>
+<div class="card">
+<h4>Microsoft Copilot ⭐⭐⭐⭐⭐</h4>
+<p><b>חוזקות:</b> אינטגרציה מלאה עם M365 (Word, Excel, PowerPoint, Teams, Outlook)</p>
+<p><b>שימוש בביטוח:</b> עיבוד מסמכי Word, ניתוח Excel, סיכום ישיבות Teams</p>
+<p><b>מחיר:</b> $30/חודש (דורש M365)</p>
+</div>
+<div class="card">
+<h4>Perplexity ⭐⭐⭐⭐</h4>
+<p><b>חוזקות:</b> מחקר עם מקורות מצוטטים, מעודכן</p>
+<p><b>שימוש בביטוח:</b> מחקר שוק, בנצ'מרק מתחרים, מעקב רגולציה</p>
+<p><b>מחיר:</b> חינם / $20/חודש</p>
+</div>
+<h2>כלי מסמכים ומצגות</h2>
+<div class="grid">
+<div class="tool"><b>NotebookLM</b><br>ניתוח מספר מסמכים + פודקאסט<br>חינם</div>
+<div class="tool"><b>Azure Doc Intelligence</b><br>OCR חכם + חילוץ טבלאות<br>לפי שימוש</div>
+<div class="tool"><b>Gamma.app</b><br>מצגות אוטומטיות מטקסט<br>חינם/$10</div>
+<div class="tool"><b>Beautiful.ai</b><br>עיצוב מצגות חכם<br>$12/חודש</div>
+<div class="tool"><b>Canva AI</b><br>עיצוב + AI, עברית טובה<br>חינם/$13</div>
+<div class="tool"><b>Tome</b><br>מצגות סיפוריות<br>$16/חודש</div>
+</div>
+<h2>Prompt Engineering - 5 כללי זהב</h2>
+<div class="card">
+<p>1. <b>היו ספציפיים:</b> "סכם ב-5 נקודות: כיסויים, חריגות, אכשרה, סכומים, תנאים"</p>
+<p>2. <b>תנו הקשר:</b> "אתה חתם ביטוח חיים עם 20 שנות ניסיון..."</p>
+<p>3. <b>בקשו פורמט:</b> "הצג כטבלה / כרשימה / ב-JSON"</p>
+<p>4. <b>חלקו משימות:</b> שלבים קטנים במקום שאלה אחת ארוכה</p>
+<p>5. <b>בקשו ביקורתיות:</b> "ציין גם חולשות ובעיות אפשריות"</p>
+</div>
+<h3>דוגמה: פרומפט רע vs טוב</h3>
+<pre>❌ רע: "מה דעתך על הפוליסה?"
+
+✅ טוב: "אתה מומחה ביטוח בריאות. סכם את הפוליסה ב-5 נקודות:
+כיסויים עיקריים, חריגות, תקופות אכשרה, השתתפות עצמית,
+ונקודות חריגות. הצג כטבלה."</pre>
+<h2>טבלת התאמה: מתי משתמשים במה</h2>
+<table>
+<tr><th>משימה</th><th>הכלי המומלץ</th><th>למה</th></tr>
+<tr><td>ניתוח פוליסה ארוכה</td><td>Claude</td><td>חלון הקשר 500 עמ׳</td></tr>
+<tr><td>כתיבת מכתב ללקוח</td><td>ChatGPT</td><td>כתיבה טבעית בעברית</td></tr>
+<tr><td>מחקר שוק</td><td>Perplexity</td><td>מקורות מצוטטים</td></tr>
+<tr><td>ניתוח Excel</td><td>Copilot</td><td>אינטגרציה ישירה</td></tr>
+<tr><td>סיכום ישיבת Teams</td><td>Copilot</td><td>אינטגרציה Teams</td></tr>
+<tr><td>יצירת מצגת</td><td>Gamma.app</td><td>מצגת מלאה מטקסט</td></tr>
+<tr><td>סריקת מסמך פיזי</td><td>Azure Doc Intel</td><td>OCR + טבלאות</td></tr>
+<tr><td>השוואת 3+ מסמכים</td><td>NotebookLM</td><td>ניתוח רב-מסמכי</td></tr>
+</table>
+<h2>תרגילים</h2>
+<h3>תרגיל 1: השוואת כלים (קבוצתי - 20 דק׳)</h3>
+<div class="card"><p>שלחו אותו טקסט ביטוחי ל-ChatGPT, Claude ו-Gemini. השוו: מי הכי מדויק? מי הכי קריא? מי פספס משהו?</p></div>
+<h3>תרגיל 2: שיפור פרומפט הדרגתי (אישי - 15 דק׳)</h3>
+<div class="card">
+<p>התחילו בסיסי ושפרו:</p>
+<pre>שלב 1: "מה זה ביטוח חיים?"
+שלב 2: "אני סוכן חדש. הסבר ריסק לעומת מעורב."
+שלב 3: "הכן טבלת השוואה: כיסוי, משך, חיסכון, עלות, למי מתאים."
+שלב 4: "אתה מומחה 20 שנה. טבלה + המלצה. עברית פשוטה."</pre>
+</div>
+</div>
+<!-- SESSION 3 -->
+<div class="section" id="sec-s3">
+<h1><span class="num">3</span> מפגש 3 - עיבוד מסמכים מהיר</h1>
+<div class="card"><b>משך:</b> 3 שעות · <b>דרישות:</b> גישה ל-Copilot/ChatGPT/Claude</div>
+<h2>יכולות עיבוד מסמכים</h2>
+<div class="card">
+<p><b>סיכום:</b> תמצות מסמך ארוך ב-5 נקודות</p>
+<p><b>חילוץ:</b> שליפת סכומים, תאריכים, שמות</p>
+<p><b>סיווג:</b> קטגוריזציה אוטומטית (תביעה/פוליסה/מכתב)</p>
+<p><b>תרגום:</b> תרגום עם שימור מונחים מקצועיים</p>
+<p><b>שאלות:</b> שאילת שאלות ספציפיות על מסמך</p>
+</div>
+<h2>פרומפטים מומלצים</h2>
+<h3>סיכום פוליסה:</h3>
+<pre>אתה מומחה ביטוח בריאות ישראלי. נתח את הפוליסה וחלץ:
+1. פרטי פוליסה: מספר, סוג, תוקף
+2. כיסויים עיקריים: רשימה + סכומים
+3. חריגות מהותיות
+4. תקופות אכשרה לכל כיסוי
+5. השתתפות עצמית
+6. תנאים מיוחדים
+הצג כטבלה מסודרת.</pre>
+<h3>ניתוח מסמך רפואי:</h3>
+<pre>אתה רופא בודק תביעות. חלץ מהמסמך:
+1. אבחנות (עם קודי ICD-10)
+2. טיפולים שבוצעו
+3. תרופות שנרשמו
+4. מצבים רפואיים קודמים (pre-existing)
+5. המלצות להמשך טיפול
+6. רלוונטיות לכיסוי ביטוחי</pre>
+<h3>השוואת פוליסות:</h3>
+<pre>השווה בין שתי הפוליסות. טבלת השוואה:
+| כיסוי | פוליסה א | פוליסה ב | הערות |
+כלול: כיסויים, סכומים, חריגות, השתתפות, אכשרה.
+בסוף: 3 יתרונות לכל פוליסה + המלצה מנומקת.</pre>
+<div class="warn">⚠️ אסור להזין מסמכים רפואיים/ביטוחיים אמיתיים לכלי AI חיצוניים! בהדרכה - מסמכים סינתטיים בלבד.</div>
+<h2>תרגילים</h2>
+<h3>תרגיל 1: סיכום פוליסה (15 דק׳)</h3>
+<div class="card"><p>פתחו את מסמך הפוליסה לדוגמה, שלחו ל-Claude/ChatGPT עם פרומפט הסיכום. בדקו: האם מדויק? מה חסר?</p></div>
+<h3>תרגיל 2: ניתוח מסמך רפואי (15 דק׳)</h3>
+<div class="card"><p>שלחו את הסיכום הרפואי לדוגמה ל-AI. בדקו: האם האבחנות נכונות? האם זוהו מצבים קודמים?</p></div>
+<h3>תרגיל 3: תרגום רפואי (10 דק׳)</h3>
+<div class="card">
+<pre>תרגם לעברית, שמור מונחים בסוגריים:
+"Patient presents with Type 2 Diabetes Mellitus.
+Current medications: Metformin 1000mg twice daily.
+HbA1c: 7.8%. Blood pressure: 140/90 mmHg.
+Mild diabetic retinopathy noted."</pre>
+</div>
+</div>
+
+<!-- SESSION 4 -->
+<div class="section" id="sec-s4">
+<h1><span class="num">4</span> מפגש 4 - בניית סוכנים חכמים</h1>
+<div class="card"><b>משך:</b> 3 שעות · <b>דרישות:</b> מפגשים 1-3</div>
+<h2>מה זה AI Agent?</h2>
+<div class="card">
+<p><b>צ'אטבוט:</b> עונה על שאלה אחת (כמו מילון)</p>
+<p><b>AI Agent:</b> מקבל מטרה → מתכנן → מבצע שלבים → מחזיר תוצאה (כמו עובד שמקבל משימה)</p>
+</div>
+<h2>כלים לבניית סוכנים</h2>
+<table>
+<tr><th>כלי</th><th>סוג</th><th>למי</th></tr>
+<tr><td>Power Automate + AI Builder</td><td>ללא קוד</td><td>עובדים עסקיים</td></tr>
+<tr><td>Zapier AI</td><td>ללא קוד</td><td>אוטומציות פשוטות</td></tr>
+<tr><td>LangChain</td><td>Python</td><td>צוותי IT</td></tr>
+<tr><td>CrewAI</td><td>Python</td><td>צוותי סוכנים</td></tr>
+</table>
+<h2>שימושים בביטוח</h2>
+<div class="card">
+<h4>1. סוכן זיהוי הונאות 🔴</h4>
+<p>מנתח תביעות → מזהה דפוסים חשודים (כפילויות, עיתוי, אי-התאמות) → מדרג סיכון → דוח לחקירה</p>
+</div>
+<div class="card">
+<h4>2. סוכן חיתום 🔵</h4>
+<p>שאלון בריאות → ניתוח גורמי סיכון → סיווג (סטנדרט/מוגבר/דחייה) → המלצה מנומקת</p>
+</div>
+<div class="card">
+<h4>3. סוכן תביעות רב-שלבי 🟢</h4>
+<pre>תביעה → חילוץ מידע → שליפת פוליסה → בדיקת כיסוי
+→ בדיקת אכשרה → חישוב סכום → בדיקת הונאה
+→ טיוטת החלטה → בקרה אנושית → מכתב</pre>
+</div>
+<div class="card">
+<h4>4. סוכן שירות לקוחות 🟡</h4>
+<p>שאלת לקוח → חיפוש בפוליסה → תשובה מותאמת → ניתוב למוקדן אם צריך</p>
+</div>
+<h2>תרגילים</h2>
+<h3>תרגיל 1: תכנון סוכן על נייר (קבוצתי - 20 דק׳)</h3>
+<div class="card">
+<p>בחרו תהליך ותכננו: <b>קלט</b> → <b>שלבים</b> (3-6) → <b>כלים</b> נדרשים → <b>פלט</b> → <b>בקרה אנושית</b> (באילו שלבים?)</p>
+</div>
+<h3>תרגיל 2: כתיבת System Prompt לסוכן (15 דק׳)</h3>
+<div class="card">
+<pre>אתה סוכן AI לעיבוד תביעות ביטוח בריאות.
+
+## התפקיד שלך
+[מה הסוכן עושה]
+
+## שלבי עבודה
+1. [שלב ראשון]
+2. [שלב שני]...
+
+## כללים
+- [כלל 1 - מתי צריך אישור אנושי]
+- [כלל 2 - מגבלות סכום]
+
+## פורמט הפלט
+[איך התוצאה נראית]</pre>
+</div>
+</div>
+
+<!-- SESSION 5 -->
+<div class="section" id="sec-s5">
+<h1><span class="num">5</span> מפגש 5 - הטמעת חשיבת AI בארגון</h1>
+<div class="card"><b>משך:</b> 3 שעות · <b>דרישות:</b> מפגשים 1-4</div>
+<h2>התגברות על התנגדות</h2>
+<table>
+<tr><th>סיבת התנגדות</th><th>פתרון</th></tr>
+<tr><td>פחד מאיבוד עבודה</td><td>AI משפר עבודה, לא מחליף</td></tr>
+<tr><td>חוסר הבנה</td><td>הדגמה מעשית של חיסכון</td></tr>
+<tr><td>חשש מטכנולוגיה</td><td>התחלה בכלי פשוט, ליווי צמוד</td></tr>
+<tr><td>"תמיד עבד ככה"</td><td>הצגת ROI קונקרטי</td></tr>
+</table>
+<h2>מדיניות שימוש ב-AI</h2>
+<div class="card" style="border-color:#065f46">
+<h4 style="color:#6ee7b7">✅ מותר</h4>
+<p>תבניות כלליות · מסמכים אנונימיים · כלים Enterprise · brainstorming · מחקר שוק</p>
+</div>
+<div class="card" style="border-color:#7c2d12">
+<h4 style="color:#fdba74">❌ אסור</h4>
+<p>פרטי לקוחות · מסמכים רפואיים אמיתיים · מידע עסקי רגיש · החלטות ללא בקרה אנושית</p>
+</div>
+<h2>מדדי הצלחה</h2>
+<table>
+<tr><th>מדד</th><th>יעד</th></tr>
+<tr><td>חיסכון בזמן</td><td>5+ שעות לעובד בשבוע</td></tr>
+<tr><td>מהירות טיפול בתביעה</td><td>הפחתה 30%</td></tr>
+<tr><td>דיוק בעיבוד מסמכים</td><td>הפחתה 50% בטעויות</td></tr>
+<tr><td>אימוץ עובדים</td><td>60%+ תוך 90 יום</td></tr>
+</table>
+<h2>📊 תוכנית 90 יום</h2>
+<div class="card">
+<h4>ימים 1-30: התנסות</h4>
+<p>בחירת תהליך אחד · התנסות עם AI · מדידת חיסכון · ספריית פרומפטים ראשונית</p>
+<h4>ימים 31-60: הרחבה</h4>
+<p>3 תהליכים נוספים · הדרכת 5 עובדים · איסוף סיפורי הצלחה · עדכון מדיניות</p>
+<h4>ימים 61-90: מיסוד</h4>
+<p>שגרת עבודה · הצגת ROI להנהלה · מינוי אלופי AI · תכנון שלב הבא</p>
+</div>
+<h2>צ'קליסט הטמעה למנהלים</h2>
+<div class="card">
+<p>☐ הגדרת מטרות ברורות ליחידה</p>
+<p>☐ זיהוי 3 תהליכים לשיפור</p>
+<p>☐ אישור הנהלה ותקציב</p>
+<p>☐ מינוי אחראי AI ביחידה</p>
+<p>☐ בחירת כלים מאושרים (Enterprise)</p>
+<p>☐ הדרכת צוות ליבה</p>
+<p>☐ הגדרת מדדי הצלחה</p>
+<p>☐ הקמת ערוץ שאלות (Teams/Slack)</p>
+<p>☐ מדידת ROI אחרי 90 יום</p>
+</div>
+</div>
+<!-- TOOLS -->
+<div class="section" id="sec-tools">
+<h1>🛠️ קטלוג כלי AI לביטוח</h1>
+<h2>מודלי שפה (LLMs)</h2>
+<div class="card"><h4>ChatGPT (OpenAI) ⭐⭐⭐⭐⭐</h4>
+<p>המודל הפופולרי ביותר. GPT-4o עם ניתוח תמונות, יצירת תמונות (DALL-E), והרצת קוד.</p>
+<p>💰 חינם/$20 · 🇮🇱 עברית: ⭐⭐⭐⭐ · <b>לביטוח:</b> תכתובות, brainstorming, ניתוח בסיסי</p></div>
+<div class="card"><h4>Claude (Anthropic) ⭐⭐⭐⭐⭐</h4>
+<p>חלון הקשר הגדול ביותר (200K tokens ≈ 500 עמודים). מצוין למסמכים ארוכים ומורכבים.</p>
+<p>💰 חינם/$20 · 🇮🇱 עברית: ⭐⭐⭐⭐ · <b>לביטוח:</b> ניתוח פוליסות שלמות, השוואת מסמכים</p></div>
+<div class="card"><h4>Google Gemini ⭐⭐⭐⭐</h4>
+<p>אינטגרציה מלאה עם Google Workspace. מולטימודלי (תמונות, וידאו).</p>
+<p>💰 חינם/$20 · 🇮🇱 עברית: ⭐⭐⭐ · <b>לביטוח:</b> ניתוח Sheets, סיכום מיילים</p></div>
+<div class="card"><h4>Microsoft Copilot ⭐⭐⭐⭐⭐</h4>
+<p>AI משולב בכל כלי M365: Word, Excel, PowerPoint, Outlook, Teams.</p>
+<p>💰 $30/חודש · 🇮🇱 עברית: ⭐⭐⭐⭐ · <b>לביטוח:</b> עיבוד Word, Excel, סיכום ישיבות</p></div>
+<div class="card"><h4>Perplexity ⭐⭐⭐⭐</h4>
+<p>מנוע חיפוש AI עם מקורות מצוטטים. מעולה למחקר ומידע עדכני.</p>
+<p>💰 חינם/$20 · 🇮🇱 עברית: ⭐⭐⭐ · <b>לביטוח:</b> מחקר שוק, מעקב רגולציה</p></div>
+
+<h2>ניתוח מסמכים</h2>
+<div class="card"><h4>Azure Document Intelligence ⭐⭐⭐⭐⭐</h4>
+<p>OCR חכם - סורק מסמכים פיזיים ו-PDF, מחלץ טקסט, טבלאות ושדות.</p>
+<p>💰 לפי שימוש · <b>לביטוח:</b> סריקת מסמכים רפואיים, חילוץ נתונים מטפסים</p></div>
+<div class="card"><h4>NotebookLM (Google) ⭐⭐⭐⭐</h4>
+<p>העלאת מספר מסמכים, שאלות עליהם עם ציטוטים מדויקים. יוצר פודקאסט!</p>
+<p>💰 חינם · <b>לביטוח:</b> ניתוח מספר פוליסות, מחקר רגולטורי</p></div>
+
+<h2>מצגות</h2>
+<div class="grid">
+<div class="tool"><b>Gamma.app</b> ⭐⭐⭐⭐<br>מצגות מלאות מטקסט<br>חינם/$10</div>
+<div class="tool"><b>Beautiful.ai</b> ⭐⭐⭐<br>עיצוב אוטומטי<br>$12/חודש</div>
+<div class="tool"><b>Canva AI</b> ⭐⭐⭐⭐<br>עיצוב + AI, עברית<br>חינם/$13</div>
+<div class="tool"><b>Tome</b> ⭐⭐⭐<br>סיפור חזותי<br>$16/חודש</div>
+</div>
+
+<h2>סוכנים ואוטומציה</h2>
+<div class="card"><h4>Power Automate + AI Builder ⭐⭐⭐⭐⭐</h4>
+<p>אוטומציה ללא קוד בתוך M365. סיווג מסמכים, חילוץ נתונים, התראות.</p>
+<p>💰 כלול ב-M365/$15 · <b>לביטוח:</b> אוטומציית מיילים, סיווג תביעות, חילוץ מטפסים</p></div>
+<div class="card"><h4>LangChain ⭐⭐⭐⭐</h4>
+<p>ספריית Python לשרשור פעולות AI. חיבור LLM + מאגרי מידע + APIs.</p>
+<p>💰 חינם (קוד פתוח) · <b>לביטוח:</b> סוכני AI מורכבים, RAG על מאגר פוליסות</p></div>
+<div class="card"><h4>CrewAI ⭐⭐⭐⭐</h4>
+<p>צוותי סוכני AI - כל סוכן עם תפקיד ומשימה, עובדים יחד.</p>
+<p>💰 חינם (קוד פתוח) · <b>לביטוח:</b> צוות חוקר+מנתח+כותב לתביעות מורכבות</p></div>
+
+<h2>כלים ייחודיים לביטוח</h2>
+<div class="card"><h4>Shift Technology ⭐⭐⭐⭐⭐</h4>
+<p>פלטפורמת AI מתמחה בזיהוי הונאות ביטוח. משמשת חברות ביטוח גדולות בעולם.</p>
+<p>💰 Enterprise · <b>לביטוח:</b> זיהוי הונאות, אוטומציית חיתום</p></div>
+<div class="card"><h4>Tractable ⭐⭐⭐⭐</h4>
+<p>AI להערכת נזקים ועיבוד תביעות מתמונות ומסמכים.</p>
+<p>💰 Enterprise · <b>לביטוח:</b> הערכת נזקים, אוטומציית תביעות</p></div>
+
+<h2>כלי פיתוח (לצוותי IT)</h2>
+<div class="grid">
+<div class="tool"><b>GitHub Copilot</b> ⭐⭐⭐⭐⭐<br>השלמת קוד ב-IDE<br>$10/חודש</div>
+<div class="tool"><b>Cursor</b> ⭐⭐⭐⭐⭐<br>IDE חכם מבוסס VS Code<br>חינם/$20</div>
+<div class="tool"><b>Claude Code</b> ⭐⭐⭐⭐<br>CLI לפיתוח בטרמינל<br>לפי שימוש</div>
+</div>
+</div>
+<!-- PROMPTS -->
+<div class="section" id="sec-prompts">
+<h1>📝 תבניות פרומפט לביטוח (38 תבניות)</h1>
+
+<h2>ניתוח פוליסות (5)</h2>
+<div class="card"><h4>1. סיכום פוליסה מקיף</h4>
+<pre>אתה מומחה ביטוח בריאות ישראלי עם 20 שנות ניסיון.
+נתח את הפוליסה וצור סיכום מובנה:
+1. פרטי פוליסה: מספר, סוג, תוקף
+2. כיסויים עיקריים: רשימה + סכומי ביטוח
+3. חריגות מהותיות
+4. תקופות אכשרה לכל כיסוי
+5. השתתפות עצמית
+6. תנאים מיוחדים
+הצג כטבלה. [הדביקו פוליסה]</pre></div>
+<div class="card"><h4>2. השוואת פוליסות</h4>
+<pre>השווה בין שתי הפוליסות. טבלת השוואה:
+| כיסוי | פוליסה א | פוליסה ב | הערות |
+כלול: כיסויים, סכומים, חריגות, השתתפות, אכשרה.
+בסוף: 3 יתרונות לכל פוליסה + המלצה.</pre></div>
+<div class="card"><h4>3. זיהוי סעיפים בעייתיים</h4>
+<pre>סקור את הפוליסה וזהה: חריגות מפתיעות, סעיפים מגבילים,
+ניסוח עמום, אכשרה ארוכה, תנאי ביטול חד-צדדי.
+לכל ממצא: ציטוט, למה בעייתי, מה מקובל בשוק.</pre></div>
+<div class="card"><h4>4. פישוט שפה משפטית</h4>
+<pre>הפוך סעיף ביטוח לשפה פשוטה. משפטים קצרים,
+ללא מונחים משפטיים, עם דוגמה מעשית.
+פורמט: מקור → בפשטות → דוגמה</pre></div>
+<div class="card"><h4>5. חילוץ נתונים ל-JSON</h4>
+<pre>חלץ נתונים מובנים מהפוליסה לפורמט JSON:
+{policy_number, type, dates, insured, premium,
+coverages[], exclusions[], special_conditions[]}</pre></div>
+
+<h2>זיהוי הונאות (5)</h2>
+<div class="card"><h4>1. דגלים אדומים בתביעה</h4>
+<pre>בדוק: עיתוי (סמוך לתחילת פוליסה?), תדירות,
+סכום חריג, אי-התאמות בתיאור, מסמכים חסרים.
+לכל דגל: ממצא, חומרה (נמוך/בינוני/גבוה).
+ציון סיכון כולל: 1-10. המלצה: לאשר/לבדוק/לחקירה.</pre></div>
+<div class="card"><h4>2. אי-התאמות בתיאורים</h4>
+<pre>השווה 2 תיאורים של אותו אירוע. זהה: סתירות,
+פערים, שינויי גרסה, דיוקים חשודים ("מושלם מדי").</pre></div>
+<div class="card"><h4>3. תביעות כפולות</h4>
+<pre>בדוק: כפילות מלאה, חלקית, דפוס חוזר, אסקלציה בסכומים.</pre></div>
+<div class="card"><h4>4. שאלות חקירה</h4>
+<pre>הכן 10-15 שאלות: מכלליות לספציפיות, בודקות עקביות,
+על פרטים שקשה להמציא. לכל שאלה: מה בודקים.</pre></div>
+<div class="card"><h4>5. סיכום ממצאי חקירה</h4>
+<pre>דוח מקצועי: פרטי תביעה, סיבת חקירה, ממצאים,
+ראיות, מסקנה, המלצה, צעדים הבאים.</pre></div>
+
+<h2>עיבוד תביעות (5)</h2>
+<div class="card"><h4>1. הערכה ראשונית</h4>
+<pre>בדוק תביעה מול פוליסה: כיסוי, אכשרה, חישוב סכום,
+מסמכים חסרים, דגלים. טבלה: פרמטר | ערך | סטטוס</pre></div>
+<div class="card"><h4>2. מכתב אישור תביעה</h4>
+<pre>מכתב מקצועי ואמפתי: פנייה אישית, פירוט סכום,
+חישוב (מקורי - השתתפות = לתשלום), אופן תשלום.</pre></div>
+<div class="card"><h4>3. מכתב דחיית תביעה</h4>
+<pre>מכתב מכבד: נימוק + הפניה לסעיף, הסבר פשוט,
+זכות ערעור, פנייה לממונה. ⚠️ חובה: זכות ערעור!</pre></div>
+<div class="card"><h4>4. סיכום תיק תביעה</h4>
+<pre>ציר זמן, סיכום רפואי, סיכום כספי, סטטוס,
+סוגיות פתוחות, המלצה לצעד הבא.</pre></div>
+<div class="card"><h4>5. בדיקת שלמות</h4>
+<pre>בדוק מסמכים נדרשים לפי סוג (אשפוז/מומחה/בדיקות/תרופות).
+טבלה: מסמך | נדרש | צורף | הערה</pre></div>
+
+<h2>מסמכים רפואיים (5)</h2>
+<div class="card"><h4>1. סיכום מסמך רפואי</h4>
+<pre>חלץ: אבחנות+ICD, טיפולים, תרופות, בדיקות,
+מצבים קודמים, המלצות, ימי אי-כושר.</pre></div>
+<div class="card"><h4>2. מיפוי ממצאים לכיסוי</h4>
+<pre>טבלה: טיפול | עלות | מכוסה? | סעיף | השתתפות | לתשלום</pre></div>
+<div class="card"><h4>3. זיהוי Pre-existing</h4>
+<pre>לכל מצב: שם+ICD, תאריך אבחון, קשר לאירוע הנוכחי,
+השפעה על כיסוי. ⚠️ רלוונטי רק אם אובחן לפני הפוליסה.</pre></div>
+<div class="card"><h4>4. תרגום מסמך רפואי</h4>
+<pre>שמור מונחים בסוגריים: "אי ספיקת לב (Heart Failure)".
+שמור קודי ICD, שמות תרופות, יחידות מעבדה כפי שהן.</pre></div>
+<div class="card"><h4>5. סיכום לחתם</h4>
+<pre>פורמט: גיל, מחלות רקע, ניתוחים, תרופות, אשפוזים,
+גורמי סיכון, מגבלות. הערכה: נמוך/בינוני/מוגבר/גבוה.</pre></div>
+
+<h2>חיתום (5)</h2>
+<div class="card"><h4>1. ניתוח שאלון בריאות</h4>
+<pre>גורמי סיכון (דירוג), מצבים מדווחים, פערים,
+ניתוח תרופות, היסטוריה משפחתית. סיווג: S/R/D/I</pre></div>
+<div class="card"><h4>2. המלצת חיתום</h4>
+<pre>טבלת גורמי סיכון, סיווג, תוספת פרמיה (%),
+חריגות, תנאים מיוחדים, נימוק מפורט.</pre></div>
+<div class="card"><h4>3. שאלות הבהרה למבקש</h4>
+<pre>שאלות בשפה מכבדת + סיבה (פנימית) + מסמכים לצירוף.</pre></div>
+<div class="card"><h4>4. השוואת סיכון מול טבלאות</h4>
+<pre>BMI, לחץ דם, HbA1c, עישון, כולסטרול -
+לכל פרמטר: ערך | קטגוריה (סטנדרט/מוגבר/דחייה)</pre></div>
+<div class="card"><h4>5. דוח חיתום מסכם</h4>
+<pre>דוח לתיק: פרטי מבקש, ביטוח מבוקש, סיכום רפואי,
+גורמי סיכון, בדיקות, החלטה, תנאים, נימוק.</pre></div>
+
+<h2>שירות לקוחות (5)</h2>
+<div class="card"><h4>1. תשובה לפניית לקוח</h4><pre>תשובה חמה, מקצועית, 100-200 מילים. התייחסות אישית + תשובה ברורה.</pre></div>
+<div class="card"><h4>2. הסבר פוליסה בפשטות</h4><pre>מה זה אומר בפשטות → דוגמה מעשית → חשוב לדעת</pre></div>
+<div class="card"><h4>3. טיפול בתלונה</h4><pre>אמפתיה → הסבר → פתרון → זכות פנייה לממונה</pre></div>
+<div class="card"><h4>4. הודעת חידוש</h4><pre>פנייה אישית, תודה על נאמנות, סיכום כיסויים, עדכון פרמיה.</pre></div>
+<div class="card"><h4>5. FAQ - 10 שאלות נפוצות</h4><pre>תשובה קצרה + מורחבת לכל שאלה. שפה פשוטה.</pre></div>
+
+<h2>תרגום (4)</h2>
+<div class="card"><h4>1. תרגום מסמך ביטוחי EN→HE</h4><pre>שמור מונחים באנגלית בסוגריים, מבנה, סכומים.</pre></div>
+<div class="card"><h4>2. תרגום רפואי EN/AR→HE</h4><pre>שמור תרופות+ICD באנגלית, יחידות מעבדה, סמן [?] לספק.</pre></div>
+<div class="card"><h4>3. פישוט שפה משפטית</h4><pre>משפטים קצרים, דוגמאות, שמירה על דיוק משפטי.</pre></div>
+<div class="card"><h4>4. התאמה לקהלים</h4><pre>צעירים (קליל), משפחות (אמין), מבוגרים (ברור ופשוט).</pre></div>
+
+<h2>רגולציה וציות (4)</h2>
+<div class="card"><h4>1. בדיקת חומר שיווקי</h4><pre>דיוק, שקיפות, הטעיה, השוואות, הבטחות. חומרה + הצעת תיקון.</pre></div>
+<div class="card"><h4>2. בדיקת חובת גילוי</h4><pre>רשימת בדיקה: חריגות, אכשרה, השתתפות, ביטול, תביעה, גילוי, ממונה.</pre></div>
+<div class="card"><h4>3. השפעת שינוי רגולטורי</h4><pre>תחומי השפעה, שינויים נדרשים, לוח זמנים, עלויות, סיכונים.</pre></div>
+<div class="card"><h4>4. דוח ציות תקופתי</h4><pre>סיכום מנהלים, ממצאים, חומרה, סטטוס, מגמות, המלצות.</pre></div>
+</div>
+<!-- DEMOS -->
+<div class="section" id="sec-demos">
+<h1>💻 דמואים - סקריפטים Python</h1>
+<div class="card"><p>כל הדמואים עובדים ב-2 מצבים: <b>Mock</b> (ללא API, תוצאות לדוגמה) ו-<b>Live</b> (עם API אמיתי).</p>
+<pre>python demos/demo_1_policy_analyzer.py</pre></div>
+
+<h2>דמו 1: ניתוח פוליסות</h2>
+<div class="card">
+<p>מקבל פוליסת ביטוח → שולח ל-AI → מחזיר סיכום מובנה:</p>
+<p>✅ כיסויים עיקריים + סכומים</p>
+<p>✅ חריגות מהותיות</p>
+<p>✅ תקופות אכשרה</p>
+<p>✅ נקודות לתשומת לב</p>
+<p><span class="badge b1">מפגש 2-3</span></p>
+</div>
+
+<h2>דמו 2: זיהוי הונאות</h2>
+<div class="card">
+<p>מנתח 4 תביעות סינתטיות ומזהה דפוסים חשודים:</p>
+<p>🔴 תביעה 45 יום אחרי תחילת פוליסה → ציון 7/10</p>
+<p>🟡 3 תביעות ב-6 חודשים → ציון 5/10</p>
+<p>🟢 תביעה רגילה → ציון 1/10</p>
+<p>🔴 ניתוח אף 26 יום אחרי פוליסה → ציון 8/10</p>
+<p><span class="badge b3">מפגש 4</span></p>
+</div>
+
+<h2>דמו 3: עיבוד מסמכים</h2>
+<div class="card">
+<p>3 שלבים על סעיף ביטוח:</p>
+<p>📋 שלב 1: סיכום (מה מכוסה, מה לא, השתתפות, אכשרה)</p>
+<p>💬 שלב 2: פישוט לשפה פשוטה</p>
+<p>❓ שלב 3: שאלות ותשובות ("האם הסרת שקדים מכוסה?")</p>
+<p><span class="badge b1">מפגש 3</span></p>
+</div>
+
+<h2>דמו 4: עוזר תביעות</h2>
+<div class="card">
+<p>הערכת תביעה מול פוליסה:</p>
+<p>✅ בדיקת כיסוי לכל פריט</p>
+<p>✅ חישוב: 52,750₪ - 2,950₪ השתתפות = 49,800₪ לתשלום</p>
+<p>⚠️ בדיקת אכשרה: ניתוח חירום → פטור!</p>
+<p>✅ בדיקת הונאה: נקי</p>
+<p><span class="badge b2">מפגש 3-4</span></p>
+</div>
+
+<h2>דמו 5: סיכום רפואי</h2>
+<div class="card">
+<p>ניתוח מכתב שחרור של מטופלת בת 58:</p>
+<p>🏥 אבחנות: NSTEMI (I21.4), סוכרת (E11.65), יל"ד (I10)</p>
+<p>💊 8 תרופות בשחרור (3 חדשות)</p>
+<p>⚠️ Pre-existing: סוכרת מ-2018, יל"ד מ-2015</p>
+<p>📊 מיפוי לכיסוי: צנתור ✅, אשפוז ✅, תרופות ⚠️ לבדוק</p>
+<p><span class="badge b4">מפגש 3</span></p>
+</div>
+
+<h2>דמו 6: עוזר חיתום</h2>
+<div class="card">
+<p>ניתוח בקשת ביטוח - גבר בן 52:</p>
+<p>📊 10 גורמי סיכון: 0 גבוהים, 7 בינוניים, 3 נמוכים</p>
+<p>📋 סיווג: מוגבר (Rated)</p>
+<p>💰 המלצה: חיים +25%, בריאות +15%</p>
+<p>🔍 בדיקות נוספות: מבחן מאמץ, בדיקות דם חוזרות</p>
+<p><span class="badge b5">מפגש 4</span></p>
+</div>
+
+<h2>דמו 7: סוכן רב-שלבי</h2>
+<div class="card">
+<p>עיבוד תביעה מקצה לקצה - 7 שלבים אוטונומיים:</p>
+<p>✅ שלב 1: חילוץ נתונים מטופס</p>
+<p>✅ שלב 2: שליפת פוליסה</p>
+<p>✅ שלב 3: בדיקת כיסוי</p>
+<p>⚠️ שלב 4: בדיקת אכשרה (חירום → פטור!)</p>
+<p>✅ שלב 5: חישוב סכום</p>
+<p>✅ שלב 6: בדיקת הונאה</p>
+<p>✅ שלב 7: הכנת החלטה</p>
+<p><b>תוצאה:</b> 49,800₪ לתשלום · 7/7 שלבים · ~15 שניות</p>
+<p><span class="badge b3">מפגש 4</span> <span class="badge b4">הדגמה מרכזית</span></p>
+</div>
+</div>
+
+<!-- JAVASCRIPT -->
+</div>
+<script>
+function showSection(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+document.getElementById('sec-'+id).classList.add('active');
+document.getElementById('nav-'+id).classList.add('active');
+window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
