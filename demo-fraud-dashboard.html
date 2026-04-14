@@ -622,6 +622,24 @@
     <div class="sidebar-nav-item" onclick="setTab('docs'); setSideNav(this)">
       <span class="nav-icon">📝</span> תיעוד ומעקב
     </div>
+    <div class="sidebar-nav-item" onclick="setTab('scoring'); setSideNav(this)">
+      <span class="nav-icon">🎯</span> דירוג סיכון
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('geo'); setSideNav(this)">
+      <span class="nav-icon">📍</span> ניתוח גיאוגרפי
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('trends'); setSideNav(this)">
+      <span class="nav-icon">📅</span> טרנדים וזמן
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('financial'); setSideNav(this)">
+      <span class="nav-icon">💰</span> ניתוח כספי
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('networks'); setSideNav(this)">
+      <span class="nav-icon">🕸️</span> רשתות וקשרים
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('receipts'); setSideNav(this)">
+      <span class="nav-icon">🧾</span> ניתוח קבלות
+    </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-label">כלים</div>
     <div class="sidebar-nav-item" onclick="alert('ייצוא PDF – בפיתוח')">
@@ -724,6 +742,24 @@
         </button>
         <button class="tab-btn" onclick="setTab('docs')" id="tab-docs">
           <span class="tab-icon">📝</span> תיעוד ומעקב
+        </button>
+        <button class="tab-btn" onclick="setTab('scoring')" id="tab-scoring">
+          <span class="tab-icon">🎯</span> דירוג סיכון
+        </button>
+        <button class="tab-btn" onclick="setTab('geo')" id="tab-geo">
+          <span class="tab-icon">📍</span> ניתוח גיאוגרפי
+        </button>
+        <button class="tab-btn" onclick="setTab('trends')" id="tab-trends">
+          <span class="tab-icon">📅</span> טרנדים וזמן
+        </button>
+        <button class="tab-btn" onclick="setTab('financial')" id="tab-financial">
+          <span class="tab-icon">💰</span> ניתוח כספי
+        </button>
+        <button class="tab-btn" onclick="setTab('networks')" id="tab-networks">
+          <span class="tab-icon">🕸️</span> רשתות וקשרים
+        </button>
+        <button class="tab-btn" onclick="setTab('receipts')" id="tab-receipts">
+          <span class="tab-icon">🧾</span> ניתוח קבלות
         </button>
       </div>
 
@@ -1134,6 +1170,608 @@
         </div>
       </div>
 
+      <!-- ════ TAB: SCORING ════ -->
+      <div class="tab-content" id="content-scoring">
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div>
+              <div class="chart-card-title">🎯 דירוג סיכון הונאה – מבוטחים</div>
+              <div class="chart-card-sub">ציון 1–100 מחושב לפי חמישה פרמטרים משוקללים</div>
+            </div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>#</th><th>שם מבוטח</th><th>ת.ז.</th><th>מס׳ תביעות</th><th>סה״כ נתבע</th><th>ספק עיקרי</th><th>ציון סיכון</th><th>מד ויזואלי</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td>1</td><td><strong>אברהם סבג</strong></td><td>111111111</td><td>50</td><td>₪10,350</td><td>מרכז רפואה משלימה אור</td>
+                <td><span class="badge badge-critical" style="font-size:13px;padding:4px 12px;">92</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:92%;background:#e63946"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>2</td><td><strong>רשת גולדשטיין (41)</strong></td><td>מרובים</td><td>41</td><td>₪12,650</td><td>קליניקת טבע</td>
+                <td><span class="badge badge-critical" style="font-size:13px;padding:4px 12px;">88</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:88%;background:#e63946"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>3</td><td><strong>עובדי הייטק א׳ – קליניקת שלום</strong></td><td>מרובים</td><td>96</td><td>₪33,600</td><td>קליניקת שלום</td>
+                <td><span class="badge badge-critical" style="font-size:13px;padding:4px 12px;">85</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:85%;background:#e63946"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>4</td><td>פוליסות חדשות (ינואר 2025)</td><td>מרובים</td><td>77</td><td>₪161,477</td><td>מגוון</td>
+                <td><span class="badge badge-high" style="font-size:13px;padding:4px 12px;">78</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:78%;background:#f4a261"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>5</td><td>לקוחות מרכז דיקור סיני</td><td>מרובים</td><td>30</td><td>₪35,000</td><td>מרכז דיקור סיני</td>
+                <td><span class="badge badge-medium" style="font-size:13px;padding:4px 12px;">65</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:65%;background:#f4a261"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>6</td><td>יוסי ממן</td><td>333444555</td><td>18</td><td>₪22,400</td><td>ד״ר יוסי לוי</td>
+                <td><span class="badge badge-medium" style="font-size:13px;padding:4px 12px;">61</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:61%;background:#f4a261"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>7</td><td>דני פרץ</td><td>222222222</td><td>14</td><td>₪18,200</td><td>כרמל רפואה</td>
+                <td><span class="badge badge-medium" style="font-size:13px;padding:4px 12px;">55</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:55%;background:#e0c400"></div></div></div></td>
+              </tr>
+              <tr>
+                <td>8</td><td>שירה לוי</td><td>445566778</td><td>10</td><td>₪12,500</td><td>מכבי שירותי בריאות</td>
+                <td><span class="badge badge-low" style="font-size:13px;padding:4px 12px;">28</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:28%;background:#2a9d8f"></div></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">פירוט שיטת חישוב הציון</div>
+              <div class="chart-card-sub">חמישה פרמטרים משוקללים המרכיבים את ציון הסיכון</div>
+            </div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>פרמטר</th><th>משקל</th><th>תיאור</th><th>דוגמה לציון גבוה</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>תדירות תביעות</td><td><span class="badge badge-critical">25%</span></td><td>יחס לממוצע הכללי (4 תביעות למבוטח)</td><td>50 תביעות = ציון מקסימלי</td></tr>
+              <tr><td>ריכוז ספק</td><td><span class="badge badge-high">20%</span></td><td>אחוז תביעות אצל ספק בודד</td><td>100% אצל ספק אחד</td></tr>
+              <tr><td>חריגת סכום</td><td><span class="badge badge-high">20%</span></td><td>פער מסכום ממוצע לסוג טיפול</td><td>סכום גבוה פי 3+ מהממוצע</td></tr>
+              <tr><td>דפוסי עיתוי</td><td><span class="badge badge-medium">15%</span></td><td>תביעות בתחילת פוליסה / סוף שנה</td><td>77 תביעות ב-60 יום ראשונים</td></tr>
+              <tr><td>בעיות מסמכים</td><td><span class="badge badge-medium">20%</span></td><td>קבלות בשבת, מספור רציף, חסרי ח.פ.</td><td>12 קבלות בשבת מספק סגור</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: GEO ════ -->
+      <div class="tab-content" id="content-geo">
+        <div class="chart-card" style="margin-bottom:18px;">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">📍 תביעות לפי עיר – גרף השוואתי</div>
+              <div class="chart-card-sub">הרצליה מציגה ריכוז חריג יחסית לגודל האוכלוסייה</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="geoBarChart" style="max-height:300px;"></canvas></div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">פירוט תביעות לפי עיר</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>עיר</th><th>תביעות</th><th>מבוטחים</th><th>ממוצע תביעות/מבוטח</th><th>ספק מרכזי חשוד</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>הרצליה</strong></td><td>165</td><td>48</td><td><strong style="color:#e63946;">3.4</strong></td><td>קליניקת טבע</td>
+                <td><span class="badge badge-critical">אשכול חשוד</span></td>
+              </tr>
+              <tr>
+                <td>תל אביב</td><td>280</td><td>72</td><td>3.9</td><td>קליניקת השמש</td>
+                <td><span class="badge badge-suspicious">לבדיקה</span></td>
+              </tr>
+              <tr>
+                <td>ירושלים</td><td>195</td><td>55</td><td>3.5</td><td>מרפאת אור וחיים</td>
+                <td><span class="badge badge-suspicious">לבדיקה</span></td>
+              </tr>
+              <tr>
+                <td>חיפה</td><td>140</td><td>40</td><td>3.5</td><td>כרמל רפואה</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>ראשון לציון</td><td>120</td><td>35</td><td>3.4</td><td>מכבי שירותי בריאות</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>באר שבע</td><td>105</td><td>30</td><td>3.5</td><td>מגוון</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td><strong>אילת</strong></td><td>92</td><td>22</td><td><strong style="color:#f4a261;">4.2</strong></td><td>מרפאות האזור הדרומי</td>
+                <td><span class="badge badge-high">עלייה חריגה +340%</span></td>
+              </tr>
+              <tr>
+                <td>נתניה</td><td>87</td><td>28</td><td>3.1</td><td>מגוון</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="charts-grid" style="grid-template-columns:1fr 1fr;">
+          <div class="chart-card" style="border-right:4px solid #e63946;">
+            <div class="chart-card-title" style="margin-bottom:10px;">🔴 הרצליה – ריכוז חריג</div>
+            <p style="font-size:13px;color:var(--text-muted);">165 תביעות מ-48 מבוטחים = 3.4 תביעות/מבוטח (ממוצע: 2.1). קשור לאשכול גולדשטיין וקליניקת טבע. כל התביעות רפואה משלימה.</p>
+          </div>
+          <div class="chart-card" style="border-right:4px solid #f4a261;">
+            <div class="chart-card-title" style="margin-bottom:10px;">🟡 אילת – עלייה גיאוגרפית</div>
+            <p style="font-size:13px;color:var(--text-muted);">עלייה של 340% בתביעות מאזור אילת בהשוואה לרבעון הקודם. 38 תביעות בחקירה פעילה. ייתכן ספקי-רפאים באזור.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ TAB: TRENDS ════ -->
+      <div class="tab-content" id="content-trends">
+        <div class="chart-card" style="margin-bottom:18px;">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">📅 מגמת תביעות חודשית – תקין מול חשוד</div>
+              <div class="chart-card-sub">עלייה חדה בתביעות חשודות בנובמבר–דצמבר (ריצת סוף שנה)</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="trendsLineChart" style="max-height:320px;"></canvas></div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">התפלגות חודשית מפורטת</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>חודש</th><th>תביעות כלל</th><th>תביעות חשודות</th><th>% חשוד</th><th>שינוי מהחודש הקודם</th><th>הערה</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>ינואר 2025</td><td>145</td><td>22</td><td>15.2%</td><td>—</td><td></td></tr>
+              <tr><td>פברואר 2025</td><td>162</td><td>25</td><td>15.4%</td><td><span style="color:#2a9d8f;">+11.7%</span></td><td></td></tr>
+              <tr><td>מרץ 2025</td><td>170</td><td>28</td><td>16.5%</td><td><span style="color:#2a9d8f;">+4.9%</span></td><td></td></tr>
+              <tr><td>אפריל 2025</td><td>148</td><td>24</td><td>16.2%</td><td><span style="color:#e63946;">-12.9%</span></td><td></td></tr>
+              <tr><td>מאי 2025</td><td>152</td><td>25</td><td>16.4%</td><td><span style="color:#2a9d8f;">+2.7%</span></td><td></td></tr>
+              <tr><td>יוני 2025</td><td>138</td><td>21</td><td>15.2%</td><td><span style="color:#e63946;">-9.2%</span></td><td></td></tr>
+              <tr><td>יולי 2025</td><td>141</td><td>23</td><td>16.3%</td><td><span style="color:#2a9d8f;">+2.2%</span></td><td></td></tr>
+              <tr><td>אוגוסט 2025</td><td>135</td><td>21</td><td>15.6%</td><td><span style="color:#e63946;">-4.3%</span></td><td></td></tr>
+              <tr style="background:#fff4ec;"><td><strong>ספטמבר 2025</strong></td><td>155</td><td>31</td><td><strong style="color:#f4a261;">20.0%</strong></td><td><span style="color:#f4a261;">+14.8%</span></td><td><span class="badge badge-high">⚠️ עלייה</span></td></tr>
+              <tr style="background:#fff4ec;"><td><strong>אוקטובר 2025</strong></td><td>160</td><td>34</td><td><strong style="color:#f4a261;">21.3%</strong></td><td><span style="color:#f4a261;">+3.2%</span></td><td><span class="badge badge-high">⚠️ עלייה</span></td></tr>
+              <tr style="background:#fdecea;"><td><strong>נובמבר 2025</strong></td><td>210</td><td>54</td><td><strong style="color:#e63946;">25.7%</strong></td><td><span style="color:#e63946;">+31.3%</span></td><td><span class="badge badge-critical">🔴 חריג +38%</span></td></tr>
+              <tr style="background:#fdecea;"><td><strong>דצמבר 2025</strong></td><td>254</td><td>69</td><td><strong style="color:#e63946;">27.2%</strong></td><td><span style="color:#e63946;">+21.0%</span></td><td><span class="badge badge-critical">🔴 חריג +68%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">שינויי דפוס חריגים – מבוטחים בודדים</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>מבוטח</th><th>ינואר–יוני</th><th>יולי–דצמבר</th><th>שינוי</th><th>ציון סיכון</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>אברהם סבג</strong></td><td>8 תביעות</td><td>42 תביעות</td>
+                <td><span class="badge badge-critical">+425%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:92%;background:#e63946"></div></div><span class="risk-num" style="color:#e63946">92</span></div></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>דני פרץ</td><td>1 תביעה</td><td>9 תביעות</td>
+                <td><span class="badge badge-high">+800%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:55%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">55</span></div></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>יעל מלכה</td><td>2 תביעות</td><td>11 תביעות</td>
+                <td><span class="badge badge-high">+450%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:61%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">61</span></div></td>
+              </tr>
+              <tr>
+                <td>רון כהן</td><td>3 תביעות</td><td>8 תביעות</td>
+                <td><span class="badge badge-medium">+167%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:38%;background:#e0c400"></div></div><span class="risk-num" style="color:#888">38</span></div></td>
+              </tr>
+              <tr>
+                <td>נועה שפירו</td><td>2 תביעות</td><td>5 תביעות</td>
+                <td><span class="badge badge-medium">+150%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:25%;background:#2a9d8f"></div></div><span class="risk-num" style="color:#2a9d8f">25</span></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: FINANCIAL ════ -->
+      <div class="tab-content" id="content-financial">
+        <!-- Summary cards -->
+        <div class="cards-row" style="margin-bottom:18px;">
+          <div class="summary-card blue">
+            <div class="card-icon blue">💳</div>
+            <div class="card-label">סה״כ נתבע</div>
+            <div class="card-value blue">₪2.7M</div>
+            <span class="card-sub warn">↑ 15% מרבעון קודם</span>
+          </div>
+          <div class="summary-card green">
+            <div class="card-icon green">✅</div>
+            <div class="card-label">סה״כ שולם</div>
+            <div class="card-value green">₪2.3M</div>
+            <span class="card-sub ok">85.6% אישור</span>
+          </div>
+          <div class="summary-card red">
+            <div class="card-icon red">⚖️</div>
+            <div class="card-label">פער נתבע–שולם</div>
+            <div class="card-value red">₪389K</div>
+            <span class="card-sub up">15% פער – חריג</span>
+          </div>
+          <div class="summary-card orange">
+            <div class="card-icon orange">📊</div>
+            <div class="card-label">ממוצע לתביעה</div>
+            <div class="card-value orange">₪1,451</div>
+            <span class="card-sub warn">ממוצע ענפי: ₪980</span>
+          </div>
+        </div>
+
+        <div class="chart-card" style="margin-bottom:18px;">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">נתבע מול שולם – לפי סוג כיסוי</div>
+              <div class="chart-card-sub">כיסוי אביזרים מציג פער חריג של 23%</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="financialBarChart" style="max-height:300px;"></canvas></div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">Top 10 מבוטחים יקרים ביותר</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>#</th><th>שם מבוטח</th><th>מס׳ תביעות</th><th>סה״כ שולם</th><th>ממוצע לתביעה</th><th>ROI פרמיה</th><th>סיכון</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td>1</td><td><strong>אברהם סבג</strong></td><td>50</td><td>₪10,000</td><td>₪200</td>
+                <td><span class="badge badge-critical">-850%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:92%;background:#e63946"></div></div><span class="risk-num" style="color:#e63946">92</span></div></td>
+              </tr>
+              <tr>
+                <td>2</td><td>רון ממן</td><td>6</td><td>₪24,000</td><td>₪4,000</td>
+                <td><span class="badge badge-critical">-920%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:91%;background:#e63946"></div></div><span class="risk-num" style="color:#e63946">91</span></div></td>
+              </tr>
+              <tr>
+                <td>3</td><td>יפה מצרי</td><td>8</td><td>₪22,400</td><td>₪2,800</td>
+                <td><span class="badge badge-critical">-760%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:88%;background:#e63946"></div></div><span class="risk-num" style="color:#e63946">88</span></div></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>4</td><td>דני פרץ</td><td>14</td><td>₪18,200</td><td>₪1,300</td>
+                <td><span class="badge badge-high">-420%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:55%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">55</span></div></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>5</td><td>יעל מלכה</td><td>13</td><td>₪16,900</td><td>₪1,300</td>
+                <td><span class="badge badge-high">-380%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:61%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">61</span></div></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>6</td><td>דוד קורן</td><td>11</td><td>₪14,800</td><td>₪1,345</td>
+                <td><span class="badge badge-high">-310%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:82%;background:#e63946"></div></div><span class="risk-num" style="color:#e63946">82</span></div></td>
+              </tr>
+              <tr>
+                <td>7</td><td>שרה לוינסון</td><td>9</td><td>₪9,800</td><td>₪1,089</td>
+                <td><span class="badge badge-medium">-260%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:76%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">76</span></div></td>
+              </tr>
+              <tr>
+                <td>8</td><td>אביגיל נחום</td><td>8</td><td>₪6,300</td><td>₪788</td>
+                <td><span class="badge badge-medium">-200%</span></td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:74%;background:#f4a261"></div></div><span class="risk-num" style="color:#f4a261">74</span></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">פער נתבע / שולם – פירוט לפי כיסוי</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>כיסוי</th><th>נתבע</th><th>שולם</th><th>פער</th><th>% פער</th><th>סיכון</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>אביזרים</strong></td><td>₪153K</td><td>₪118K</td><td><strong>₪35K</strong></td><td><strong style="color:#e63946;">23%</strong></td>
+                <td><span class="badge badge-critical">חריג</span></td>
+              </tr>
+              <tr>
+                <td>פיזיותרפיה</td><td>₪140K</td><td>₪126K</td><td>₪14K</td><td>10%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>רפואה משלימה</td><td>₪161K</td><td>₪148K</td><td>₪13K</td><td>8%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>התייעצות מומחה</td><td>₪247K</td><td>₪228K</td><td>₪19K</td><td>8%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>בדיקות אבחנתיות</td><td>₪336K</td><td>₪310K</td><td>₪26K</td><td>8%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: NETWORKS ════ -->
+      <div class="tab-content" id="content-networks">
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">🕸️ רשתות חשודות שזוהו</div>
+            <div style="font-size:12px;color:var(--text-muted);">3 רשתות קריטיות, 4 בינוניות</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>#</th><th>שם הרשת</th><th>סוג חיבור</th><th>מבוטחים מעורבים</th><th>תביעות</th><th>סה״כ סכום</th><th>חומרה</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td>1</td>
+                <td><strong>קליניקת שלום ↔ חברת הייטק א׳</strong></td>
+                <td>ספק–מעסיק</td><td>96 עובדים</td><td>192</td><td>₪67,200</td>
+                <td><span class="badge badge-critical">קריטי</span></td>
+              </tr>
+              <tr style="background:#fdecea;">
+                <td>2</td>
+                <td><strong>משפחת גולדשטיין ↔ קליניקת טבע</strong></td>
+                <td>אשכול משפחתי</td><td>41 בני משפחה</td><td>41</td><td>₪12,650</td>
+                <td><span class="badge badge-critical">קריטי</span></td>
+              </tr>
+              <tr style="background:#fdecea;">
+                <td>3</td>
+                <td><strong>סבג (3 בני משפחה) ↔ מרכז רפ. משלימה אור</strong></td>
+                <td>אשכול משפחתי</td><td>3 מבוטחים</td><td>52</td><td>₪10,750</td>
+                <td><span class="badge badge-critical">קריטי</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>4</td>
+                <td>הרצל 15, הרצליה – כתובת משותפת</td>
+                <td>כתובת זהה</td><td>4 מבוטחים</td><td>18</td><td>₪5,400</td>
+                <td><span class="badge badge-high">גבוה</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>5</td>
+                <td>ויצמן 8, תל אביב – כתובת משותפת</td>
+                <td>כתובת זהה</td><td>3 מבוטחים</td><td>12</td><td>₪3,600</td>
+                <td><span class="badge badge-high">גבוה</span></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>מבוטחים מת״א – ספק בנתניה</td>
+                <td>חוסר עקביות גיאוגרפי</td><td>12 מבוטחים</td><td>24</td><td>₪7,200</td>
+                <td><span class="badge badge-medium">בינוני</span></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>פוליסות ינואר 2025 – תביעה מיידית</td>
+                <td>דפוס עיתוי</td><td>30+ מבוטחים</td><td>77</td><td>₪161,477</td>
+                <td><span class="badge badge-high">גבוה</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">סוגי קשרים שנבדקו</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>סוג קשר</th><th>בדיקות שבוצעו</th><th>קשרים שנמצאו</th><th>קשרים חשודים</th><th>שיטת זיהוי</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>מעסיק ↔ ספק</strong></td><td>1,870</td><td>45</td><td><strong style="color:#e63946;">3</strong></td><td>ריכוז >30% ממעסיק אחד</td>
+              </tr>
+              <tr style="background:#fdecea;">
+                <td><strong>משפחה ↔ ספק</strong></td><td>1,870</td><td>28</td><td><strong style="color:#e63946;">2</strong></td><td>שם משפחה + עיר + ספק זהה</td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td><strong>כתובת משותפת</strong></td><td>1,870</td><td>15</td><td><strong style="color:#f4a261;">4</strong></td><td>כתובת מדויקת זהה, ספק זהה</td>
+              </tr>
+              <tr>
+                <td>טלפון משותף</td><td>1,870</td><td>8</td><td>1</td><td>מספר טלפון זהה, פוליסות שונות</td>
+              </tr>
+              <tr>
+                <td>הפניות הדדיות</td><td>1,870</td><td>12</td><td>1</td><td>A → B → אותו ספק בהפרש ימים</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">פירוט: כתובות משותפות חשודות</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>כתובת</th><th>מבוטחים</th><th>תביעות</th><th>ספק משותף</th><th>% תביעות משותפות</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>הרצל 15, הרצליה</strong></td><td>4</td><td>18</td><td>קליניקת טבע</td><td>100%</td>
+                <td><span class="badge badge-critical">חשוד מאוד</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>ויצמן 8, תל אביב</td><td>3</td><td>12</td><td>מרכז רפ. משלימה אור</td><td>83%</td>
+                <td><span class="badge badge-high">חשוד</span></td>
+              </tr>
+              <tr>
+                <td>הנשיא 22, חיפה</td><td>2</td><td>6</td><td>מגוון</td><td>33%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+              <tr>
+                <td>בן-גוריון 44, רמת גן</td><td>2</td><td>5</td><td>ד״ר יוסי לוי</td><td>60%</td>
+                <td><span class="badge badge-medium">לבדיקה</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: RECEIPTS ════ -->
+      <div class="tab-content" id="content-receipts">
+        <!-- Summary row -->
+        <div class="cards-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">
+          <div class="summary-card red">
+            <div class="card-icon red">📅</div>
+            <div class="card-label">קבלות בשבת/חג</div>
+            <div class="card-value red">23</div>
+            <span class="card-sub up">מספקים סגורים</span>
+          </div>
+          <div class="summary-card red">
+            <div class="card-icon red">🔢</div>
+            <div class="card-label">מספור רציף חשוד</div>
+            <div class="card-value red">96</div>
+            <span class="card-sub up">קליניקת שלום</span>
+          </div>
+          <div class="summary-card orange">
+            <div class="card-icon orange">💲</div>
+            <div class="card-label">סכומים עגולים (×500)</div>
+            <div class="card-value orange">30</div>
+            <span class="card-sub warn">80% אצל דיקור סיני</span>
+          </div>
+          <div class="summary-card orange">
+            <div class="card-icon orange">📋</div>
+            <div class="card-label">חסרי ח.פ./עוסק</div>
+            <div class="card-value orange">8</div>
+            <span class="card-sub warn">זיהוי חסר</span>
+          </div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">🔍 בדיקות אנומליות שבוצעו – סיכום</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>בדיקה</th><th>קבלות שנבדקו</th><th>ממצאים</th><th>% ממצאים</th><th>חומרה</th><th>חשיפה משוערת</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>תאריכי שבת/חג</strong></td><td>1,870</td><td>23</td><td>1.2%</td>
+                <td><span class="badge badge-critical">קריטי</span></td><td>₪52,000</td>
+              </tr>
+              <tr style="background:#fdecea;">
+                <td><strong>מספור רציף (יום אחד)</strong></td><td>1,870</td><td>96</td><td>5.1%</td>
+                <td><span class="badge badge-critical">קריטי</span></td><td>₪420,000</td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td><strong>סכומים עגולים (כפולות ×500)</strong></td><td>1,870</td><td>30</td><td>1.6%</td>
+                <td><span class="badge badge-high">גבוה</span></td><td>₪35,000</td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td><strong>חסר ח.פ./עוסק מורשה</strong></td><td>1,870</td><td>8</td><td>0.4%</td>
+                <td><span class="badge badge-high">גבוה</span></td><td>₪18,400</td>
+              </tr>
+              <tr>
+                <td>כפילות קבלה (מספר זהה)</td><td>1,870</td><td>2</td><td>0.1%</td>
+                <td><span class="badge badge-medium">בינוני</span></td><td>₪4,600</td>
+              </tr>
+              <tr>
+                <td>סכום חורג ממחירון</td><td>1,870</td><td>15</td><td>0.8%</td>
+                <td><span class="badge badge-medium">בינוני</span></td><td>₪67,000</td>
+              </tr>
+              <tr>
+                <td>חוסר עקביות פונט/עיצוב</td><td>1,870</td><td>7</td><td>0.4%</td>
+                <td><span class="badge badge-medium">בינוני</span></td><td>₪12,500</td>
+              </tr>
+              <tr>
+                <td>חסרת חתימה/חותמת</td><td>1,870</td><td>11</td><td>0.6%</td>
+                <td><span class="badge badge-medium">בינוני</span></td><td>₪19,800</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card" style="margin-bottom:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">קבלות בשבת – פירוט לפי ספק</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>ספק</th><th>קבלות בשבת/חג</th><th>פתוח בשבת?</th><th>סה״כ קבלות</th><th>%</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>קליניקת שלום</strong></td><td>12</td><td><span style="color:#e63946;">סגור</span></td><td>192</td><td>6.3%</td>
+                <td><span class="badge badge-critical">חשוד מאוד</span></td>
+              </tr>
+              <tr style="background:#fdecea;">
+                <td><strong>מרכז דיקור סיני</strong></td><td>6</td><td><span style="color:#e63946;">סגור</span></td><td>150</td><td>4.0%</td>
+                <td><span class="badge badge-critical">חשוד</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td>קליניקת טבע</td><td>3</td><td><span style="color:#f4a261;">לא ידוע</span></td><td>135</td><td>2.2%</td>
+                <td><span class="badge badge-high">לבדיקה</span></td>
+              </tr>
+              <tr>
+                <td>פיזיו פלוס</td><td>2</td><td><span style="color:#2a9d8f;">פתוח בשבת</span></td><td>98</td><td>2.0%</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">מספור רציף חשוד – ממצאי קליניקת שלום</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>טווח מספרי קבלה</th><th>מספר קבלות</th><th>תאריך הנפקה</th><th>מבוטחים מעורבים</th><th>סכום כולל</th><th>הערה</th>
+            </tr></thead>
+            <tbody>
+              <tr style="background:#fdecea;">
+                <td><strong>1201 – 1296</strong></td><td>96</td><td>מרובים</td><td>96 (עובדי הייטק א׳)</td><td>₪33,600</td>
+                <td><span class="badge badge-critical">הופקו בכמות מראש</span></td>
+              </tr>
+              <tr style="background:#fff4ec;">
+                <td><strong>1297 – 1320</strong></td><td>24</td><td>01–05.12.2025</td><td>24 מבוטחים חדשים</td><td>₪8,400</td>
+                <td><span class="badge badge-high">מספור רציף חשוד</span></td>
+              </tr>
+              <tr>
+                <td>1321 – 1345</td><td>25</td><td>06–15.12.2025</td><td>25 מבוטחים</td><td>₪8,750</td>
+                <td><span class="badge badge-normal">תקין יחסית</span></td>
+              </tr>
+              <tr>
+                <td>1346 – 1360</td><td>15</td><td>16–31.12.2025</td><td>15 מבוטחים</td><td>₪5,250</td>
+                <td><span class="badge badge-normal">תקין</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="footer-note">
         ⚠️ כל הנתונים המוצגים בדמו זה הם <strong>סינתטיים לחלוטין</strong> ונוצרו לצורכי הדגמה בלבד.
         אין קשר לאנשים, ספקים, או תביעות אמיתיות. | מערכת זיהוי הונאות v1.0-demo
@@ -1310,6 +1948,102 @@ function initCharts() {
       scales: {
         x: { title:{ display:true, text:'מספר תביעות', font:{family:'Heebo'} }, grid:{color:'#eee'} },
         y: { title:{ display:true, text:'סכום ממוצע (₪)', font:{family:'Heebo'} }, grid:{color:'#eee'} }
+      }
+    }
+  });
+
+  // Geo bar chart
+  new Chart(document.getElementById('geoBarChart'), {
+    type: 'bar',
+    data: {
+      labels: ['הרצליה', 'תל אביב', 'ירושלים', 'חיפה', 'ראשון לציון', 'באר שבע', 'אילת', 'נתניה'],
+      datasets: [
+        {
+          label: 'תביעות כלל',
+          data: [165, 280, 195, 140, 120, 105, 92, 87],
+          backgroundColor: ['#e63946','#4a90d9','#4a90d9','#4a90d9','#4a90d9','#4a90d9','#f4a261','#4a90d9'],
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `תביעות: ${ctx.raw}` } }
+      },
+      scales: {
+        x: { ticks: { font: { family: 'Heebo', size: 12 } }, grid: { display: false } },
+        y: { grid: { color: '#eee' }, ticks: { font: { family: 'Heebo' } } }
+      }
+    }
+  });
+
+  // Trends line chart
+  new Chart(document.getElementById('trendsLineChart'), {
+    type: 'line',
+    data: {
+      labels: ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'],
+      datasets: [
+        {
+          label: 'תביעות תקינות',
+          data: [123, 137, 142, 124, 127, 117, 118, 114, 124, 126, 156, 185],
+          borderColor: '#2a9d8f',
+          backgroundColor: 'rgba(42,157,143,.08)',
+          tension: 0.35,
+          fill: true,
+          pointRadius: 4,
+          pointBackgroundColor: '#2a9d8f'
+        },
+        {
+          label: 'תביעות חשודות',
+          data: [22, 25, 28, 24, 25, 21, 23, 21, 31, 34, 54, 69],
+          borderColor: '#e63946',
+          backgroundColor: 'rgba(230,57,70,.08)',
+          tension: 0.35,
+          fill: true,
+          pointRadius: 4,
+          pointBackgroundColor: '#e63946'
+        }
+      ]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'top', labels: { font: { family: 'Heebo' }, padding: 16 } }
+      },
+      scales: {
+        x: { ticks: { font: { family: 'Heebo', size: 11 } }, grid: { color: '#eee' } },
+        y: { grid: { color: '#eee' }, ticks: { font: { family: 'Heebo' } } }
+      }
+    }
+  });
+
+  // Financial bar chart (claimed vs paid by coverage type)
+  new Chart(document.getElementById('financialBarChart'), {
+    type: 'bar',
+    data: {
+      labels: ['אביזרים', 'פיזיותרפיה', 'רפואה משלימה', 'התייעצות מומחה', 'בדיקות אבחנתיות'],
+      datasets: [
+        {
+          label: 'נתבע (₪K)',
+          data: [153, 140, 161, 247, 336],
+          backgroundColor: 'rgba(26,58,92,.75)',
+          borderRadius: 6
+        },
+        {
+          label: 'שולם (₪K)',
+          data: [118, 126, 148, 228, 310],
+          backgroundColor: 'rgba(42,157,143,.75)',
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'top', labels: { font: { family: 'Heebo' }, padding: 16 } }
+      },
+      scales: {
+        x: { ticks: { font: { family: 'Heebo', size: 11 } }, grid: { display: false } },
+        y: { grid: { color: '#eee' }, ticks: { font: { family: 'Heebo' }, callback: v => '₪' + v + 'K' } }
       }
     }
   });
