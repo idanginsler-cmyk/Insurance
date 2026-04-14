@@ -648,7 +648,7 @@
       <div class="mode-icon">🧠</div>
       <div class="mode-info">
         <h3>מצב חכם – NLP</h3>
-        <p>תאר את מצב המבוטח במילים שלך — ה-AI יזהה את הפרמטרים הרלוונטיים ויציג החלטה</p>
+        <p>תאר את מצב המבוטח במילים שלך — המערכת תחפש בספר החיתום את עץ ההחלטות המתאים ותחזיר החלטה מתוך המסמך בלבד</p>
         <span class="mode-tag">עיבוד שפה טבעית</span>
       </div>
     </div>
@@ -823,7 +823,7 @@
       </div>
 
       <div class="insights-card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0;">
-        <h4 style="color:#065f46;">🤖 תובנות AI נוספות</h4>
+        <h4 style="color:#065f46;">📖 ממצאים מתוך ספר החיתום</h4>
         <div class="insight-item"><span class="insight-icon">📊</span><span class="insight-text">הפרופיל מתאים למבוטח בסיכון נמוך-בינוני עם FMF מאוזן ומטופל</span></div>
         <div class="insight-item"><span class="insight-icon">📄</span><span class="insight-text">מומלץ לבקש אישור רופא מטפל על יציבות המחלה ומינון הקולכיצין</span></div>
         <div class="insight-item"><span class="insight-icon">✅</span><span class="insight-text">ללא צורך בבדיקות מעבדה נוספות — המחלה ב-remission לפי הדיווח</span></div>
@@ -847,12 +847,12 @@
   <div class="panel" id="panel-nlp">
 
     <div class="nlp-input-card">
-      <h3>🧠 תיאור חופשי של מצב המבוטח</h3>
+      <h3>📖 שאילתה לספר החיתום</h3>
       <textarea class="nlp-textarea" id="nlp-input"
-        placeholder="תאר את מצב המבוטח... לדוגמה: מבוטח בן 35, מאובחן עם FMF מגיל 12, מטופל בקולכיצין 1 מ״ג ליום, ללא סיבוכים, ללא התקפים בשנה האחרונה"></textarea>
+        placeholder="תאר את מצב המבוטח... המערכת תחפש בספר החיתום את עץ ההחלטות המתאים ותחזיר החלטה מתוך המסמך. לדוגמה: מבוטח בן 35, מאובחן עם FMF מגיל 12, מטופל בקולכיצין 1 מ״ג ליום, ללא סיבוכים, ללא התקפים בשנה האחרונה"></textarea>
       <div class="nlp-footer">
-        <span class="nlp-hint">💡 ניתן לכתוב בצורה חופשית — ה-AI יזהה את הפרמטרים הרלוונטיים</span>
-        <button class="nlp-btn" id="nlp-analyze-btn" onclick="analyzeNLP()">🔍 נתח</button>
+        <span class="nlp-hint">📄 המערכת קוראת את קובץ הוורד של ספר החיתום ומחזירה תשובה מתוך המסמך בלבד — ללא "המצאת" תשובות</span>
+        <button class="nlp-btn" id="nlp-analyze-btn" onclick="analyzeNLP()">🔍 חפש בספר החיתום</button>
       </div>
     </div>
 
@@ -941,8 +941,8 @@
         <div class="results-header">
           <div class="results-icon">✅</div>
           <div>
-            <h3>החלטת חיתום — NLP Mode</h3>
-            <p>מופק אוטומטית על בסיס ניתוח הטקסט</p>
+            <h3>החלטת חיתום — מתוך ספר החיתום</h3>
+            <p>מופק על בסיס חיפוש בספר החיתום בלבד <span style="display:inline-block;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 8px;font-size:.75rem;font-weight:600;margin-right:6px;">מקור: ספר החיתום, עמוד 47</span></p>
           </div>
         </div>
         <table class="decisions-table">
@@ -975,7 +975,7 @@
       </div>
 
       <div class="insights-card">
-        <h4>🤖 תובנות AI נוספות</h4>
+        <h4>📖 ממצאים מתוך ספר החיתום</h4>
         <div class="insight-item"><span class="insight-icon">📊</span><span class="insight-text">הפרופיל מתאים למבוטח בסיכון נמוך-בינוני — FMF מאוזן תחת טיפול</span></div>
         <div class="insight-item"><span class="insight-icon">📄</span><span class="insight-text">מומלץ לבקש אישור רופא מטפל על יציבות המחלה ומינון הקולכיצין</span></div>
         <div class="insight-item"><span class="insight-icon">✅</span><span class="insight-text">ללא צורך בבדיקות נוספות — המחלה ב-remission לפי הדיווח</span></div>

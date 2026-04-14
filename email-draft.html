@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>טיוטת מייל - בקשה לאישור Claude Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Heebo', sans-serif; background: #f0f4f8; color: #1a202c; padding: 40px 20px; line-height: 1.7; }
+  .email-container { max-width: 780px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+  .email-header { background: linear-gradient(135deg, #1a365d, #2b6cb0); color: #fff; padding: 24px 32px; }
+  .email-header h1 { font-size: 18px; font-weight: 500; }
+  .email-header .subject { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  .email-body { padding: 32px; }
+  .greeting { font-size: 16px; margin-bottom: 16px; }
+  .project { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+  .project h2 { font-size: 17px; color: #1a365d; margin-bottom: 8px; border-bottom: 2px solid #bee3f8; padding-bottom: 8px; }
+  .project p { font-size: 14px; margin: 6px 0; }
+  .project strong { color: #2d3748; }
+  .demo-link { display: inline-block; margin-top: 8px; background: #2b6cb0; color: #fff; padding: 6px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; }
+  .demo-link:hover { background: #1a4e8a; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #1a365d; color: #fff; padding: 10px 12px; text-align: center; }
+  td { padding: 10px 12px; border: 1px solid #e2e8f0; text-align: center; }
+  tr:nth-child(even) { background: #f7fafc; }
+  .security { background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
+  .security h3 { font-size: 15px; color: #22543d; margin-bottom: 8px; }
+  .security ul { padding-right: 20px; font-size: 14px; }
+  .security li { margin: 4px 0; }
+  .closing { margin-top: 24px; font-size: 15px; }
+  .label { font-size: 12px; display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+  .label-green { background: #c6f6d5; color: #22543d; }
+  .label-blue { background: #bee3f8; color: #1a365d; }
+  .label-orange { background: #fefcbf; color: #744210; }
+  .print-btn { display: block; margin: 20px auto; background: #2b6cb0; color: #fff; border: none; padding: 10px 28px; border-radius: 8px; font-family: 'Heebo'; font-size: 15px; cursor: pointer; }
+  .print-btn:hover { background: #1a4e8a; }
+  .note { text-align: center; font-size: 12px; color: #a0aec0; margin-top: 12px; }
+  @media print { .print-btn, .note { display: none; } body { background: #fff; padding: 0; } .email-container { box-shadow: none; } }
+</style>
+</head>
+<body>
+
+<div class="email-container">
+  <div class="email-header">
+    <h1>טיוטת מייל למנהלת חטיבת AI</h1>
+    <div class="subject">נושא: בקשה לאישור שימוש ב-Claude Code — 3 פרויקטי AI לתחום הביטוח</div>
+  </div>
+
+  <div class="email-body">
+    <p class="greeting">היי [שם],</p>
+    <p>בהמשך לשיחה שלנו, אני מבקש לקבל גישה לכלי Claude Code לצורך פיתוח 3 פרויקטים שיכולים לייצר ערך משמעותי לארגון. בניתי דמו עובד לכל אחד מהם.</p>
+
+    <!-- Project 1 -->
+    <div class="project">
+      <h2>פרויקט 1: דשבורד זיהוי הונאות בתביעות</h2>
+      <p><strong>מה עושה:</strong> מערכת שמקבלת קובץ CSV של תביעות ומייצרת דשבורד אינטראקטיבי — 12 ניתוחים שונים (תדירות, ריכוזי ספקים, קבלות חשודות, רשתות קשרים), drill-down למספרי תביעות ספציפיים לתחקור במערכות התפעוליות, ומערכת תיעוד ומעקב לממצאים.</p>
+      <p><strong>הבעיה שפותר:</strong> היום בדיקת תביעות חשודות נעשית ידנית, איטית, וללא מערכת מרכזית שמשלבת ניתוח + תיעוד.</p>
+      <p><strong>כלים נדרשים:</strong> Claude Code (פיתוח מקומי בלבד) + Java 22 (כבר מותקן). <span class="label label-green">ללא חיבור לאינטרנט</span></p>
+      <a class="demo-link" href="https://idanginsler-cmyk.github.io/Insurance/demo-fraud-dashboard.html" target="_blank">🔗 צפה בדמו</a>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project">
+      <h2>פרויקט 2: ניתוח מסמכים תפעוליים וזיהוי זיופים</h2>
+      <p><strong>מה עושה:</strong> כלי שמנתח מסמכים (קבלות, אישורים רפואיים, חשבוניות) — חילוץ מידע אוטומטי, זיהוי אנומליות (תאריכי שבת, סכומים חריגים, מספור רציף), וזיהוי סימני זיוף (פונטים לא אחידים, עריכות מטא-דאטה).</p>
+      <p><strong>הבעיה שפותר:</strong> מסמכים נבדקים ידנית, זיופים מתוחכמים קשה לזהות בעין, ואין כלי שמרכז את כל סימני האזהרה במקום אחד.</p>
+      <p><strong>כלים נדרשים:</strong> Claude Code + גישה ל-Claude API עם יכולת Vision. <span class="label label-orange">דורש אישור API</span><br><small style="color:#718096;">💡 במסגרת Claude Enterprise, גישה ל-API עשויה להיות כלולה בתוכנית — כדאי לבדוק מה מאפשר הפלאן.</small></p>
+      <a class="demo-link" href="https://idanginsler-cmyk.github.io/Insurance/demo-document-analysis.html" target="_blank">🔗 צפה בדמו</a>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project">
+      <h2>פרויקט 3: ספר חיתום אינטראקטיבי</h2>
+      <p><strong>מה עושה:</strong> מחליף את ספר החיתום (מסמך Word של מאות עמודים) בכלי אינטראקטיבי עם שני מצבים:</p>
+      <p>1. <strong>שאלון מובנה</strong> — בחירת מחלה → שאלות → החלטת חיתום לכל כיסוי (30+ כיסויים)</p>
+      <p>2. <strong>מצב חכם (NLP)</strong> — המערכת קוראת את קובץ הוורד של ספר החיתום, וכשמזינים שאלה במלל חופשי — היא מחפשת בתוך המסמך את עץ ההחלטות הרלוונטי ומחזירה את התשובה מתוך הספר בלבד, ללא "המצאת" תשובות.</p>
+      <p><strong>הבעיה שפותר:</strong> חיפוש ידני במסמך ארוך, זמן הכשרה ארוך לחיתומאים חדשים, וסיכון לטעויות.</p>
+      <p><strong>כלים נדרשים:</strong> Claude Code + Java 22 למצב האינטראקטיבי <span class="label label-green">עובד כבר היום</span>. למצב NLP: <span class="label label-orange">דורש Claude API</span></p>
+      <a class="demo-link" href="https://idanginsler-cmyk.github.io/Insurance/demo-underwriting.html" target="_blank">🔗 צפה בדמו</a>
+    </div>
+
+    <!-- Summary Table -->
+    <h3 style="margin-top: 24px; font-size: 16px;">סיכום כלים נדרשים</h3>
+    <table>
+      <tr><th>כלי</th><th>פרויקט 1</th><th>פרויקט 2</th><th>פרויקט 3</th></tr>
+      <tr><td><strong>Claude Code</strong></td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td><strong>Java 22 (מותקן)</strong></td><td>✅</td><td>—</td><td>✅</td></tr>
+      <tr><td><strong>Claude API + Vision</strong></td><td>—</td><td>✅</td><td>✅ (NLP בלבד)</td></tr>
+    </table>
+    <p style="font-size:13px; color:#718096; margin-top:8px;">💡 <strong>הערה:</strong> במסגרת Claude Enterprise, ייתכן ש-Claude Code ו-API כלולים יחד בתוכנית — כדאי לבדוק מה מאפשר הפלאן הספציפי.</p>
+
+    <!-- Security -->
+    <div class="security">
+      <h3>🔒 אבטחת מידע</h3>
+      <ul>
+        <li>Claude Code רץ מקומית, אך מתקשר עם שרתי Anthropic לצורך סיוע בפיתוח — התקשורת מוצפנת ללא שמירת נתונים (zero data retention)</li>
+        <li>לוגיקת ניתוח ההונאות בפרויקט 1 רצה לחלוטין אופליין — Java מעבד את ה-CSV מקומית; חיבור נדרש רק לסיוע הפיתוח עצמו דרך Claude Code</li>
+        <li>הנתונים מוצפנים בהעברה ולא נשמרים לאימון מודלים. במסגרת Claude Enterprise, הכל תחת הסכם ארגוני עם מדיניות אבטחה מחמירה.</li>
+        <li>כל הנתונים בדמואים סינתטיים לחלוטין</li>
+      </ul>
+    </div>
+
+    <p class="closing">אשמח לתאם פגישה קצרה להדגמה חיה.</p>
+    <p class="closing">בברכה,<br>עידן</p>
+  </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ הדפס / שמור כ-PDF</button>
+<p class="note">ניתן ללחוץ Ctrl+C כדי להעתיק את הטקסט, או להדפיס ל-PDF</p>
+
+</body>
+</html>
