@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מערכת זיהוי הונאות – ביטוח</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #1a3a5c;
+      --primary-light: #234e7a;
+      --accent:     #e63946;
+      --accent2:    #f4a261;
+      --green:      #2a9d8f;
+      --green-light:#e8f7f5;
+      --red:        #e63946;
+      --red-light:  #fdecea;
+      --orange:     #f4a261;
+      --orange-light:#fff4ec;
+      --bg:         #f0f4f8;
+      --card:       #ffffff;
+      --border:     #dde3ea;
+      --text:       #1a2e42;
+      --text-muted: #6b7c93;
+      --sidebar-w:  240px;
+    }
+
+    body {
+      font-family: 'Heebo', 'Arial', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d2137 100%);
+      color: #fff;
+      padding: 0 28px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 14px; }
+    .topbar-logo {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--accent), #c1121f);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(230,57,70,.4);
+    }
+    .topbar-title { font-size: 19px; font-weight: 700; letter-spacing: .3px; }
+    .topbar-sub   { font-size: 12px; font-weight: 300; opacity: .75; margin-top: 1px; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .topbar-badge {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12px;
+    }
+    .topbar-badge span { color: #7dd3ca; font-weight: 600; }
+    .topbar-user {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg,#7dd3ca,#2a9d8f);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; cursor: pointer;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-layout { display: flex; min-height: calc(100vh - 64px); }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: #0f2537;
+      color: #a8bcd4;
+      flex-shrink: 0;
+      padding: 20px 0;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4a6580;
+      padding: 16px 20px 6px;
+    }
+    .sidebar-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 0;
+      font-size: 14px;
+      transition: all .2s;
+      border-right: 3px solid transparent;
+      position: relative;
+    }
+    .sidebar-nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+    .sidebar-nav-item.active {
+      background: rgba(26,58,92,.6);
+      color: #fff;
+      border-right-color: var(--accent);
+    }
+    .sidebar-nav-item .nav-icon { font-size: 17px; width: 22px; text-align: center; }
+    .sidebar-nav-item .nav-badge {
+      margin-right: auto;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 7px;
+    }
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,.07); margin: 10px 0; }
+
+    /* ── CONTENT ── */
+    .content { flex: 1; padding: 28px; overflow: auto; }
+
+    /* ── UPLOAD AREA ── */
+    #upload-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      gap: 24px;
+    }
+    .upload-card {
+      background: var(--card);
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      padding: 56px 64px;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+      cursor: pointer;
+    }
+    .upload-card:hover { border-color: var(--primary-light); box-shadow: 0 4px 24px rgba(26,58,92,.1); }
+    .upload-card.dragover { border-color: var(--accent); background: #fff8f8; }
+    .upload-icon { font-size: 56px; margin-bottom: 16px; }
+    .upload-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .upload-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+    .btn-upload-file {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background .2s;
+    }
+    .btn-upload-file:hover { background: var(--primary-light); }
+    .upload-or { color: var(--text-muted); font-size: 13px; margin: 8px 0; }
+    .btn-sample {
+      background: linear-gradient(135deg, var(--accent), #c1121f);
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(230,57,70,.35);
+      transition: all .2s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .btn-sample:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(230,57,70,.4); }
+    .upload-note { font-size: 12px; color: var(--text-muted); }
+
+    /* ── LOADING OVERLAY ── */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(10,25,40,.75);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #fff;
+      gap: 20px;
+    }
+    #loading-overlay.show { display: flex; }
+    .loader-ring {
+      width: 60px; height: 60px;
+      border: 5px solid rgba(255,255,255,.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-steps { text-align: center; }
+    .loader-step { font-size: 13px; opacity: .7; margin-top: 4px; transition: opacity .3s; }
+    .loader-step.active { opacity: 1; font-weight: 600; color: #7dd3ca; }
+
+    /* ── DASHBOARD ── */
+    #dashboard-section { display: none; }
+    #dashboard-section.show { display: block; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .page-header-left h1 { font-size: 24px; font-weight: 800; }
+    .page-header-left p { color: var(--text-muted); font-size: 13px; margin-top: 3px; }
+    .page-header-right { display: flex; gap: 10px; }
+    .btn-action {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── SUMMARY CARDS ── */
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .summary-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .summary-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 4px; height: 100%;
+    }
+    .summary-card.blue::before  { background: var(--primary); }
+    .summary-card.red::before   { background: var(--red); }
+    .summary-card.orange::before{ background: var(--orange); }
+    .summary-card.green::before { background: var(--green); }
+    .card-icon {
+      font-size: 28px;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .card-icon.blue   { background: #eaf0fb; }
+    .card-icon.red    { background: var(--red-light); }
+    .card-icon.orange { background: var(--orange-light); }
+    .card-icon.green  { background: var(--green-light); }
+    .card-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+    .card-value { font-size: 30px; font-weight: 800; line-height: 1; }
+    .card-value.blue   { color: var(--primary); }
+    .card-value.red    { color: var(--red); }
+    .card-value.orange { color: var(--orange); }
+    .card-value.green  { color: var(--green); }
+    .card-sub {
+      font-size: 11px;
+      margin-top: 8px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: 600;
+    }
+    .card-sub.up   { background: #fdecea; color: var(--red); }
+    .card-sub.warn { background: #fff4ec; color: #c87333; }
+    .card-sub.ok   { background: var(--green-light); color: var(--green); }
+
+    /* ── TABS ── */
+    .tabs-bar {
+      display: flex;
+      gap: 2px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all .2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tab-btn:hover { background: var(--bg); color: var(--text); }
+    .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 2px 10px rgba(26,58,92,.3); }
+    .tab-btn .tab-icon { font-size: 15px; }
+    .tab-content { display: none; animation: fadeIn .25s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── CHART CARDS ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .chart-card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 22px;
+    }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .chart-card-title { font-size: 15px; font-weight: 700; }
+    .chart-card-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .chart-wrap { position: relative; }
+    .chart-wrap canvas { max-height: 280px; }
+
+    /* ── TABLE ── */
+    .table-card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .table-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-card-title { font-size: 15px; font-weight: 700; }
+    .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+    }
+    .search-box input {
+      border: none; background: transparent; font-family: inherit;
+      font-size: 13px; outline: none; color: var(--text);
+      width: 200px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th {
+      background: var(--bg);
+      padding: 11px 16px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background .15s;
+      cursor: pointer;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f7f9fc; }
+    tbody td { padding: 11px 16px; vertical-align: middle; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-critical { background: #fdecea; color: var(--red); }
+    .badge-high     { background: #fff4ec; color: #c87333; }
+    .badge-medium   { background: #fffbe6; color: #9c7b00; }
+    .badge-low      { background: var(--green-light); color: var(--green); }
+    .badge-clear    { background: var(--green-light); color: var(--green); }
+    .badge-open     { background: #eaf0fb; color: var(--primary); }
+    .badge-closed   { background: #f0f0f0; color: #666; }
+    .badge-fraud    { background: #fdecea; color: var(--red); }
+    .badge-suspicious { background: #fff4ec; color: #c87333; }
+    .badge-normal   { background: var(--green-light); color: var(--green); }
+
+    .risk-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .risk-bar {
+      height: 6px; border-radius: 3px; flex: 1;
+      background: #eee;
+      overflow: hidden;
+    }
+    .risk-bar-fill { height: 100%; border-radius: 3px; }
+    .risk-num { font-weight: 700; font-size: 13px; width: 32px; text-align: left; }
+
+    /* ── EXPANDED ROW ── */
+    .expanded-row td {
+      padding: 0 !important;
+      background: #f7f9fc;
+    }
+    .expanded-details {
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .detail-item label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+    .detail-item p { font-size: 14px; font-weight: 500; margin-top: 2px; }
+    .detail-flags {
+      grid-column: 1 / -1;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .flag-chip {
+      background: #fdecea;
+      color: var(--red);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ── ALERTS TAB ── */
+    .alert-row td:first-child { padding-right: 16px; }
+    .alert-indicator {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 6px;
+      animation: pulse 1.5s infinite;
+    }
+    .alert-indicator.critical { background: var(--red); }
+    .alert-indicator.high     { background: var(--orange); animation: none; }
+    .alert-indicator.medium   { background: #e0c400; animation: none; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .3; }
+    }
+
+    /* ── PROVIDER ANALYSIS ── */
+    .scatter-legend {
+      display: flex; gap: 18px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ── DOCUMENTATION TAB ── */
+    .inv-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .inv-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .inv-card-title { font-weight: 700; font-size: 14px; }
+    .inv-card-meta  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .inv-card-body  { padding: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .form-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px; }
+    .form-group textarea,
+    .form-group select,
+    .form-group input[type=text] {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color .2s;
+      resize: vertical;
+    }
+    .form-group textarea:focus,
+    .form-group select:focus,
+    .form-group input:focus { border-color: var(--primary); }
+    .form-group.full { grid-column: 1 / -1; }
+    .inv-card-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 10px;
+    }
+    .btn-save {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 8px 22px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-save:hover { background: #228b7e; }
+
+    .add-inv-card {
+      background: var(--card);
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+    .add-inv-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+    .add-inv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .add-inv-grid .full { grid-column: 1 / -1; }
+
+    /* ── FOOTER ── */
+    .footer-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 24px 0 8px;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .cards-row { grid-template-columns: repeat(2,1fr); }
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cards-row { grid-template-columns: 1fr; }
+      .content { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay">
+  <div class="loader-ring"></div>
+  <div class="loader-steps">
+    <div class="loader-step active" id="ls1">📂 טוען קובץ CSV...</div>
+    <div class="loader-step" id="ls2">🔍 מנתח תביעות (1,870 רשומות)...</div>
+    <div class="loader-step" id="ls3">🤖 מריץ מודל זיהוי הונאות...</div>
+    <div class="loader-step" id="ls4">📊 בונה דוחות ותרשימים...</div>
+    <div class="loader-step" id="ls5">✅ מוכן!</div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">🛡️</div>
+    <div>
+      <div class="topbar-title">מערכת זיהוי הונאות – ביטוח</div>
+      <div class="topbar-sub">דמו – ניתוח תביעות חשודות</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-badge">מחזור ניתוח: <span>ינואר–מרץ 2025</span></div>
+    <div class="topbar-badge">מודל: <span>FraudNet v3.2</span></div>
+    <div class="topbar-user" title="ד״ר לבנת כהן – חוקרת ראשית">ל</div>
+  </div>
+</header>
+
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="main-sidebar" style="display:none;">
+    <div class="sidebar-section-label">ניווט</div>
+    <div class="sidebar-nav-item active" onclick="setTab('overview'); setSideNav(this)">
+      <span class="nav-icon">📊</span> סקירה כללית
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('alerts'); setSideNav(this)">
+      <span class="nav-icon">🔔</span> התראות
+      <span class="nav-badge">3</span>
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('providers'); setSideNav(this)">
+      <span class="nav-icon">🏥</span> ניתוח ספקים
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('patterns'); setSideNav(this)">
+      <span class="nav-icon">🔎</span> ניתוח תבניות
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('drilldown'); setSideNav(this)">
+      <span class="nav-icon">📋</span> דריל-דאון תביעות
+    </div>
+    <div class="sidebar-nav-item" onclick="setTab('docs'); setSideNav(this)">
+      <span class="nav-icon">📝</span> תיעוד ומעקב
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">כלים</div>
+    <div class="sidebar-nav-item" onclick="alert('ייצוא PDF – בפיתוח')">
+      <span class="nav-icon">📄</span> ייצוא דוח PDF
+    </div>
+    <div class="sidebar-nav-item" onclick="alert('שיתוף – בפיתוח')">
+      <span class="nav-icon">🔗</span> שתף עם צוות
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- ── UPLOAD SECTION ── -->
+    <div id="upload-section">
+      <div style="text-align:center;">
+        <div style="font-size:13px;color:var(--text-muted);background:var(--orange-light);border:1px solid var(--orange);border-radius:8px;padding:8px 20px;display:inline-block;margin-bottom:24px;">
+          🔒 כל הנתונים מעובדים מקומית – לא נשלחת מידע לשרת חיצוני
+        </div>
+      </div>
+
+      <div class="upload-card" id="drop-zone"
+           ondragover="event.preventDefault(); this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDrop(event)">
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">גרור קובץ CSV לכאן</div>
+        <div class="upload-sub">קובץ תביעות מייצוא מערכת ה-CRM / Core Insurance</div>
+        <input type="file" id="csv-input" accept=".csv" style="display:none" onchange="handleFile(this)"/>
+        <button class="btn-upload-file" onclick="document.getElementById('csv-input').click()">בחר קובץ</button>
+        <div class="upload-or">— או —</div>
+        <div style="font-size:12px;color:var(--text-muted);">תמיכה בפורמטים: CSV, XLSX (בפיתוח)</div>
+      </div>
+
+      <button class="btn-sample" onclick="loadSampleData()">
+        <span>⚡</span> טען נתוני דוגמה
+      </button>
+      <div class="upload-note">⚠️ הנתונים בדמו זה הם סינתטיים לחלוטין ואינם מייצגים אנשים אמיתיים</div>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <div id="dashboard-section">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1>לוח בקרה – זיהוי הונאות</h1>
+          <p>ניתוח Q1 2025 | עודכן: 14.04.2025 09:32 | מנתחת: ד״ר לבנת כהן</p>
+        </div>
+        <div class="page-header-right">
+          <button class="btn-action btn-outline" onclick="alert('ייצוא בפיתוח')">📥 ייצא דוח</button>
+          <button class="btn-action btn-primary" onclick="alert('שיתוף בפיתוח')">🔗 שתף</button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="cards-row">
+        <div class="summary-card blue">
+          <div class="card-icon blue">📋</div>
+          <div class="card-label">סה״כ תביעות שנותחו</div>
+          <div class="card-value blue" id="cnt-total">1,870</div>
+          <span class="card-sub warn">↑ 12% מהרבעון הקודם</span>
+        </div>
+        <div class="summary-card red">
+          <div class="card-icon red">⚠️</div>
+          <div class="card-label">תביעות חשודות</div>
+          <div class="card-value red" id="cnt-suspicious">342</div>
+          <span class="card-sub up">18.3% מהסה״כ</span>
+        </div>
+        <div class="summary-card orange">
+          <div class="card-icon orange">🚨</div>
+          <div class="card-label">סיכון גבוה – לטיפול דחוף</div>
+          <div class="card-value orange" id="cnt-high">47</div>
+          <span class="card-sub warn">↑ 8 מהחודש הקודם</span>
+        </div>
+        <div class="summary-card green">
+          <div class="card-icon green">💰</div>
+          <div class="card-label">סכום הונאה משוער</div>
+          <div class="card-value green" id="cnt-amount">₪4.2M</div>
+          <span class="card-sub ok">חיסכון פוטנציאלי</span>
+        </div>
+      </div>
+
+      <!-- Tab Bar -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" onclick="setTab('overview')" id="tab-overview">
+          <span class="tab-icon">📊</span> סקירה כללית
+        </button>
+        <button class="tab-btn" onclick="setTab('alerts')" id="tab-alerts">
+          <span class="tab-icon">🔔</span> התראות <span style="background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 7px;margin-right:4px;">3</span>
+        </button>
+        <button class="tab-btn" onclick="setTab('providers')" id="tab-providers">
+          <span class="tab-icon">🏥</span> ניתוח ספקים
+        </button>
+        <button class="tab-btn" onclick="setTab('patterns')" id="tab-patterns">
+          <span class="tab-icon">🔎</span> ניתוח תבניות
+        </button>
+        <button class="tab-btn" onclick="setTab('drilldown')" id="tab-drilldown">
+          <span class="tab-icon">📋</span> דריל-דאון תביעות
+        </button>
+        <button class="tab-btn" onclick="setTab('docs')" id="tab-docs">
+          <span class="tab-icon">📝</span> תיעוד ומעקב
+        </button>
+      </div>
+
+      <!-- ════ TAB: OVERVIEW ════ -->
+      <div class="tab-content active" id="content-overview">
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">סטטוס תביעות</div>
+                <div class="chart-card-sub">פילוח כל הרבעון</div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">10 ספקים חשודים מובילים</div>
+                <div class="chart-card-sub">לפי מספר תביעות חשודות</div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini alerts strip -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">🚨 התראות פעילות</div>
+            <button class="btn-action btn-outline" onclick="setTab('alerts')" style="font-size:12px;padding:6px 14px;">הצג הכל</button>
+          </div>
+          <table>
+            <thead><tr>
+              <th>חומרה</th><th>תיאור</th><th>תביעות מעורבות</th><th>תאריך</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-critical">⬤ קריטי</span></td>
+                <td>אשכול של 14 תביעות עם מספרי קבלה רצופים – ספק "קליניקת השמש"</td>
+                <td>14</td><td>12.04.2025</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-critical">⬤ קריטי</span></td>
+                <td>ספק-רפאים: אין רישיון תקף – "מרפאת אור וחיים"</td>
+                <td>27</td><td>10.04.2025</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-high">⬤ גבוה</span></td>
+                <td>עלייה של 340% בתביעות מאזור אילת – פרמטר חריג</td>
+                <td>38</td><td>09.04.2025</td>
+                <td><span class="badge badge-open">בטיפול</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: ALERTS ════ -->
+      <div class="tab-content" id="content-alerts">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">כל ההתראות</div>
+            <div style="font-size:12px;color:var(--text-muted);">8 התראות פעילות</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th></th><th>חומרה</th><th>תיאור ההתראה</th><th>תאריך</th><th>תביעות</th><th>ספק מעורב</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody id="alerts-tbody">
+              <tr class="alert-row">
+                <td><span class="alert-indicator critical"></span></td>
+                <td><span class="badge badge-critical">קריטי</span></td>
+                <td>אשכול מספרי קבלה רצופים – סימן לזיוף</td>
+                <td>12.04.2025</td><td>14</td><td>קליניקת השמש</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator critical"></span></td>
+                <td><span class="badge badge-critical">קריטי</span></td>
+                <td>ספק ללא רישיון תקף – תביעות בסך ₪280,000</td>
+                <td>10.04.2025</td><td>27</td><td>מרפאת אור וחיים</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator high"></span></td>
+                <td><span class="badge badge-high">גבוה</span></td>
+                <td>עלייה חריגה 340% בתביעות מאילת</td>
+                <td>09.04.2025</td><td>38</td><td>מרפאות האזור הדרומי</td>
+                <td><span class="badge" style="background:#fff4ec;color:#c87333;">בטיפול</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator high"></span></td>
+                <td><span class="badge badge-high">גבוה</span></td>
+                <td>מבוטח הגיש 9 תביעות ב-30 יום – חריג ב-4 סטיות תקן</td>
+                <td>08.04.2025</td><td>9</td><td>—</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator high"></span></td>
+                <td><span class="badge badge-high">גבוה</span></td>
+                <td>18 תביעות בסופי שבוע מאותו מרפאה – חשד לתיארוך כוזב</td>
+                <td>07.04.2025</td><td>18</td><td>כרמל רפואה</td>
+                <td><span class="badge badge-open">פתוח</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator" style="background:#e0c400;animation:none"></span></td>
+                <td><span class="badge badge-medium">בינוני</span></td>
+                <td>כפילויות בתביעות – אותה חשבונית הוגשה ב-2 פוליסות</td>
+                <td>05.04.2025</td><td>6</td><td>—</td>
+                <td><span class="badge" style="background:#f0f0f0;color:#666;">טופל</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator" style="background:#e0c400;animation:none"></span></td>
+                <td><span class="badge badge-medium">בינוני</span></td>
+                <td>סכום תביעה גבוה ב-280% ממחיר שוק של הטיפול</td>
+                <td>03.04.2025</td><td>3</td><td>ד"ר יוסי לוי – פרטי</td>
+                <td><span class="badge" style="background:#f0f0f0;color:#666;">טופל</span></td>
+              </tr>
+              <tr class="alert-row">
+                <td><span class="alert-indicator" style="background:#e0c400;animation:none"></span></td>
+                <td><span class="badge badge-medium">בינוני</span></td>
+                <td>פרטי מבוטח זהים – ייתכן גניבת זהות</td>
+                <td>01.04.2025</td><td>4</td><td>—</td>
+                <td><span class="badge badge-open">בחקירה</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: PROVIDERS ════ -->
+      <div class="tab-content" id="content-providers">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">מפת ספקים – מספר תביעות מול סכום ממוצע</div>
+              <div class="chart-card-sub">נקודות אדומות = ספקים חשודים; גודל הנקודה = מספר מבוטחים ייחודיים</div>
+            </div>
+            <div class="scatter-legend">
+              <div><span class="legend-dot" style="background:var(--red)"></span> ספק חשוד</div>
+              <div><span class="legend-dot" style="background:#4a90d9"></span> ספק תקין</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="scatterChart" style="max-height:360px;"></canvas></div>
+        </div>
+
+        <!-- Top suspicious providers table -->
+        <div class="table-card" style="margin-top:18px;">
+          <div class="table-card-header">
+            <div class="chart-card-title">ספקים חשודים מובילים</div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>שם ספק</th><th>סוג</th><th>תביעות</th><th>סכום כולל</th><th>ממוצע לתביעה</th><th>ציון סיכון</th><th>סטטוס</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>קליניקת השמש</td><td>מרפאה פרטית</td><td>84</td><td>₪412,000</td><td>₪4,905</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:94%;background:var(--red)"></div></div><span class="risk-num" style="color:var(--red)">94</span></div></td>
+                <td><span class="badge badge-fraud">הונאה</span></td></tr>
+              <tr><td>מרפאת אור וחיים</td><td>מרפאה פרטית</td><td>67</td><td>₪280,000</td><td>₪4,179</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:91%;background:var(--red)"></div></div><span class="risk-num" style="color:var(--red)">91</span></div></td>
+                <td><span class="badge badge-fraud">הונאה</span></td></tr>
+              <tr><td>כרמל רפואה</td><td>בית מרקחת</td><td>55</td><td>₪198,000</td><td>₪3,600</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:78%;background:var(--orange)"></div></div><span class="risk-num" style="color:var(--orange)">78</span></div></td>
+                <td><span class="badge badge-suspicious">חשוד</span></td></tr>
+              <tr><td>ד"ר יוסי לוי</td><td>רופא פרטי</td><td>43</td><td>₪167,000</td><td>₪3,884</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:72%;background:var(--orange)"></div></div><span class="risk-num" style="color:var(--orange)">72</span></div></td>
+                <td><span class="badge badge-suspicious">חשוד</span></td></tr>
+              <tr><td>מרפאות האזור הדרומי</td><td>רשת מרפאות</td><td>38</td><td>₪145,000</td><td>₪3,816</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:65%;background:var(--orange)"></div></div><span class="risk-num" style="color:var(--orange)">65</span></div></td>
+                <td><span class="badge badge-suspicious">חשוד</span></td></tr>
+              <tr><td>מכבי שירותי בריאות</td><td>קופת חולים</td><td>312</td><td>₪890,000</td><td>₪2,853</td>
+                <td><div class="risk-bar-wrap"><div class="risk-bar"><div class="risk-bar-fill" style="width:18%;background:var(--green)"></div></div><span class="risk-num" style="color:var(--green)">18</span></div></td>
+                <td><span class="badge badge-normal">תקין</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: PATTERNS ════ -->
+      <div class="tab-content" id="content-patterns">
+        <div class="charts-grid">
+          <div class="chart-card full">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">תבניות הונאה שזוהו</div>
+                <div class="chart-card-sub">מספר מקרים שזוהו לפי קטגוריה</div>
+              </div>
+            </div>
+            <div class="chart-wrap"><canvas id="patternChart" style="max-height:300px;"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Pattern breakdown cards -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px;">
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">🔁</div>
+            <div class="chart-card-title">תביעות כפולות</div>
+            <div class="chart-card-sub" style="margin-top:4px;">87 מקרים – אותה קבלה הוגשה ב-2 פוליסות שונות. 34 מהם אושרו שולמו בטעות.</div>
+            <div style="margin-top:12px;"><span class="badge badge-critical" style="font-size:13px;">₪210,000 חשיפה</span></div>
+          </div>
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">💸</div>
+            <div class="chart-card-title">הגדלת סכומים</div>
+            <div class="chart-card-sub" style="margin-top:4px;">62 מקרים – חשבוניות שסכומן גבוה ב->200% ממחיר מחירון.</div>
+            <div style="margin-top:12px;"><span class="badge badge-high" style="font-size:13px;">₪340,000 חשיפה</span></div>
+          </div>
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">👻</div>
+            <div class="chart-card-title">ספקי-רפאים</div>
+            <div class="chart-card-sub" style="margin-top:4px;">29 מקרים – ספקים שאינם רשומים ברשם הלאומי של משרד הבריאות.</div>
+            <div style="margin-top:12px;"><span class="badge badge-critical" style="font-size:13px;">₪280,000 חשיפה</span></div>
+          </div>
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">📅</div>
+            <div class="chart-card-title">קבלות סופי שבוע</div>
+            <div class="chart-card-sub" style="margin-top:4px;">54 מקרים – קבלות מתוארכות לשבת/ראשון ממרפאות סגורות בסופ"ש.</div>
+            <div style="margin-top:12px;"><span class="badge badge-high" style="font-size:13px;">₪185,000 חשיפה</span></div>
+          </div>
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">🔢</div>
+            <div class="chart-card-title">קבלות רצופות</div>
+            <div class="chart-card-sub" style="margin-top:4px;">110 מקרים – מספרי קבלה עוקבים מהותיים מספק אחד ביום אחד.</div>
+            <div style="margin-top:12px;"><span class="badge badge-high" style="font-size:13px;">₪420,000 חשיפה</span></div>
+          </div>
+          <div class="chart-card">
+            <div style="font-size:24px;margin-bottom:8px;">📍</div>
+            <div class="chart-card-title">חוסר עקביות גיאוגרפית</div>
+            <div class="chart-card-sub" style="margin-top:4px;">מבוטח בחיפה + קבלה מאילת + ביקור אצל רופא בת״א – ביום אחד.</div>
+            <div style="margin-top:12px;"><span class="badge badge-medium" style="font-size:13px;">₪95,000 חשיפה</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ TAB: DRILLDOWN ════ -->
+      <div class="tab-content" id="content-drilldown">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="chart-card-title">תביעות חשודות – פירוט</div>
+            <div class="search-box">
+              <span>🔍</span>
+              <input type="text" placeholder="חפש לפי שם, ת.ז., ספק..." id="claim-search" oninput="filterClaims(this.value)"/>
+            </div>
+          </div>
+          <table>
+            <thead><tr>
+              <th></th>
+              <th>מס׳ תביעה</th>
+              <th>שם מבוטח</th>
+              <th>ספק</th>
+              <th>סכום</th>
+              <th>תאריך</th>
+              <th>ציון סיכון</th>
+              <th>סטטוס</th>
+            </tr></thead>
+            <tbody id="claims-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ TAB: DOCS ════ -->
+      <div class="tab-content" id="content-docs">
+
+        <!-- Existing investigations -->
+        <div class="inv-card">
+          <div class="inv-card-header">
+            <div>
+              <div class="inv-card-title">תביעה #TBC-2025-0841 – ד"ר אריאל שרון</div>
+              <div class="inv-card-meta">ספק: קליניקת השמש | ₪18,500 | נפתחה: 10.04.2025 | חוקר: שי אביב</div>
+            </div>
+            <span class="badge badge-fraud">הונאה מאושרת</span>
+          </div>
+          <div class="inv-card-body">
+            <div class="form-group full">
+              <label>הערות חוקר</label>
+              <textarea rows="3">מספרי קבלה 1001–1014 הוגשו ב-6 שעות. לפי בדיקת מול מרשם המדינה, הרופא סיים רישיונו ב-2022. ממשיך לפעול תחת שם אחר.</textarea>
+            </div>
+            <div class="form-group">
+              <label>ממצא</label>
+              <select><option value="fraud" selected>הונאה מאושרת</option><option>טוהר</option><option>דרוש מידע נוסף</option></select>
+            </div>
+            <div class="form-group">
+              <label>פעולה שנלקחה</label>
+              <select><option selected>הועבר לפרקליטות</option><option>דחיית תביעה</option><option>אזהרה</option><option>סגירה ללא פעולה</option></select>
+            </div>
+            <div class="form-group">
+              <label>תאריך סגירה</label>
+              <input type="text" value="14.04.2025"/>
+            </div>
+          </div>
+          <div class="inv-card-footer">
+            <button class="btn-save" onclick="showToast('השינויים נשמרו ✓')">💾 שמור שינויים</button>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-card-header">
+            <div>
+              <div class="inv-card-title">תביעה #TBC-2025-0792 – שרה לוינסון</div>
+              <div class="inv-card-meta">ספק: כרמל רפואה | ₪9,800 | נפתחה: 07.04.2025 | חוקר: מיכל דיין</div>
+            </div>
+            <span class="badge badge-medium">דרוש מידע נוסף</span>
+          </div>
+          <div class="inv-card-body">
+            <div class="form-group full">
+              <label>הערות חוקר</label>
+              <textarea rows="3">קבלה מתוארכת לשבת 05.04 – בית מרקחת מדווח כסגור. המבוטחת טוענת כי קיבלה שירות דחוף. נשלח מכתב לאישור.</textarea>
+            </div>
+            <div class="form-group">
+              <label>ממצא</label>
+              <select><option>הונאה מאושרת</option><option>טוהר</option><option value="info" selected>דרוש מידע נוסף</option></select>
+            </div>
+            <div class="form-group">
+              <label>פעולה שנלקחה</label>
+              <select><option>הועבר לפרקליטות</option><option>דחיית תביעה</option><option>אזהרה</option><option selected>סגירה ללא פעולה</option></select>
+            </div>
+            <div class="form-group">
+              <label>תאריך פולו-אפ</label>
+              <input type="text" value="21.04.2025"/>
+            </div>
+          </div>
+          <div class="inv-card-footer">
+            <button class="btn-save" onclick="showToast('השינויים נשמרו ✓')">💾 שמור שינויים</button>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-card-header">
+            <div>
+              <div class="inv-card-title">תביעה #TBC-2025-0764 – רון ממן</div>
+              <div class="inv-card-meta">ספק: מרפאת אור וחיים | ₪24,000 | נפתחה: 06.04.2025 | חוקר: שי אביב</div>
+            </div>
+            <span class="badge badge-fraud">הונאה מאושרת</span>
+          </div>
+          <div class="inv-card-body">
+            <div class="form-group full">
+              <label>הערות חוקר</label>
+              <textarea rows="3">הספק אינו רשום במשרד הבריאות. כתובת המרפאה הינה דירת מגורים. 27 תביעות דומות בסך ₪280,000 הוגשו. נקבע דיון בלשכת הפיקוח.</textarea>
+            </div>
+            <div class="form-group">
+              <label>ממצא</label>
+              <select><option value="fraud" selected>הונאה מאושרת</option><option>טוהר</option><option>דרוש מידע נוסף</option></select>
+            </div>
+            <div class="form-group">
+              <label>פעולה שנלקחה</label>
+              <select><option selected>הועבר לפרקליטות</option><option>דחיית תביעה</option><option>אזהרה</option><option>סגירה ללא פעולה</option></select>
+            </div>
+            <div class="form-group">
+              <label>תאריך סגירה</label>
+              <input type="text" value="13.04.2025"/>
+            </div>
+          </div>
+          <div class="inv-card-footer">
+            <button class="btn-save" onclick="showToast('השינויים נשמרו ✓')">💾 שמור שינויים</button>
+          </div>
+        </div>
+
+        <!-- Add new investigation -->
+        <div class="add-inv-card">
+          <h3>➕ פתיחת חקירה חדשה</h3>
+          <div class="add-inv-grid">
+            <div class="form-group">
+              <label>מספר תביעה</label>
+              <input type="text" placeholder="TBC-2025-XXXX"/>
+            </div>
+            <div class="form-group">
+              <label>שם מבוטח</label>
+              <input type="text" placeholder="שם מלא"/>
+            </div>
+            <div class="form-group">
+              <label>שם ספק</label>
+              <input type="text" placeholder="שם ספק / מרפאה"/>
+            </div>
+            <div class="form-group">
+              <label>סכום תביעה (₪)</label>
+              <input type="text" placeholder="0"/>
+            </div>
+            <div class="form-group">
+              <label>חוקר מטפל</label>
+              <select>
+                <option>שי אביב</option>
+                <option>מיכל דיין</option>
+                <option>ד"ר לבנת כהן</option>
+                <option>עמית פרידמן</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>עדיפות</label>
+              <select>
+                <option>קריטי</option><option>גבוה</option><option>בינוני</option><option>נמוך</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>פרטי החקירה הראשוניים</label>
+              <textarea rows="3" placeholder="תאר את הממצאים הראשוניים שהובילו לפתיחת החקירה..."></textarea>
+            </div>
+          </div>
+          <div style="text-align:left;margin-top:16px;">
+            <button class="btn-save" style="font-size:14px;padding:10px 28px;" onclick="showToast('חקירה חדשה נפתחה בהצלחה ✓')">פתח חקירה</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        ⚠️ כל הנתונים המוצגים בדמו זה הם <strong>סינתטיים לחלוטין</strong> ונוצרו לצורכי הדגמה בלבד.
+        אין קשר לאנשים, ספקים, או תביעות אמיתיות. | מערכת זיהוי הונאות v1.0-demo
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:#1a3a5c;color:#fff;padding:12px 28px;border-radius:10px;
+  font-weight:600;font-size:14px;opacity:0;transition:all .3s;z-index:9999;
+  box-shadow:0 4px 18px rgba(0,0,0,.3);">
+</div>
+
+<script>
+/* ─────────────────────────────────────────
+   DATA
+───────────────────────────────────────── */
+const sampleClaims = [
+  { id:'TBC-2025-0841', name:'ד"ר אריאל שרון', provider:'קליניקת השמש', amount:'₪18,500', date:'06.04.2025', risk:94, status:'הונאה', flags:['קבלות רצופות','ספק-רפאים','ריבוי תביעות'], address:'תל אביב', policy:'BT-009-2891', type:'רפואה פרטית', days_since:8 },
+  { id:'TBC-2025-0764', name:'רון ממן', provider:'מרפאת אור וחיים', amount:'₪24,000', date:'02.04.2025', risk:91, status:'הונאה', flags:['ספק ללא רישיון','כתובת שגויה'], address:'ירושלים', policy:'BT-007-3341', type:'ניתוח', days_since:12 },
+  { id:'TBC-2025-0912', name:'יפה מצרי', provider:'קליניקת השמש', amount:'₪7,200', date:'11.04.2025', risk:88, status:'חשוד', flags:['קבלות רצופות'], address:'חיפה', policy:'BT-011-0012', type:'רפואה פרטית', days_since:3 },
+  { id:'TBC-2025-0889', name:'דוד קורן', provider:'ד"ר יוסי לוי', amount:'₪14,800', date:'09.04.2025', risk:82, status:'חשוד', flags:['סכום גבוה ב-280%'], address:'רמת גן', policy:'BT-008-7721', type:'אורתופד', days_since:5 },
+  { id:'TBC-2025-0792', name:'שרה לוינסון', provider:'כרמל רפואה', amount:'₪9,800', date:'05.04.2025', risk:76, status:'חשוד', flags:['קבלה בסופ"ש','תאריך חשוד'], address:'נתניה', policy:'BT-006-5590', type:'תרופות', days_since:9 },
+  { id:'TBC-2025-0831', name:'אביגיל נחום', provider:'כרמל רפואה', amount:'₪6,300', date:'07.04.2025', risk:74, status:'חשוד', flags:['קבלה בסופ"ש'], address:'באר שבע', policy:'BT-010-2201', type:'תרופות', days_since:7 },
+  { id:'TBC-2025-0755', name:'עמי גולדשטיין', provider:'מרפאות האזור הדרומי', amount:'₪11,200', date:'01.04.2025', risk:68, status:'חשוד', flags:['עלייה גיאוגרפית חריגה'], address:'אשדוד', policy:'BT-005-9988', type:'כירורגיה', days_since:13 },
+  { id:'TBC-2025-0867', name:'נועה בן-דוד', provider:'מרפאות האזור הדרומי', amount:'₪8,900', date:'08.04.2025', risk:65, status:'חשוד', flags:['חוסר עקביות גיאוגרפית'], address:'אילת', policy:'BT-009-4432', type:'רפואה פרטית', days_since:6 },
+  { id:'TBC-2025-0801', name:'יוסי כהן', provider:'בית מרקחת הכוכב', amount:'₪3,200', date:'04.04.2025', risk:42, status:'לבדיקה', flags:['תביעה כפולה'], address:'תל אביב', policy:'BT-007-1123', type:'תרופות', days_since:10 },
+  { id:'TBC-2025-0744', name:'מרים פרץ', provider:'מכבי שירותי בריאות', amount:'₪2,800', date:'31.03.2025', risk:21, status:'תקין', flags:[], address:'פתח תקווה', policy:'BT-004-8871', type:'ביקור רופא', days_since:14 },
+  { id:'TBC-2025-0923', name:'גיל ברק', provider:'קופת חולים לאומית', amount:'₪1,900', date:'12.04.2025', risk:12, status:'תקין', flags:[], address:'חולון', policy:'BT-012-0034', type:'ביקור רופא', days_since:2 },
+  { id:'TBC-2025-0900', name:'טל שמחה', provider:'ד"ר רינת אביב', amount:'₪5,600', date:'10.04.2025', risk:55, status:'לבדיקה', flags:['סכום גבוה'], address:'ראשון לציון', policy:'BT-011-6612', type:'פיזיותרפיה', days_since:4 },
+];
+
+/* ─────────────────────────────────────────
+   LOADING SIMULATION
+───────────────────────────────────────── */
+function loadSampleData() {
+  const overlay = document.getElementById('loading-overlay');
+  overlay.classList.add('show');
+  const steps = [1,2,3,4,5];
+  let i = 0;
+  function nextStep() {
+    if (i > 0) document.getElementById('ls'+i).classList.remove('active');
+    i++;
+    if (i <= 5) {
+      document.getElementById('ls'+i).classList.add('active');
+      setTimeout(nextStep, i < 5 ? 700 : 400);
+    } else {
+      setTimeout(() => {
+        overlay.classList.remove('show');
+        document.getElementById('upload-section').style.display = 'none';
+        document.getElementById('dashboard-section').classList.add('show');
+        document.getElementById('main-sidebar').style.display = 'block';
+        initCharts();
+        renderClaims(sampleClaims);
+      }, 300);
+    }
+  }
+  nextStep();
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('dragover');
+  loadSampleData();
+}
+function handleFile(input) {
+  if (input.files.length) loadSampleData();
+}
+
+/* ─────────────────────────────────────────
+   TABS
+───────────────────────────────────────── */
+function setTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('content-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+function setSideNav(el) {
+  document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ─────────────────────────────────────────
+   CHARTS
+───────────────────────────────────────── */
+let chartsInit = false;
+function initCharts() {
+  if (chartsInit) return;
+  chartsInit = true;
+
+  // Pie
+  new Chart(document.getElementById('pieChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['תקין', 'חשוד', 'הונאה מאושרת'],
+      datasets: [{
+        data: [1528, 295, 47],
+        backgroundColor: ['#2a9d8f','#f4a261','#e63946'],
+        borderWidth: 2, borderColor: '#fff'
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position:'bottom', labels:{ font:{family:'Heebo',size:13}, padding:16 } }
+      },
+      cutout: '65%'
+    }
+  });
+
+  // Bar – top providers
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['קליניקת השמש','מרפאת אור וחיים','כרמל רפואה','ד"ר יוסי לוי','מרפאות דרום','ד"ר שרון פינק','הכוכב - בית מרקחת','מרפאת אחוזה','ד"ר רינת אביב','בריאות אילת'],
+      datasets: [{
+        label: 'תביעות חשודות',
+        data: [84, 67, 55, 43, 38, 32, 28, 24, 21, 18],
+        backgroundColor: [
+          '#e63946','#e63946','#f4a261','#f4a261','#f4a261',
+          '#f4a261','#f4a261','#f4a261','#f4a261','#f4a261'
+        ],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend:{ display:false } },
+      scales: {
+        x: { grid:{ color:'#eee' }, ticks:{ font:{family:'Heebo'} } },
+        y: { ticks:{ font:{family:'Heebo', size:11} } }
+      }
+    }
+  });
+
+  // Scatter – providers
+  const suspiciousProviders = [
+    {x:84,y:4905,r:12,label:'קליניקת השמש'},
+    {x:67,y:4179,r:9,label:'מרפאת אור וחיים'},
+    {x:55,y:3600,r:7,label:'כרמל רפואה'},
+    {x:43,y:3884,r:6,label:'ד"ר יוסי לוי'},
+    {x:38,y:3816,r:5,label:'מרפאות דרום'},
+    {x:32,y:3100,r:4,label:'ד"ר שרון פינק'},
+    {x:28,y:2900,r:4,label:'הכוכב'},
+  ];
+  const normalProviders = [
+    {x:312,y:2853,r:20,label:'מכבי שירותי בריאות'},
+    {x:245,y:2100,r:16,label:'קופת חולים לאומית'},
+    {x:189,y:1980,r:13,label:'כללית'},
+    {x:156,y:2340,r:11,label:'מאוחדת'},
+    {x:98,y:1850,r:8,label:'ד"ר דנה ורד'},
+    {x:72,y:2050,r:6,label:'מרפאת מרכז תל אביב'},
+    {x:45,y:1720,r:4,label:'ד"ר אמיר כץ'},
+  ];
+  new Chart(document.getElementById('scatterChart'), {
+    type: 'bubble',
+    data: {
+      datasets: [
+        { label:'ספק חשוד', data:suspiciousProviders.map(p=>({x:p.x,y:p.y,r:p.r})),
+          backgroundColor:'rgba(230,57,70,.65)', borderColor:'#c1121f', borderWidth:1.5 },
+        { label:'ספק תקין', data:normalProviders.map(p=>({x:p.x,y:p.y,r:p.r})),
+          backgroundColor:'rgba(74,144,217,.55)', borderColor:'#2a6ebb', borderWidth:1.5 }
+      ]
+    },
+    options: {
+      plugins: {
+        legend:{ position:'top', labels:{ font:{family:'Heebo'} } },
+        tooltip:{ callbacks:{ label: ctx => `תביעות: ${ctx.raw.x} | ממוצע: ₪${ctx.raw.y.toLocaleString()}` } }
+      },
+      scales: {
+        x: { title:{ display:true, text:'מספר תביעות', font:{family:'Heebo'} }, grid:{color:'#eee'} },
+        y: { title:{ display:true, text:'סכום ממוצע (₪)', font:{family:'Heebo'} }, grid:{color:'#eee'} }
+      }
+    }
+  });
+
+  // Pattern bar
+  new Chart(document.getElementById('patternChart'), {
+    type: 'bar',
+    data: {
+      labels: ['קבלות רצופות','תביעות כפולות','הגדלת סכומים','קבלות סופ"ש','ספקי-רפאים','חוסר עקביות גיאוגרפי','ריבוי תביעות – אותו מבוטח'],
+      datasets: [{
+        label: 'מקרים שזוהו',
+        data: [110, 87, 62, 54, 29, 24, 15],
+        backgroundColor: ['#e63946','#e63946','#f4a261','#f4a261','#e63946','#f4a261','#f4a261'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      plugins: { legend:{ display:false } },
+      scales: {
+        x: { ticks:{ font:{family:'Heebo', size:11} }, grid:{display:false} },
+        y: { grid:{color:'#eee'}, ticks:{ font:{family:'Heebo'} } }
+      }
+    }
+  });
+}
+
+/* ─────────────────────────────────────────
+   CLAIMS TABLE
+───────────────────────────────────────── */
+function riskColor(r) {
+  if (r >= 80) return '#e63946';
+  if (r >= 60) return '#f4a261';
+  if (r >= 40) return '#e0c400';
+  return '#2a9d8f';
+}
+function statusBadge(s) {
+  const map = { 'הונאה':'badge-fraud','חשוד':'badge-suspicious','תקין':'badge-normal','לבדיקה':'badge-medium' };
+  return `<span class="badge ${map[s]||'badge-medium'}">${s}</span>`;
+}
+
+let expandedRow = null;
+function renderClaims(data) {
+  const tbody = document.getElementById('claims-tbody');
+  tbody.innerHTML = '';
+  data.forEach((c, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:var(--text-muted);font-size:11px;">${idx+1}</td>
+      <td style="font-weight:600;color:var(--primary);">${c.id}</td>
+      <td>${c.name}</td>
+      <td>${c.provider}</td>
+      <td style="font-weight:600;">${c.amount}</td>
+      <td>${c.date}</td>
+      <td>
+        <div class="risk-bar-wrap">
+          <div class="risk-bar"><div class="risk-bar-fill" style="width:${c.risk}%;background:${riskColor(c.risk)}"></div></div>
+          <span class="risk-num" style="color:${riskColor(c.risk)}">${c.risk}</span>
+        </div>
+      </td>
+      <td>${statusBadge(c.status)}</td>
+    `;
+    tr.addEventListener('click', () => toggleExpand(c, tr));
+    tbody.appendChild(tr);
+  });
+}
+
+function toggleExpand(c, tr) {
+  // remove existing expanded
+  const old = document.querySelector('.expanded-row');
+  if (old) { old.remove(); }
+  if (expandedRow === tr) { expandedRow = null; return; }
+  expandedRow = tr;
+
+  const flagsHtml = c.flags.length
+    ? c.flags.map(f => `<span class="flag-chip">⚑ ${f}</span>`).join('')
+    : '<span style="color:var(--text-muted);font-size:12px;">אין דגלים</span>';
+
+  const details = document.createElement('tr');
+  details.className = 'expanded-row';
+  details.innerHTML = `<td colspan="8">
+    <div class="expanded-details">
+      <div class="detail-item"><label>מספר פוליסה</label><p>${c.policy}</p></div>
+      <div class="detail-item"><label>סוג טיפול</label><p>${c.type}</p></div>
+      <div class="detail-item"><label>כתובת מבוטח</label><p>${c.address}</p></div>
+      <div class="detail-item"><label>ימים מהגשה</label><p>${c.days_since} ימים</p></div>
+      <div class="detail-item detail-flags">
+        <label style="width:100%;margin-bottom:6px;">דגלי סיכון:</label>
+        ${flagsHtml}
+      </div>
+      <div style="grid-column:1/-1;display:flex;gap:10px;margin-top:4px;">
+        <button class="btn-action btn-primary" style="font-size:12px;" onclick="showToast('פתיחת חקירה עבור ${c.id} ✓')">📂 פתח חקירה</button>
+        <button class="btn-action btn-outline" style="font-size:12px;" onclick="showToast('תביעה ${c.id} נדחתה ✓')">🚫 דחה תביעה</button>
+        <button class="btn-action btn-outline" style="font-size:12px;" onclick="showToast('תביעה ${c.id} סומנה לבדיקת שדה ✓')">🔍 בדיקת שדה</button>
+      </div>
+    </div>
+  </td>`;
+  tr.after(details);
+}
+
+function filterClaims(q) {
+  const filtered = sampleClaims.filter(c =>
+    c.name.includes(q) || c.id.includes(q) || c.provider.includes(q)
+  );
+  renderClaims(filtered);
+  expandedRow = null;
+}
+
+/* ─────────────────────────────────────────
+   TOAST
+───────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(60px)';
+  }, 2500);
+}
+</script>
+</body>
+</html>
