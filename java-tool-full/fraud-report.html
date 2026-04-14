@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>דשבורד זיהוי הונאות</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;line-height:1.6}
+nav{background:#1e293b;padding:10px 16px;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{color:#94a3b8;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:0.85em;display:inline-block;margin:2px}
+nav a:hover{color:#fff;background:#334155}
+h1{text-align:center;color:#1e293b;margin:16px;font-size:1.5em}
+h2{color:#0f172a;margin:20px 0 10px;font-size:1.2em;border-bottom:2px solid #e2e8f0;padding-bottom:6px}
+h3{color:#334155;margin:12px 0 6px;font-size:1em}
+.container{max-width:1000px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:12px;padding:14px;margin:8px 0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0}
+.stat{background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid #e2e8f0}
+.stat .num{font-size:1.5em;font-weight:bold;color:#2563eb;display:block}
+.stat .label{font-size:0.75em;color:#64748b}
+.stat-alert .num{color:#dc2626}
+.alert{border-radius:10px;padding:12px;margin:6px 0;border-right:5px solid}
+.alert-high{background:#fef2f2;border-color:#dc2626}
+.alert-med{background:#fffbeb;border-color:#f59e0b}
+.alert h4{color:#0f172a;margin-bottom:2px;font-size:0.95em}
+.alert p{font-size:0.82em;color:#64748b}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.72em;font-weight:bold}
+.tag-h{background:#dc2626;color:#fff}.tag-m{background:#f59e0b;color:#fff}.tag-l{background:#22c55e;color:#fff}
+table{width:100%;border-collapse:collapse;margin:6px 0;font-size:0.82em}
+th{background:#f8fafc;padding:6px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:2px solid #e2e8f0}
+td{padding:6px 8px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#f8fafc}
+.bar{height:18px;border-radius:4px;display:inline-block;min-width:4px}
+.score-box{display:inline-block;padding:4px 10px;border-radius:6px;font-weight:bold;font-size:0.85em}
+.score-high{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
+.score-med{background:#fffbeb;color:#b45309;border:1px solid #fcd34d}
+.score-low{background:#f0fdf4;color:#16a34a;border:1px solid #86efac}
+a.back{display:inline-block;background:#e2e8f0;color:#475569;padding:5px 12px;font-size:0.82em;border-radius:6px;text-decoration:none;margin:4px}
+a.back:hover{background:#cbd5e1}
+.page{display:none}.page:target{display:block}
+#p-main{display:block}#p-main:target~#p-main{display:block}:target~#p-main{display:none}
+</style>
+</head>
+<body>
+<nav>
+<a href="#p-main">📊 סקירה</a>
+<a href="#p-alerts">🚨 התראות</a>
+<a href="#p-scoring">🎯 דירוג</a>
+<a href="#p-providers">🏥 נותני שירות</a>
+<a href="#p-geo">📍 גיאוגרפי</a>
+<a href="#p-coverage">📋 כיסויים</a>
+<a href="#p-monthly">📅 טרנדים</a>
+<a href="#p-financial">💰 כספי</a>
+<a href="#p-families">👥 משפחות</a>
+<a href="#p-personas">🎭 פרופילים</a>
+<a href="#p-watchlist">📋 מעקב</a>
+</nav>
+<div class="container">
+<div class="page" id="p-main">
+<h1>🔍 דשבורד זיהוי הונאות - ביטוח בריאות</h1>
+<div class="card" style="text-align:center;background:#eff6ff;border-color:#bfdbfe">
+<p style="color:#1e40af">1,870 תביעות | 467 מבוטחים | 16 נותני שירות | 19 התראות</p></div>
+<div class="stat-grid">
+<div class="stat"><span class="num">1,870</span><span class="label">תביעות</span></div>
+<div class="stat"><span class="num">2,713,050₪</span><span class="label">נתבע</span></div>
+<div class="stat"><span class="num">2,323,333₪</span><span class="label">שולם</span></div>
+<div class="stat"><span class="num">467</span><span class="label">מבוטחים</span></div>
+<div class="stat stat-alert"><span class="num">6</span><span class="label">🔴 גבוהות</span></div>
+<div class="stat"><span class="num" style="color:#f59e0b">13</span><span class="label">🟡 בינוניות</span></div>
+</div>
+<h2>🔴 התראות חמורות</h2>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">תדירות_חריגה</span> אברהם סבג - 50 תביעות</h4>
+<p>ממוצע: 4. סה"כ: 10,350 ₪, 1 נותני שירות</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">ריכוז_נותן_שירות</span> מרכז דיקור סיני - 150 תביעות (8.0%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (21 תביעות, 14%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">ריכוז_נותן_שירות</span> קליניקת שלום - 192 תביעות (10.3%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (96 תביעות, 50%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">אשכול_משפחתי</span> משפחת גולדשטיין - 41 מבוטחים, 41 תביעות</h4>
+<p>עיר: הרצליה, נותן שירות: קליניקת טבע, סה"כ: 14,520 ₪</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">אשכול_משפחתי</span> משפחת סבג - 3 מבוטחים, 52 תביעות</h4>
+<p>עיר: תל אביב, נותן שירות: מרכז רפואה משלימה אור, סה"כ: 12,841 ₪</p>
+</div>
+</div>
+<div class="page" id="p-alerts">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🚨 כל ההתראות (19)</h1>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תדירות_חריגה</span> אברהם סבג - 50 תביעות</h4>
+<p>ממוצע: 4. סה"כ: 10,350 ₪, 1 נותני שירות</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> מרכז דיקור סיני - 150 תביעות (8.0%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (21 תביעות, 14%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> קליניקת שלום - 192 תביעות (10.3%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (96 תביעות, 50%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת גולדשטיין - 41 מבוטחים, 41 תביעות</h4>
+<p>עיר: הרצליה, נותן שירות: קליניקת טבע, סה"כ: 14,520 ₪</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת סבג - 3 מבוטחים, 52 תביעות</h4>
+<p>עיר: תל אביב, נותן שירות: מרכז רפואה משלימה אור, סה"כ: 12,841 ₪</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תביעה_מיידית</span> 77 תביעות תוך 60 יום מפוליסה חדשה</h4>
+<p>סה"כ: 161,477 ₪, ממוצע: 2,097 ₪</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר מזרחי רונית - 126 תביעות (6.7%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (20 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר פרידמן אלי - 99 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת גב ומפרקים - 96 תביעות (5.1%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת החלמה - 104 תביעות (5.6%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (19 תביעות, 18%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר כהן יוסף - 100 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (18 תביעות, 18%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מרכז רפואה משלימה אור - 148 תביעות (7.9%)</h4>
+<p>מעסיק דומיננטי: עצמאי (60 תביעות, 40%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת טבע - 135 תביעות (7.2%)</h4>
+<p>מעסיק דומיננטי: עצמאי (54 תביעות, 40%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון שיקום הדר - 119 תביעות (6.4%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (20 תביעות, 16%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> פיזיו פלוס - 97 תביעות (5.2%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר אברהם דוד - 106 תביעות (5.7%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (16 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון MRI צפון - 110 תביעות (5.9%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (16 תביעות, 14%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר לוי שרה - 113 תביעות (6.0%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (17 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 קבלות_בשבת</span> 252 תביעות עם תאריכי טיפול בשבת</h4>
+<p>נותני שירות: קליניקת שלום (31), מרכז דיקור סיני (23), מכון שיקום הדר (21)</p>
+</div>
+</div>
+<div class="page" id="p-scoring">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🎯 דירוג סיכון - מבוטחים</h1>
+<table>
+<tr><th>#</th><th>מבוטח</th><th>ת.ז.</th><th>תביעות</th><th>סכום</th><th>נ.ש.</th><th>פרופיל</th><th>ציון</th></tr>
+<tr><td>1</td><td>אברהם סבג</td><td>111111111</td><td>50</td><td>10,350₪</td><td>1</td><td>🏋️ הממקסם</td><td><span class="score-box score-high">60</span></td></tr>
+<tr><td>2</td><td>משה מלכה</td><td>260650212</td><td>5</td><td>7,642₪</td><td>2</td><td>🏃 הרוכב</td><td><span class="score-box score-med">25</span></td></tr>
+<tr><td>3</td><td>ליאת שמעוני</td><td>115133072</td><td>13</td><td>16,595₪</td><td>8</td><td></td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>4</td><td>עידו כהן</td><td>354793680</td><td>3</td><td>6,851₪</td><td>3</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>5</td><td>אורי יוסף</td><td>288272458</td><td>1</td><td>3,819₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>6</td><td>לירון אזולאי</td><td>172659705</td><td>1</td><td>2,801₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>7</td><td>מאיה שמעוני</td><td>139463600</td><td>4</td><td>7,030₪</td><td>4</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>8</td><td>זיו דהן</td><td>223543871</td><td>1</td><td>1,243₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>9</td><td>עידו בן דוד</td><td>390455761</td><td>5</td><td>8,530₪</td><td>5</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>10</td><td>איתן מלכה</td><td>106625318</td><td>4</td><td>5,743₪</td><td>4</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>11</td><td>איתן פרץ</td><td>132806994</td><td>1</td><td>2,935₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>12</td><td>טלי דהן</td><td>132335898</td><td>5</td><td>6,093₪</td><td>5</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>13</td><td>טלי ביטון</td><td>140173111</td><td>4</td><td>4,172₪</td><td>4</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>14</td><td>בני גולדשטיין</td><td>357018827</td><td>1</td><td>2,623₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>15</td><td>שרה עמר</td><td>192694177</td><td>9</td><td>12,598₪</td><td>6</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>16</td><td>הילה פרידמן</td><td>108952030</td><td>1</td><td>3,903₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>17</td><td>עמית פרץ</td><td>168023739</td><td>1</td><td>2,852₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>18</td><td>טלי כהן</td><td>289416668</td><td>5</td><td>7,770₪</td><td>3</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>19</td><td>גיל פרץ</td><td>189226321</td><td>1</td><td>3,237₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>20</td><td>בני נחום</td><td>361559955</td><td>1</td><td>3,135₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>21</td><td>גיל יוסף</td><td>143719708</td><td>1</td><td>2,021₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>22</td><td>הילה כהן</td><td>143606188</td><td>3</td><td>4,051₪</td><td>3</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>23</td><td>מיכל נחום</td><td>344818322</td><td>2</td><td>2,131₪</td><td>2</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>24</td><td>טלי רוזנברג</td><td>134230842</td><td>14</td><td>15,503₪</td><td>7</td><td></td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>25</td><td>ליאת מזרחי</td><td>335723857</td><td>5</td><td>9,895₪</td><td>5</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>26</td><td>נועה נחום</td><td>162973077</td><td>1</td><td>3,443₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>27</td><td>ליאת פרידמן</td><td>338039481</td><td>3</td><td>3,518₪</td><td>3</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>28</td><td>לירון סבג</td><td>268941402</td><td>3</td><td>4,344₪</td><td>2</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>29</td><td>מיכל ביטון</td><td>262062810</td><td>2</td><td>3,840₪</td><td>2</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+<tr><td>30</td><td>נועה נחום</td><td>209769615</td><td>1</td><td>3,433₪</td><td>1</td><td>🏃 הרוכב</td><td><span class="score-box score-low">15</span></td></tr>
+</table>
+</div>
+<div class="page" id="p-providers">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🏥 ניתוח נותני שירות</h1>
+<table>
+<tr><th>נותן שירות</th><th>תביעות</th><th>%</th><th>מעסיק דומיננטי</th><th>סכום ממוצע</th><th>סיכון</th></tr>
+<tr style="background:#fef2f2"><td>קליניקת שלום</td><td>192</td><td>10.3%</td><td>חברת הייטק א (50%)</td><td>1028₪</td><td>🔴</td></tr>
+<tr style="background:#fef2f2"><td>מרכז דיקור סיני</td><td>150</td><td>8.0%</td><td>חברת הייטק א (14%)</td><td>1585₪</td><td>🔴</td></tr>
+<tr style="background:#fffbeb"><td>מרכז רפואה משלימה אור</td><td>148</td><td>7.9%</td><td>עצמאי (41%)</td><td>1049₪</td><td>🔴</td></tr>
+<tr style="background:#fffbeb"><td>קליניקת טבע</td><td>135</td><td>7.2%</td><td>עצמאי (40%)</td><td>1161₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>דר מזרחי רונית</td><td>126</td><td>6.7%</td><td>חברת תקשורת (16%)</td><td>1668₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>מכון שיקום הדר</td><td>119</td><td>6.4%</td><td>חברת הייטק א (17%)</td><td>1510₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>דר לוי שרה</td><td>113</td><td>6.0%</td><td>משרד הבריאות (15%)</td><td>1598₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>מכון MRI צפון</td><td>110</td><td>5.9%</td><td>חברת תקשורת (15%)</td><td>1632₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>דר אברהם דוד</td><td>106</td><td>5.7%</td><td>חברת תקשורת (15%)</td><td>1628₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>קליניקת החלמה</td><td>104</td><td>5.6%</td><td>משרד הבריאות (18%)</td><td>1500₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>דר כהן יוסף</td><td>100</td><td>5.3%</td><td>חברת ביטוח ב (18%)</td><td>1765₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>דר פרידמן אלי</td><td>99</td><td>5.3%</td><td>משרד הבריאות (15%)</td><td>1495₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>פיזיו פלוס</td><td>97</td><td>5.2%</td><td>משרד הבריאות (15%)</td><td>1581₪</td><td>🟡</td></tr>
+<tr style="background:#fffbeb"><td>קליניקת גב ומפרקים</td><td>96</td><td>5.1%</td><td>חברת ביטוח ב (16%)</td><td>1550₪</td><td>🟡</td></tr>
+<tr><td>מכון פיזיו בריא</td><td>92</td><td>4.9%</td><td>עצמאי (13%)</td><td>1508₪</td><td>🟢</td></tr>
+<tr><td>מרכז בריאות טוב</td><td>83</td><td>4.4%</td><td>חברת תקשורת (17%)</td><td>1468₪</td><td>🟢</td></tr>
+</table>
+</div>
+<div class="page" id="p-geo">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>📍 ניתוח גיאוגרפי</h1>
+<table>
+<tr><th>עיר</th><th>תביעות</th><th>מבוטחים</th><th>תביעות/מבוטח</th><th></th></tr>
+<tr><td>הרצליה</td><td>219</td><td>80</td><td>2.7</td><td><div class="bar" style="width:200px;background:#2563eb"></div></td></tr>
+<tr><td>תל אביב</td><td>178</td><td>34</td><td>5.2</td><td><div class="bar" style="width:162px;background:#2563eb"></div></td></tr>
+<tr><td>חולון</td><td>161</td><td>37</td><td>4.4</td><td><div class="bar" style="width:147px;background:#2563eb"></div></td></tr>
+<tr><td>כפר סבא</td><td>157</td><td>34</td><td>4.6</td><td><div class="bar" style="width:143px;background:#2563eb"></div></td></tr>
+<tr><td>ירושלים</td><td>127</td><td>32</td><td>4.0</td><td><div class="bar" style="width:115px;background:#2563eb"></div></td></tr>
+<tr><td>חיפה</td><td>125</td><td>28</td><td>4.5</td><td><div class="bar" style="width:114px;background:#2563eb"></div></td></tr>
+<tr><td>נתניה</td><td>120</td><td>28</td><td>4.3</td><td><div class="bar" style="width:109px;background:#2563eb"></div></td></tr>
+<tr><td>רחובות</td><td>113</td><td>25</td><td>4.5</td><td><div class="bar" style="width:103px;background:#2563eb"></div></td></tr>
+<tr><td>בני ברק</td><td>107</td><td>24</td><td>4.5</td><td><div class="bar" style="width:97px;background:#2563eb"></div></td></tr>
+<tr><td>פתח תקווה</td><td>101</td><td>25</td><td>4.0</td><td><div class="bar" style="width:92px;background:#2563eb"></div></td></tr>
+<tr><td>אשקלון</td><td>100</td><td>26</td><td>3.8</td><td><div class="bar" style="width:91px;background:#2563eb"></div></td></tr>
+<tr><td>באר שבע</td><td>97</td><td>24</td><td>4.0</td><td><div class="bar" style="width:88px;background:#2563eb"></div></td></tr>
+<tr><td>רמת גן</td><td>95</td><td>23</td><td>4.1</td><td><div class="bar" style="width:86px;background:#2563eb"></div></td></tr>
+<tr><td>ראשון לציון</td><td>90</td><td>25</td><td>3.6</td><td><div class="bar" style="width:82px;background:#2563eb"></div></td></tr>
+<tr><td>אשדוד</td><td>80</td><td>22</td><td>3.6</td><td><div class="bar" style="width:73px;background:#2563eb"></div></td></tr>
+</table>
+</div>
+<div class="page" id="p-coverage">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>📋 ניתוח כיסויים</h1>
+<table>
+<tr><th>כיסוי</th><th>תביעות</th><th>סה"כ סכום</th><th>ממוצע</th><th></th></tr>
+<tr><td>רפואה משלימה</td><td>421</td><td>456,714₪</td><td>1,084₪</td><td><div class="bar" style="width:200px;background:#3b82f6"></div></td></tr>
+<tr><td>פיזיותרפיה</td><td>282</td><td>445,802₪</td><td>1,580₪</td><td><div class="bar" style="width:133px;background:#3b82f6"></div></td></tr>
+<tr><td>התייעצות מומחה</td><td>257</td><td>367,994₪</td><td>1,431₪</td><td><div class="bar" style="width:122px;background:#3b82f6"></div></td></tr>
+<tr><td>שיקום</td><td>253</td><td>390,441₪</td><td>1,543₪</td><td><div class="bar" style="width:120px;background:#3b82f6"></div></td></tr>
+<tr><td>אביזרים רפואיים</td><td>224</td><td>361,177₪</td><td>1,612₪</td><td><div class="bar" style="width:106px;background:#3b82f6"></div></td></tr>
+<tr><td>בדיקות אבחנתיות</td><td>222</td><td>373,160₪</td><td>1,680₪</td><td><div class="bar" style="width:105px;background:#3b82f6"></div></td></tr>
+<tr><td>רפואת שיניים</td><td>211</td><td>317,762₪</td><td>1,505₪</td><td><div class="bar" style="width:100px;background:#3b82f6"></div></td></tr>
+</table>
+</div>
+<div class="page" id="p-monthly">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>📅 טרנדים חודשיים</h1>
+<table>
+<tr><th>חודש</th><th>תביעות</th><th>סכום</th><th></th><th>הערה</th></tr>
+<tr><td>2025-01</td><td>132</td><td>198,664₪</td><td><div class="bar" style="width:174px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-02</td><td>153</td><td>249,866₪</td><td><div class="bar" style="width:202px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-03</td><td>166</td><td>251,343₪</td><td><div class="bar" style="width:219px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-04</td><td>138</td><td>197,755₪</td><td><div class="bar" style="width:182px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-05</td><td>149</td><td>198,183₪</td><td><div class="bar" style="width:197px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-06</td><td>129</td><td>203,302₪</td><td><div class="bar" style="width:170px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-07</td><td>140</td><td>209,133₪</td><td><div class="bar" style="width:185px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-08</td><td>136</td><td>206,994₪</td><td><div class="bar" style="width:179px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-09</td><td>166</td><td>207,916₪</td><td><div class="bar" style="width:219px;background:#2563eb"></div></td><td></td></tr>
+<tr><td>2025-10</td><td>189</td><td>257,486₪</td><td><div class="bar" style="width:250px;background:#f59e0b"></div></td><td></td></tr>
+<tr><td>2025-11</td><td>189</td><td>248,780₪</td><td><div class="bar" style="width:250px;background:#f59e0b"></div></td><td></td></tr>
+<tr><td>2025-12</td><td>183</td><td>283,628₪</td><td><div class="bar" style="width:242px;background:#f59e0b"></div></td><td></td></tr>
+</table>
+<div class="card"><p>ממוצע חודשי: 156 תביעות</p></div>
+</div>
+<div class="page" id="p-financial">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>💰 ניתוח כספי</h1>
+<div class="stat-grid">
+<div class="stat"><span class="num">2,713,050₪</span><span class="label">נתבע</span></div>
+<div class="stat"><span class="num">2,323,333₪</span><span class="label">שולם</span></div>
+<div class="stat stat-alert"><span class="num">389,717₪</span><span class="label">פער (14%)</span></div>
+<div class="stat"><span class="num">1,450₪</span><span class="label">ממוצע לתביעה</span></div>
+</div>
+<h2>Top 10 מבוטחים יקרים</h2>
+<table>
+<tr><th>#</th><th>מבוטח</th><th>תביעות</th><th>שולם</th><th>ממוצע</th></tr>
+<tr><td>1</td><td>אורי סבג</td><td>12</td><td>16,759₪</td><td>1,396₪</td></tr>
+<tr><td>2</td><td>טלי רוזנברג</td><td>14</td><td>15,362₪</td><td>1,097₪</td></tr>
+<tr><td>3</td><td>רון אלון</td><td>8</td><td>14,659₪</td><td>1,832₪</td></tr>
+<tr><td>4</td><td>הילה אברהם</td><td>7</td><td>14,624₪</td><td>2,089₪</td></tr>
+<tr><td>5</td><td>ענת עמר</td><td>9</td><td>14,492₪</td><td>1,610₪</td></tr>
+<tr><td>6</td><td>ליאת שמעוני</td><td>13</td><td>14,136₪</td><td>1,087₪</td></tr>
+<tr><td>7</td><td>אבי נחום</td><td>8</td><td>13,999₪</td><td>1,749₪</td></tr>
+<tr><td>8</td><td>בני יוסף</td><td>8</td><td>13,956₪</td><td>1,744₪</td></tr>
+<tr><td>9</td><td>קרן יוסף</td><td>11</td><td>13,355₪</td><td>1,214₪</td></tr>
+<tr><td>10</td><td>גיל גולדשטיין</td><td>9</td><td>13,197₪</td><td>1,466₪</td></tr>
+</table>
+<h2>התפלגות סכומים</h2>
+<table>
+<tr><th>טווח</th><th>תביעות</th><th>%</th><th></th></tr>
+<tr><td>0-200₪</td><td>71</td><td>3.8%</td><td><div class="bar" style="width:35px;background:#22c55e"></div></td></tr>
+<tr><td>200-500₪</td><td>323</td><td>17.3%</td><td><div class="bar" style="width:161px;background:#22c55e"></div></td></tr>
+<tr><td>500-1K₪</td><td>313</td><td>16.7%</td><td><div class="bar" style="width:156px;background:#2563eb"></div></td></tr>
+<tr><td>1K-2K₪</td><td>555</td><td>29.7%</td><td><div class="bar" style="width:277px;background:#2563eb"></div></td></tr>
+<tr><td>2K-3K₪</td><td>593</td><td>31.7%</td><td><div class="bar" style="width:296px;background:#f59e0b"></div></td></tr>
+<tr><td>3K+₪</td><td>15</td><td>0.8%</td><td><div class="bar" style="width:7px;background:#dc2626"></div></td></tr>
+</table>
+</div>
+<div class="page" id="p-families">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>👥 אשכולות משפחתיים</h1>
+<table>
+<tr><th>משפחה</th><th>עיר</th><th>נותן שירות</th><th>מבוטחים</th><th>תביעות</th><th>סה"כ</th></tr>
+<tr style="background:#fef2f2"><td><b>סבג</b></td><td>תל אביב</td><td>מרכז רפואה משלימה אור</td><td>3</td><td>52</td><td>12,841₪</td></tr>
+<tr style="background:#fef2f2"><td><b>גולדשטיין</b></td><td>הרצליה</td><td>קליניקת טבע</td><td>41</td><td>41</td><td>14,520₪</td></tr>
+</table>
+</div>
+<div class="page" id="p-personas">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>🎭 פרופילי הונאה</h1>
+<div class="card" style="border-right:5px solid #dc2626">
+<h2 style="border:none;margin:0;color:#dc2626">🏋️ הממקסם (1)</h2>
+<table>
+<tr><th>מבוטח</th><th>תביעות</th><th>סכום</th><th>ציון</th></tr>
+<tr><td>אברהם סבג</td><td>50</td><td>10,350₪</td><td><span class="score-box score-high">60</span></td></tr>
+</table>
+</div>
+<div class="card" style="border-right:5px solid #dc2626">
+<h2 style="border:none;margin:0;color:#dc2626">🏃 הרוכב (66)</h2>
+<table>
+<tr><th>מבוטח</th><th>תביעות</th><th>סכום</th><th>ציון</th></tr>
+<tr><td>משה מלכה</td><td>5</td><td>7,642₪</td><td><span class="score-box score-med">25</span></td></tr>
+<tr><td>עידו כהן</td><td>3</td><td>6,851₪</td><td><span class="score-box score-med">15</span></td></tr>
+<tr><td>אורי יוסף</td><td>1</td><td>3,819₪</td><td><span class="score-box score-med">15</span></td></tr>
+<tr><td>לירון אזולאי</td><td>1</td><td>2,801₪</td><td><span class="score-box score-med">15</span></td></tr>
+<tr><td>מאיה שמעוני</td><td>4</td><td>7,030₪</td><td><span class="score-box score-med">15</span></td></tr>
+</table>
+</div>
+</div>
+<div class="page" id="p-watchlist">
+<a href="#p-main" class="back">← סקירה</a>
+<h1>📋 Watchlist - רשימת מעקב</h1>
+<div class="stat-grid">
+<div class="stat stat-alert"><span class="num">1</span><span class="label">🔴 סיכון גבוה</span></div>
+<div class="stat"><span class="num" style="color:#f59e0b">1</span><span class="label">🟡 בינוני</span></div>
+</div>
+<h2>🔴 מבוטחים במעקב (ציון 50+)</h2>
+<table>
+<tr><th>#</th><th>מבוטח</th><th>ת.ז.</th><th>פרופיל</th><th>תביעות</th><th>ציון</th></tr>
+<tr style="background:#fef2f2"><td>1</td><td>אברהם סבג</td><td>111111111</td><td>🏋️ הממקסם</td><td>50</td><td><span class="score-box score-high">60</span></td></tr>
+</table>
+<h2>פעולות מומלצות</h2>
+<div class="card">
+<p>1. ⚡ <b>דחוף:</b> בירור עם 1 מבוטחים בסיכון גבוה</p>
+<p>2. 📞 <b>בינוני:</b> דגימה אקראית של 1 מבוטחים בסיכון בינוני</p>
+<p>3. 📋 <b>שוטף:</b> הוספת סף בקרה לפוליסות חדשות (60 יום ראשונים)</p>
+</div>
+</div>
+</div>
+</body>
+</html>
