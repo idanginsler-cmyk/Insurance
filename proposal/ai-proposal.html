@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>הצעה לשימוש ב-Claude AI - מחלקת חיתום ואנליזת הונאות</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#fff;color:#1e293b;line-height:1.7;max-width:900px;margin:0 auto;padding:30px}
+h1{color:#1e40af;font-size:2em;margin:20px 0 10px;border-bottom:3px solid #1e40af;padding-bottom:10px}
+h2{color:#0f172a;font-size:1.4em;margin:30px 0 10px;border-right:4px solid #1e40af;padding-right:12px}
+h3{color:#1e40af;font-size:1.15em;margin:16px 0 6px}
+h4{color:#334155;margin:10px 0 4px}
+p{margin:8px 0;text-align:justify}
+ul,ol{margin:10px 25px}
+li{margin:4px 0}
+.meta{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:15px;margin:15px 0}
+.meta strong{color:#1e40af}
+.box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:15px;margin:12px 0}
+.green-box{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:15px;margin:12px 0}
+.red-box{background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:15px;margin:12px 0}
+.yellow-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:15px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:0.92em}
+th{background:#1e40af;color:#fff;padding:10px;text-align:right;font-weight:600}
+td{padding:10px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.78em;font-weight:bold;margin:2px}
+.tag-risk{background:#dc2626;color:#fff}
+.tag-ok{background:#16a34a;color:#fff}
+.tag-info{background:#2563eb;color:#fff}
+.toc{background:#fafafa;border:1px solid #e2e8f0;border-radius:8px;padding:15px;margin:20px 0}
+.toc a{color:#1e40af;text-decoration:none;display:block;padding:3px 0}
+.toc a:hover{text-decoration:underline}
+.section{page-break-inside:avoid}
+code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.9em;direction:ltr;display:inline-block}
+pre{background:#0f172a;color:#e2e8f0;padding:15px;border-radius:8px;overflow-x:auto;font-size:0.85em;direction:ltr;text-align:left;margin:10px 0}
+.header-box{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;padding:30px;border-radius:12px;margin-bottom:20px;text-align:center}
+.header-box h1{color:#fff;border:none;font-size:2.2em}
+.header-box p{font-size:1.1em;opacity:0.95}
+.step{background:#fff;border-right:3px solid #2563eb;padding:10px 15px;margin:8px 0}
+@media print{
+  body{padding:15px;font-size:10pt}
+  h1{font-size:18pt}h2{font-size:14pt}h3{font-size:12pt}
+  .header-box{background:#1e40af!important;-webkit-print-color-adjust:exact}
+  .no-print{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="header-box">
+<h1>🤖 הצעה: שימוש ב-Claude AI לכלי עבודה בחיתום והונאות</h1>
+<p>מסמך מפורט למחלקת AI | פברואר 2026</p>
+<p style="font-size:0.9em;margin-top:10px">הגשה: [שם העובד] | תפקיד: אנליסט הונאות</p>
+</div>
+
+<div class="meta">
+<p><strong>מגיש:</strong> [שם]</p>
+<p><strong>מחלקה:</strong> אנליזת הונאות / חיתום</p>
+<p><strong>מטרת המסמך:</strong> בקשת אישור לשימוש ב-Claude AI לצורך פיתוח כלי עבודה פנימיים</p>
+<p><strong>מעמד:</strong> הצעה לפיילוט - דורש אישור אבטחת מידע ו-AI Governance</p>
+</div>
+
+<div class="toc">
+<h3 style="margin-top:0">תוכן עניינים</h3>
+<a href="#summary">1. תקציר מנהלים</a>
+<a href="#problem">2. הבעיה העסקית</a>
+<a href="#solution">3. הפתרון המוצע</a>
+<a href="#tools">4. כלים שפותחו עד כה (POC)</a>
+<a href="#architecture">5. ארכיטקטורה טכנית</a>
+<a href="#security">6. אבטחת מידע ופרטיות</a>
+<a href="#usecases">7. מקרי שימוש קונקרטיים</a>
+<a href="#workflow">8. תהליך עבודה מוצע</a>
+<a href="#risks">9. ניהול סיכונים</a>
+<a href="#roi">10. ROI וחיסכון משוער</a>
+<a href="#requirements">11. דרישות טכניות</a>
+<a href="#timeline">12. לוח זמנים מוצע</a>
+<a href="#governance">13. Governance והגבלות שימוש</a>
+</div>
+
+<!-- 1. תקציר מנהלים -->
+<div class="section" id="summary">
+<h1>1. תקציר מנהלים</h1>
+<p>מסמך זה מציג הצעה לאישור שימוש ב-<strong>Claude AI</strong> (פלטפורמת הבינה המלאכותית של Anthropic) כחלק מכלי העבודה הפנימיים של מחלקות החיתום ואנליזת ההונאות.</p>
+
+<p>הפיילוט שנעשה עד כה (POC) הראה שניתן לבנות <strong>כלים מבוססי AI</strong> המשפרים משמעותית את יעילות העבודה:</p>
+
+<ul>
+<li>דשבורד אינטראקטיבי לזיהוי הונאות תביעות</li>
+<li>ספר חיתום דיגיטלי אינטראקטיבי לקבלת החלטות חיתום</li>
+<li>תוכנית הכשרה מובנית לשימוש ב-AI בביטוח</li>
+<li>38 תבניות פרומפט מוכנות לתחומי ביטוח</li>
+<li>7 דמואים Python לעיבוד מסמכי ביטוח ורפואיים</li>
+</ul>
+
+<p>כל הכלים נבנו ללא הזנת מידע אמיתי של החברה או לקוחות - תוך שימוש בנתונים סינתטיים בלבד.</p>
+
+<div class="green-box">
+<h4>✅ בקשה מרכזית</h4>
+<p>אישור לשימוש פנימי ב-Claude AI (דרך API ארגוני או שירות ממוגן) לפיתוח כלים פנימיים על בסיס נתונים סינתטיים, עם מעבר מבוקר לנתונים אמיתיים בהמשך תחת פיקוח אבטחת מידע.</p>
+</div>
+</div>
+
+<!-- 2. הבעיה -->
+<div class="section" id="problem">
+<h1>2. הבעיה העסקית</h1>
+
+<h2>2.1 אתגרים בזיהוי הונאות</h2>
+<p>אנליזת הונאות ביטוח כיום דורשת:</p>
+<ul>
+<li><strong>סקירה ידנית</strong> של אלפי תביעות בחודש</li>
+<li>זיהוי <strong>דפוסים מורכבים</strong> בין מבוטחים, נותני שירות ומעסיקים</li>
+<li>ניתוח <strong>היסטוריית תביעות</strong> ארוכה</li>
+<li>זמן טיפול ממוצע <strong>גבוה</strong> לכל תביעה חשודה</li>
+<li>חוסר <strong>ויזואליזציה</strong> אפקטיבית של נתונים</li>
+</ul>
+
+<h2>2.2 אתגרים בחיתום</h2>
+<ul>
+<li>ספר חיתום עבה עם <strong>מאות מסלולים</strong> של החלטות</li>
+<li>קושי בניווט מהיר בין מצבים רפואיים</li>
+<li>זמן למידה ארוך לחתמים חדשים</li>
+<li>חוסר אחידות בהחלטות בין חתמים שונים</li>
+</ul>
+
+<h2>2.3 פערים נוכחיים</h2>
+<table>
+<tr><th>תחום</th><th>מצב נוכחי</th><th>פער</th></tr>
+<tr><td>זיהוי הונאות</td><td>ידני, מבוסס Excel</td><td>אין זיהוי דפוסים אוטומטי</td></tr>
+<tr><td>חיתום</td><td>ספר PDF סטטי</td><td>אין כלי חיפוש מהיר</td></tr>
+<tr><td>ניתוח מסמכים</td><td>קריאה ידנית</td><td>שעות רבות על מסמכים ארוכים</td></tr>
+<tr><td>ידע ארגוני</td><td>מפוזר בין אנשים</td><td>אין "זיכרון ארגוני" נגיש</td></tr>
+</table>
+</div>
+
+<!-- 3. הפתרון -->
+<div class="section" id="solution">
+<h1>3. הפתרון המוצע</h1>
+
+<h2>3.1 מה זה Claude AI</h2>
+<p><strong>Claude</strong> הוא מודל שפה גדול (LLM) שפותח על ידי <strong>Anthropic</strong>, חברה אמריקאית שהוקמה ב-2021 ומתמחה ב-AI בטוח ואחראי. Claude ידוע ב:</p>
+<ul>
+<li>יכולת לעבד <strong>מסמכים ארוכים</strong> (עד 200,000 tokens ≈ 500 עמודים)</li>
+<li><strong>תמיכה מצוינת בעברית</strong></li>
+<li><strong>דיוק גבוה</strong> בניתוח טקסט מקצועי</li>
+<li>דגש על <strong>אבטחה ופרטיות</strong> (Anthropic היא מהחברות המחמירות ביותר)</li>
+<li>אישור <strong>SOC 2 Type II</strong>, HIPAA, GDPR</li>
+</ul>
+
+<h2>3.2 מה אנחנו מציעים</h2>
+<ol>
+<li><strong>שלב 1 - POC מורחב:</strong> המשך פיתוח הכלים הקיימים עם נתונים סינתטיים</li>
+<li><strong>שלב 2 - פיילוט מצומצם:</strong> שימוש בנתונים אנונימיים/מצומצמים מול Claude Enterprise</li>
+<li><strong>שלב 3 - אינטגרציה:</strong> חיבור מבוקר למערכות פנימיות (תחת פיקוח מלא)</li>
+</ol>
+</div>
+
+<!-- 4. כלים שפותחו -->
+<div class="section" id="tools">
+<h1>4. כלים שפותחו עד כה (POC)</h1>
+<p>במסגרת פיילוט פרטי (ללא נתוני חברה), נבנו הכלים הבאים:</p>
+
+<h2>4.1 דשבורד זיהוי הונאות</h2>
+<div class="box">
+<p><strong>מה זה:</strong> דשבורד HTML אינטראקטיבי עם 12 טאבים לניתוח תביעות ביטוח בריאות.</p>
+<p><strong>יכולות:</strong></p>
+<ul>
+<li>זיהוי תדירות חריגה של תביעות למבוטח</li>
+<li>ריכוז נותני שירות ("טבעות")</li>
+<li>ניתוח אשכולות משפחתיים</li>
+<li>זיהוי תביעות מיידיות אחרי תחילת פוליסה</li>
+<li>פרופילי הונאה (הממקסם, המארגן, הצמוד, הרוכב)</li>
+<li>Watchlist ומעקב</li>
+<li>ניתוח קבלות (מספור רציף, תאריכי שבת)</li>
+<li>ניתוח גיאוגרפי ורשתות קשרים</li>
+</ul>
+<p><strong>טכנולוגיה:</strong> HTML + CSS (ללא JavaScript) - עובד בכל מחשב ארגוני</p>
+<p><strong>גרסה עצמאית:</strong> כלי Java שמקבל CSV ומפיק HTML (רץ מקומית, ללא אינטרנט)</p>
+</div>
+
+<h2>4.2 ספר חיתום אינטראקטיבי</h2>
+<div class="box">
+<p><strong>מה זה:</strong> המרת ספר החיתום הסטטי לכלי אינטראקטיבי עם עץ החלטות ויזואלי.</p>
+<p><strong>דוגמה - FMF (קדחת ים תיכונית):</strong></p>
+<ul>
+<li>שאלון מונחה: נושא/חולה? → מטופל? → התקפים?</li>
+<li>מסלול אוטומטי לקוד החלטה (FMF 101/105/114)</li>
+<li>תצוגת עץ מלא של כל המסלולים</li>
+<li>טבלת החלטות לכל ענף ביטוח</li>
+</ul>
+<p><strong>ערך:</strong> חתמים חדשים מגיעים לתשובה נכונה תוך <strong>30 שניות</strong> במקום חיפוש בדפים</p>
+</div>
+
+<h2>4.3 תוכנית הכשרה ל-AI בביטוח</h2>
+<div class="box">
+<p>5 מפגשים מובנים: מבוא, סקירת כלים, עיבוד מסמכים, בניית סוכנים, הטמעה</p>
+<p>+ 38 תבניות פרומפט לתחומי ביטוח שונים</p>
+<p>+ 7 דמואים Python לעיבוד מסמכים רפואיים</p>
+</div>
+</div>
+
+<!-- 5. ארכיטקטורה -->
+<div class="section" id="architecture">
+<h1>5. ארכיטקטורה טכנית</h1>
+
+<h2>5.1 אופציות פריסה (מהכי בטוח לפחות)</h2>
+<table>
+<tr><th>אפשרות</th><th>תיאור</th><th>אבטחה</th><th>המלצה</th></tr>
+<tr>
+<td><strong>Claude for Enterprise</strong></td>
+<td>חשבון ארגוני עם Anthropic</td>
+<td><span class="tag tag-ok">גבוהה</span></td>
+<td>⭐ מומלץ</td>
+</tr>
+<tr>
+<td><strong>Amazon Bedrock</strong></td>
+<td>Claude דרך AWS בענן פרטי</td>
+<td><span class="tag tag-ok">גבוהה מאוד</span></td>
+<td>אם יש AWS</td>
+</tr>
+<tr>
+<td><strong>Google Cloud Vertex</strong></td>
+<td>Claude דרך GCP</td>
+<td><span class="tag tag-ok">גבוהה מאוד</span></td>
+<td>אם יש GCP</td>
+</tr>
+<tr>
+<td><strong>Claude.ai Team</strong></td>
+<td>ממשק מיידי לשימוש</td>
+<td><span class="tag tag-info">סטנדרטית</span></td>
+<td>לפיילוט ראשוני</td>
+</tr>
+</table>
+
+<h2>5.2 זרימת נתונים מוצעת</h2>
+<pre>
+[עובד החברה]
+     ↓
+[מחשב עבודה מקומי]
+     ↓
+[אינטרנט ארגוני / VPN]
+     ↓
+[Claude Enterprise - שרתי Anthropic מוצפנים]
+     ↓
+[תשובה חוזרת - ללא שמירה]
+     ↓
+[מחשב עבודה - תוצאה]
+</pre>
+
+<h2>5.3 נקודות אבטחה קריטיות</h2>
+<ul>
+<li><strong>HTTPS בלבד</strong> - הצפנה בתעבורה (TLS 1.3)</li>
+<li><strong>No Training</strong> - בחשבון Enterprise הנתונים לא משמשים לאימון מודלים</li>
+<li><strong>Zero Data Retention</strong> - אפשר להגדיר שהנתונים נמחקים מיד אחרי הפניה</li>
+<li><strong>SSO + MFA</strong> - כניסה עם חשבון החברה בלבד</li>
+<li><strong>Audit Logs</strong> - תיעוד מלא של כל פעולה</li>
+</ul>
+</div>
+
+<!-- 6. אבטחת מידע -->
+<div class="section" id="security">
+<h1>6. אבטחת מידע ופרטיות</h1>
+
+<h2>6.1 סיווג מידע</h2>
+<table>
+<tr><th>סוג מידע</th><th>סיווג</th><th>שימוש ב-AI</th></tr>
+<tr><td>נתונים סינתטיים</td><td><span class="tag tag-ok">פתוח</span></td><td>מותר לחלוטין</td></tr>
+<tr><td>נתונים אגרגטיביים (סטטיסטיקות)</td><td><span class="tag tag-info">פנימי</span></td><td>מותר בזהירות</td></tr>
+<tr><td>מסמכי מדיניות/נהלים</td><td><span class="tag tag-info">פנימי</span></td><td>מותר ב-Enterprise</td></tr>
+<tr><td>נתוני לקוחות אנונימיים</td><td><span class="tag tag-info">רגיש</span></td><td>רק ב-Enterprise + אישור</td></tr>
+<tr><td>פרטי לקוחות מזהים (PII)</td><td><span class="tag tag-risk">סודי</span></td><td>❌ לא מותר</td></tr>
+<tr><td>מידע רפואי (PHI)</td><td><span class="tag tag-risk">סודי</span></td><td>❌ לא מותר (אלא עם BAA)</td></tr>
+</table>
+
+<h2>6.2 הסכמי אבטחה מצד Anthropic</h2>
+<div class="green-box">
+<h4>אישורים ועמידה בתקנים של Anthropic:</h4>
+<ul>
+<li><strong>SOC 2 Type II</strong> - ביקורת חיצונית של בקרות אבטחה</li>
+<li><strong>ISO 27001</strong> - תקן בינלאומי לניהול אבטחת מידע</li>
+<li><strong>GDPR</strong> - עמידה בתקן האירופי לפרטיות</li>
+<li><strong>HIPAA BAA</strong> - זמין לחשבונות Enterprise (למידע רפואי)</li>
+<li><strong>CCPA</strong> - עמידה בתקן פרטיות קליפורניה</li>
+</ul>
+</div>
+
+<h2>6.3 מה Anthropic לא עושה עם הנתונים</h2>
+<div class="red-box">
+<h4>❌ ב-Enterprise, Anthropic אינם:</h4>
+<ul>
+<li>משתמשים בנתונים שלכם לאימון מודלים</li>
+<li>משתפים את הנתונים עם לקוחות אחרים</li>
+<li>שומרים את הנתונים אחרי מחיקה</li>
+<li>מעבירים את הנתונים למדינות שלישיות ללא הסכם</li>
+</ul>
+</div>
+
+<h2>6.4 המלצות אבטחת מידע מטעמנו</h2>
+<ol>
+<li><strong>מדיניות שימוש:</strong> מסמך מחייב מה מותר/אסור להזין ל-Claude</li>
+<li><strong>הדרכת עובדים:</strong> לפני הענקת גישה</li>
+<li><strong>מסך "דגל":</strong> תזכורת לפני כל שימוש לא להזין PII</li>
+<li><strong>Audit רבעוני:</strong> סקירת לוגים לזיהוי חריגות</li>
+<li><strong>Redaction אוטומטי:</strong> כלי שמנטרל ת.ז., טלפון, שם לפני שליחה</li>
+<li><strong>Data Classification:</strong> תיוג נתונים לפני שימוש</li>
+</ol>
+</div>
+
+<!-- 7. מקרי שימוש -->
+<div class="section" id="usecases">
+<h1>7. מקרי שימוש קונקרטיים</h1>
+
+<h2>7.1 זיהוי הונאות - מקרה לדוגמה</h2>
+<div class="box">
+<h4>תרחיש נוכחי:</h4>
+<p>אנליסט מקבל רשימה של 200 תביעות חשודות. בודק ידנית כל אחת - קורא מסמכים, משווה עם היסטוריה, בודק דפוסים. זמן ממוצע לתביעה: 15-30 דקות.</p>
+
+<h4>תרחיש עם Claude:</h4>
+<p>1. Claude מקבל את רשימת התביעות (אנונימיות)<br>
+2. מזהה באופן אוטומטי דפוסים חשודים<br>
+3. מייצר סיכום מנומק לכל תביעה<br>
+4. האנליסט מקבל רק את ה-20 הכי חשודות + סיבות<br>
+5. זמן ממוצע לתביעה: 3-5 דקות</p>
+
+<p><strong>חיסכון:</strong> 80% בזמן</p>
+</div>
+
+<h2>7.2 חיתום - מקרה לדוגמה</h2>
+<div class="box">
+<h4>תרחיש נוכחי:</h4>
+<p>חתם חדש מקבל בקשה ביטוח עם הצהרת בריאות מורכבת. חיפוש בספר חיתום פיזי לוקח 10-20 דקות. אם יש ספק - התייעצות עם בכיר.</p>
+
+<h4>תרחיש עם Claude:</h4>
+<p>1. חתם מזין את הצהרת הבריאות (ללא שם/ת.ז.)<br>
+2. Claude מזהה את המצבים הרפואיים ומפנה לספר החיתום הדיגיטלי<br>
+3. מציג את המסלול הרלוונטי עם החלטה מומלצת<br>
+4. מצביע על נקודות שדורשות תשומת לב<br>
+5. החתם בודק ומאשר</p>
+
+<p><strong>חיסכון:</strong> 70% בזמן החלטה + אחידות גבוהה יותר</p>
+</div>
+
+<h2>7.3 עיבוד מסמכים רפואיים</h2>
+<div class="box">
+<h4>תרחיש:</h4>
+<p>תביעה עם 50 עמודי מסמכים רפואיים. Claude יכול:</p>
+<ul>
+<li>לחלץ את האבחנות הרלוונטיות</li>
+<li>לזהות מצבים שהיו לפני תחילת הפוליסה (Pre-existing)</li>
+<li>לסכם את ההיסטוריה הרפואית</li>
+<li>להצביע על חוסר התאמה בין תביעה למסמכים</li>
+</ul>
+<p><strong>ללא Claude:</strong> 2-3 שעות קריאה</p>
+<p><strong>עם Claude:</strong> 15 דקות לסקירה + אימות אנושי</p>
+</div>
+
+<h2>7.4 שירות לקוחות חכם</h2>
+<div class="box">
+<p>Claude יכול לסייע לנציגי שירות במענה מדויק על שאלות מורכבות על פוליסות, תוך גישה לידע הארגוני (תוך כיבוד הרשאות).</p>
+</div>
+</div>
+
+<!-- 8. תהליך עבודה -->
+<div class="section" id="workflow">
+<h1>8. תהליך עבודה מוצע</h1>
+
+<h2>שלב 1: POC מורחב (חודש 1)</h2>
+<div class="step">
+<p><strong>מטרה:</strong> הוכחת ערך על נתונים סינתטיים</p>
+<ul>
+<li>הרחבת הכלים הקיימים</li>
+<li>בניית מדדי הצלחה</li>
+<li>הדגמה להנהלה</li>
+</ul>
+</div>
+
+<h2>שלב 2: פיילוט מבוקר (חודש 2-3)</h2>
+<div class="step">
+<p><strong>מטרה:</strong> שימוש מצומצם בנתונים אמיתיים (אנונימיים)</p>
+<ul>
+<li>צוות מצומצם של 3-5 עובדים</li>
+<li>שימוש יומי עם Claude Enterprise</li>
+<li>מעקב הדוק של אבטחת מידע</li>
+<li>דוחות שבועיים</li>
+</ul>
+</div>
+
+<h2>שלב 3: הרחבה (חודש 4-6)</h2>
+<div class="step">
+<p><strong>מטרה:</strong> הטמעה רחבה יותר במחלקה</p>
+<ul>
+<li>20+ משתמשים</li>
+<li>אינטגרציה עם מערכות פנימיות</li>
+<li>הדרכות שגרתיות</li>
+</ul>
+</div>
+
+<h2>שלב 4: אופרציונליזציה (חודש 7+)</h2>
+<div class="step">
+<p><strong>מטרה:</strong> הפיכה לכלי חיוני במחלקה</p>
+<ul>
+<li>הטמעה במחלקות נוספות</li>
+<li>KPIs מחייבים</li>
+<li>אוטומציות</li>
+</ul>
+</div>
+</div>
+
+<!-- 9. ניהול סיכונים -->
+<div class="section" id="risks">
+<h1>9. ניהול סיכונים</h1>
+
+<table>
+<tr><th>סיכון</th><th>חומרה</th><th>הסתברות</th><th>מיטיגציה</th></tr>
+<tr>
+<td>דליפת PII</td>
+<td><span class="tag tag-risk">גבוהה</span></td>
+<td>נמוכה</td>
+<td>מדיניות, הדרכה, כלי Redaction, Audit</td>
+</tr>
+<tr>
+<td>הזיות (Hallucinations)</td>
+<td><span class="tag tag-info">בינונית</span></td>
+<td>בינונית</td>
+<td>תמיד Human-in-the-loop, אימות</td>
+</tr>
+<tr>
+<td>הטיות (Bias)</td>
+<td><span class="tag tag-info">בינונית</span></td>
+<td>נמוכה</td>
+<td>בדיקות איכות, דגימה</td>
+</tr>
+<tr>
+<td>תלות בשירות חיצוני</td>
+<td><span class="tag tag-info">בינונית</span></td>
+<td>נמוכה</td>
+<td>SLA, תוכנית המשכיות, backup</td>
+</tr>
+<tr>
+<td>עלויות חורגות</td>
+<td><span class="tag tag-info">בינונית</span></td>
+<td>בינונית</td>
+<td>תקציב מוגדר, ניטור שימוש</td>
+</tr>
+<tr>
+<td>אי-עמידה רגולטורית</td>
+<td><span class="tag tag-risk">גבוהה</span></td>
+<td>נמוכה</td>
+<td>ליווי יועץ רגולציה, תיעוד מלא</td>
+</tr>
+<tr>
+<td>התנגדות עובדים</td>
+<td><span class="tag tag-info">נמוכה</span></td>
+<td>בינונית</td>
+<td>הדרכות, הצגת יתרונות</td>
+</tr>
+</table>
+
+<h2>9.1 עקרונות מחייבים</h2>
+<div class="yellow-box">
+<ol>
+<li><strong>Human-in-the-loop:</strong> אף החלטה פיננסית/חיתום לא מתבצעת ללא אישור אנושי</li>
+<li><strong>Explainability:</strong> כל המלצה של AI חייבת להיות מוסברת</li>
+<li><strong>Audit trail:</strong> תיעוד מלא של כל שימוש</li>
+<li><strong>No PII:</strong> ללא פרטים מזהים אישיים</li>
+<li><strong>Fairness:</strong> בדיקות שלא קיימות הטיות</li>
+</ol>
+</div>
+</div>
+
+<!-- 10. ROI -->
+<div class="section" id="roi">
+<h1>10. ROI וחיסכון משוער</h1>
+
+<h2>10.1 חיסכון זמן עבודה (משוער)</h2>
+<table>
+<tr><th>תהליך</th><th>זמן נוכחי</th><th>זמן עם AI</th><th>חיסכון</th></tr>
+<tr><td>ניתוח תביעה חשודה</td><td>20 דק׳</td><td>5 דק׳</td><td>75%</td></tr>
+<tr><td>החלטת חיתום מורכבת</td><td>15 דק׳</td><td>5 דק׳</td><td>67%</td></tr>
+<tr><td>סקירת מסמכים רפואיים</td><td>120 דק׳</td><td>30 דק׳</td><td>75%</td></tr>
+<tr><td>כתיבת תשובה ללקוח</td><td>15 דק׳</td><td>5 דק׳</td><td>67%</td></tr>
+<tr><td>סיכום ישיבת צוות</td><td>30 דק׳</td><td>5 דק׳</td><td>83%</td></tr>
+</table>
+
+<h2>10.2 חישוב שנתי משוער</h2>
+<div class="box">
+<p><strong>דוגמה למחלקה של 20 עובדים:</strong></p>
+<ul>
+<li>חיסכון של 10 שעות/עובד/שבוע</li>
+<li>20 עובדים × 10 שעות × 50 שבועות = <strong>10,000 שעות</strong> בשנה</li>
+<li>בעלות שעת עובד ממוצעת של 150₪ = <strong>1.5M₪ חיסכון</strong></li>
+</ul>
+</div>
+
+<h2>10.3 ערך עסקי נוסף</h2>
+<ul>
+<li><strong>שיפור דיוק</strong> - פחות החלטות שגויות</li>
+<li><strong>זיהוי הונאות מוקדם</strong> - חיסכון בתשלומי תביעות לא מוצדקות</li>
+<li><strong>שירות לקוחות מהיר</strong> - שיפור שביעות רצון</li>
+<li><strong>אחידות החלטות</strong> - פחות תלות בעובד מסוים</li>
+<li><strong>הכשרת עובדים חדשים</strong> - מהירה יותר</li>
+</ul>
+</div>
+
+<!-- 11. דרישות טכניות -->
+<div class="section" id="requirements">
+<h1>11. דרישות טכניות</h1>
+
+<h2>11.1 דרישות לקוח</h2>
+<ul>
+<li>דפדפן מודרני (Chrome, Edge, Firefox)</li>
+<li>אין צורך בהתקנות מיוחדות</li>
+<li>יכול לעבוד דרך ממשק Web של Claude או API</li>
+</ul>
+
+<h2>11.2 דרישות שרת (אם API)</h2>
+<ul>
+<li>חיבור אינטרנט יציב דרך רשת ארגונית</li>
+<li>Firewall rule לכתובת api.anthropic.com</li>
+<li>מפתח API ארגוני (מאוחסן ב-Vault)</li>
+</ul>
+
+<h2>11.3 רישוי</h2>
+<table>
+<tr><th>חבילה</th><th>משתמשים</th><th>עלות משוערת</th><th>יתרונות</th></tr>
+<tr><td>Claude for Work</td><td>עד 5 צוות</td><td>~30$/משתמש</td><td>ממשק Web, זמין מיד</td></tr>
+<tr><td>Claude Enterprise</td><td>20+ משתמשים</td><td>לפי הסכם</td><td>SSO, Audit, API, SLA</td></tr>
+<tr><td>AWS Bedrock</td><td>לפי שימוש</td><td>Pay-as-you-go</td><td>בתוך AWS, privacy מקסימלי</td></tr>
+</table>
+
+<h2>11.4 דרישות מחלקת AI</h2>
+<ul>
+<li>הגדרת <strong>מדיניות שימוש</strong> (Usage Policy)</li>
+<li>בניית <strong>כלי Redaction</strong> - ניקוי אוטומטי של PII</li>
+<li>הגדרת <strong>Audit</strong> וניטור</li>
+<li>הכשרה למשתמשים</li>
+<li>בניית <strong>ספריית פרומפטים</strong> מאושרים</li>
+</ul>
+</div>
+
+<!-- 12. לוח זמנים -->
+<div class="section" id="timeline">
+<h1>12. לוח זמנים מוצע</h1>
+
+<table>
+<tr><th>שלב</th><th>משך</th><th>תכולה</th><th>אישורים נדרשים</th></tr>
+<tr>
+<td><strong>הכנה</strong></td>
+<td>2 שבועות</td>
+<td>גיבוש מסמך זה, אישור עקרוני</td>
+<td>מחלקת AI, הנהלה</td>
+</tr>
+<tr>
+<td><strong>POC מורחב</strong></td>
+<td>4 שבועות</td>
+<td>פיתוח כלים, הדגמות, מדדים</td>
+<td>אישור נתונים סינתטיים</td>
+</tr>
+<tr>
+<td><strong>פיילוט</strong></td>
+<td>8 שבועות</td>
+<td>3-5 משתמשים, נתונים מצומצמים</td>
+<td>אבטחת מידע, רגולציה</td>
+</tr>
+<tr>
+<td><strong>הערכה</strong></td>
+<td>2 שבועות</td>
+<td>מדידת ROI, איסוף משוב</td>
+<td>דיווח להנהלה</td>
+</tr>
+<tr>
+<td><strong>הרחבה</strong></td>
+<td>12 שבועות</td>
+<td>20+ משתמשים</td>
+<td>תקציב, הדרכות</td>
+</tr>
+</table>
+
+<p><strong>סה"כ:</strong> 28 שבועות (כ-7 חודשים) מאישור ראשוני עד הטמעה מלאה.</p>
+</div>
+
+<!-- 13. Governance -->
+<div class="section" id="governance">
+<h1>13. Governance והגבלות שימוש</h1>
+
+<h2>13.1 מדיניות שימוש מוצעת</h2>
+<div class="green-box">
+<h4>✅ מותר:</h4>
+<ul>
+<li>ניתוח נתונים סינתטיים</li>
+<li>סיכום מסמכי מדיניות פנימיים</li>
+<li>כתיבת תוכן שיווקי (ללא פרטי לקוחות)</li>
+<li>תרגום מסמכים כלליים</li>
+<li>Brainstorming וחשיבה יצירתית</li>
+<li>כתיבת קוד לכלים פנימיים</li>
+<li>ניתוח נתונים אגרגטיביים</li>
+</ul>
+</div>
+
+<div class="red-box">
+<h4>❌ אסור:</h4>
+<ul>
+<li>הזנת פרטי לקוחות (שם, ת.ז., טלפון)</li>
+<li>הזנת מסמכים רפואיים עם פרטים מזהים</li>
+<li>הזנת מידע פיננסי רגיש</li>
+<li>שימוש לצרכים אישיים</li>
+<li>קבלת החלטות סופיות ללא בקרה אנושית</li>
+<li>שיתוף תוצרים מחוץ לחברה</li>
+</ul>
+</div>
+
+<h2>13.2 תפקידים מוגדרים</h2>
+<table>
+<tr><th>תפקיד</th><th>אחריות</th></tr>
+<tr><td>AI Owner</td><td>בעל הפתרון הטכני, ניטור שימוש</td></tr>
+<tr><td>Data Protection Officer</td><td>פיקוח על אבטחת מידע</td></tr>
+<tr><td>Champion</td><td>עובד שמוביל הטמעה במחלקה</td></tr>
+<tr><td>End Users</td><td>עובדים מורשים לשימוש</td></tr>
+</table>
+
+<h2>13.3 KPIs למעקב</h2>
+<ul>
+<li>מספר שימושים בחודש</li>
+<li>שעות עבודה חסכות</li>
+<li>מספר תביעות שטופלו ע"י כלי AI</li>
+<li>דיוק (דגימה אקראית)</li>
+<li>אירועי אבטחה (אמור להיות 0)</li>
+<li>שביעות רצון משתמשים</li>
+</ul>
+
+<h2>13.4 Review תקופתי</h2>
+<ul>
+<li><strong>חודשי:</strong> סקירת שימוש ולוגים</li>
+<li><strong>רבעוני:</strong> ביקורת אבטחת מידע</li>
+<li><strong>שנתי:</strong> הערכה כוללת ואישור המשך</li>
+</ul>
+</div>
+
+<!-- סיכום ובקשה -->
+<div class="section">
+<h1>סיכום ובקשה</h1>
+
+<div class="header-box" style="background:linear-gradient(135deg,#16a34a,#22c55e)">
+<h1 style="border:none;font-size:1.5em">בקשה לאישור מחלקת AI</h1>
+<p>לעבור לשלב הבא - POC מורחב עם ליווי צמוד</p>
+</div>
+
+<div class="box">
+<h3>מה אנחנו מבקשים:</h3>
+<ol>
+<li>אישור עקרוני להמשך הפרויקט</li>
+<li>פגישה להצגת POC קיים וקבלת משוב</li>
+<li>גישה מוגבלת ל-Claude Enterprise (חשבון בדיקה)</li>
+<li>שיתוף פעולה עם מחלקת AI לבניית מדיניות</li>
+<li>הקצאת זמן מחלקת אבטחת מידע לסקירה</li>
+</ol>
+
+<h3>מה אנחנו מתחייבים:</h3>
+<ol>
+<li>עבודה אך ורק עם נתונים סינתטיים בשלב ה-POC</li>
+<li>דיווחים שבועיים על התקדמות</li>
+<li>תיעוד מלא של כל פעולה</li>
+<li>הקפדה על מדיניות אבטחת מידע</li>
+<li>שיתוף הידע והכלים לטובת החברה</li>
+</ol>
+</div>
+
+<div class="meta" style="margin-top:30px">
+<p><strong>נספחים (זמינים על פי דרישה):</strong></p>
+<ul>
+<li>קוד מקור של הכלים שנבנו</li>
+<li>דשבורד חיים להדגמה</li>
+<li>מסמך מדיניות AI לדוגמה</li>
+<li>סטטיסטיקות פיילוט מפורטות</li>
+<li>אישורי אבטחה של Anthropic</li>
+</ul>
+</div>
+
+<p style="text-align:center;margin-top:40px;color:#64748b">
+מסמך זה הוכן על בסיס ניסיון POC מלא ונתונים סינתטיים בלבד.<br>
+כל שלב בהמשך יתואם עם מחלקות AI ואבטחת מידע.
+</p>
+</div>
+
+</body>
+</html>
