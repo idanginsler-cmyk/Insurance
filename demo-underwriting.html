@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ספר חיתום אינטראקטיבי - דמו</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #1a5fa8;
+      --primary-dark:  #0d3d72;
+      --primary-light: #3b82c4;
+      --teal:          #0e9f8e;
+      --teal-dark:     #077a6c;
+      --teal-light:    #2ec4b3;
+      --accent:        #f59e0b;
+      --success:       #10b981;
+      --warning:       #f59e0b;
+      --danger:        #ef4444;
+      --bg:            #f0f4f8;
+      --surface:       #ffffff;
+      --border:        #dde3ed;
+      --text:          #1e293b;
+      --text-muted:    #64748b;
+      --text-light:    #94a3b8;
+      --shadow-sm:     0 1px 4px rgba(0,0,0,.06);
+      --shadow:        0 4px 16px rgba(0,0,0,.09);
+      --shadow-lg:     0 8px 32px rgba(0,0,0,.13);
+      --radius:        14px;
+      --radius-sm:     8px;
+      --radius-lg:     20px;
+      --transition:    .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--teal) 100%);
+      color: #fff;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(13,61,114,.35);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 14px; }
+    .topbar-logo {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .topbar-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -.3px; }
+    .topbar-subtitle { font-size: .78rem; opacity: .75; margin-top: 1px; font-weight: 400; }
+    .topbar-badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .topbar-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .6; transform: scale(.8); }
+    }
+
+    /* ─── MAIN WRAPPER ─── */
+    .main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+    /* ─── DEMO NOTICE ─── */
+    .demo-notice {
+      background: linear-gradient(90deg, #fef3c7, #fef9ee);
+      border: 1px solid #fcd34d;
+      border-radius: var(--radius-sm);
+      padding: 10px 18px;
+      font-size: .82rem;
+      color: #92400e;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 2rem;
+    }
+
+    /* ─── SECTION TITLE ─── */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ─── MODE CARDS ─── */
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .mode-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; left: 0;
+      height: 4px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .mode-card.interactive::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+    .mode-card.nlp::before          { background: linear-gradient(90deg, var(--teal-dark), var(--teal-light)); }
+    .mode-card:hover, .mode-card.active {
+      border-color: transparent;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .mode-card.interactive:hover, .mode-card.interactive.active {
+      border-color: var(--primary);
+      box-shadow: 0 8px 32px rgba(26,95,168,.18);
+    }
+    .mode-card.nlp:hover, .mode-card.nlp.active {
+      border-color: var(--teal);
+      box-shadow: 0 8px 32px rgba(14,159,142,.18);
+    }
+    .mode-card:hover::before, .mode-card.active::before { opacity: 1; }
+    .mode-icon {
+      width: 60px; height: 60px; flex-shrink: 0;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .mode-card.interactive .mode-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .mode-card.nlp .mode-icon          { background: linear-gradient(135deg, #ccfbf1, #99f6e4); }
+    .mode-info h3 { font-size: 1.15rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .mode-info p  { font-size: .875rem; color: var(--text-muted); line-height: 1.5; }
+    .mode-tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+    .mode-card.interactive .mode-tag { background: #dbeafe; color: var(--primary-dark); }
+    .mode-card.nlp .mode-tag          { background: #ccfbf1; color: var(--teal-dark); }
+
+    /* ─── PANELS ─── */
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar {
+      display: flex; align-items: center; gap: 0;
+      margin-bottom: 2rem;
+      background: var(--surface);
+      border-radius: 50px;
+      padding: 6px 10px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+    .progress-step {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-light);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .progress-step .step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700;
+      transition: var(--transition);
+    }
+    .progress-step.done .step-num   { background: var(--success); color: #fff; }
+    .progress-step.active .step-num { background: var(--primary); color: #fff; }
+    .progress-step.active           { color: var(--primary); background: #eff6ff; }
+    .progress-sep { flex: 1; height: 2px; background: var(--border); min-width: 20px; }
+    .progress-sep.done { background: var(--success); }
+
+    /* ─── CATEGORIES GRID ─── */
+    .categories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .cat-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .cat-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .cat-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+    .cat-name { font-size: .9rem; font-weight: 700; color: var(--text); }
+    .cat-en   { font-size: .75rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ─── CONDITIONS LIST ─── */
+    .cond-list { display: flex; flex-direction: column; gap: .8rem; }
+    .cond-item {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .cond-item:hover { border-color: var(--primary); transform: translateX(-3px); box-shadow: var(--shadow); }
+    .cond-item-name { font-weight: 700; font-size: .95rem; }
+    .cond-item-sub  { font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
+    .cond-arrow     { color: var(--text-light); font-size: 1.1rem; }
+
+    /* ─── QUESTIONNAIRE ─── */
+    .q-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      animation: fadeIn .3s ease;
+    }
+    .q-counter {
+      font-size: .78rem; font-weight: 700; color: var(--primary);
+      background: #eff6ff; border-radius: 20px;
+      padding: 3px 12px; display: inline-block; margin-bottom: 1rem;
+    }
+    .q-text { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; line-height: 1.5; }
+    .q-answers { display: flex; flex-wrap: wrap; gap: .8rem; }
+    .q-btn {
+      padding: .75rem 1.6rem;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Heebo', sans-serif;
+      font-size: .92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .q-btn:hover   { border-color: var(--primary); color: var(--primary); background: #eff6ff; transform: scale(1.03); }
+    .q-btn.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+    /* ─── RESULTS ─── */
+    .results-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      animation: fadeIn .4s ease;
+    }
+    .results-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 1.4rem 1.8rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .results-header h3 { font-size: 1.1rem; font-weight: 800; }
+    .results-header p  { font-size: .82rem; opacity: .8; margin-top: 2px; }
+    .results-icon { font-size: 2rem; }
+
+    table.decisions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+    }
+    table.decisions-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: .9rem 1.2rem;
+      text-align: right;
+      border-bottom: 2px solid var(--border);
+      font-size: .8rem;
+    }
+    table.decisions-table td {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    table.decisions-table tr:last-child td { border-bottom: none; }
+    table.decisions-table tr:hover td { background: #f8fafc; }
+    .coverage-name { font-weight: 700; color: var(--text); }
+    .decision-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: .78rem; font-weight: 700;
+    }
+    .badge-green  { background: #d1fae5; color: #065f46; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-orange { background: #ffedd5; color: #9a3412; }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .conditions-text { font-size: .8rem; color: var(--text-muted); }
+
+    /* ─── DECISION TREE VISUAL ─── */
+    .tree-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .tree-card h4 { font-size: .95rem; font-weight: 800; color: var(--text); margin-bottom: 1.4rem; display: flex; align-items: center; gap: 8px; }
+    .tree-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+    }
+    .tree-row { display: flex; align-items: center; gap: 0; width: 100%; }
+    .tree-node {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: .8rem; font-weight: 600;
+      border: 2px solid var(--border);
+      background: #f8fafc;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .tree-node.highlighted {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      color: var(--primary-dark);
+    }
+    .tree-node.result-node {
+      border-color: var(--success);
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+      color: #065f46;
+    }
+    .tree-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      min-width: 30px;
+    }
+    .tree-line.highlighted { background: var(--primary); }
+    .tree-line-label {
+      position: absolute;
+      top: -18px;
+      right: 50%;
+      transform: translateX(50%);
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      background: #eff6ff;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .tree-connector {
+      width: 2px;
+      height: 22px;
+      background: var(--border);
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .tree-connector.highlighted { background: var(--primary); }
+
+    /* ─── NLP PANEL ─── */
+    .nlp-input-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .nlp-input-card h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .nlp-textarea {
+      width: 100%;
+      min-height: 130px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      font-family: 'Heebo', sans-serif;
+      font-size: .92rem;
+      color: var(--text);
+      resize: vertical;
+      transition: var(--transition);
+      line-height: 1.7;
+      direction: rtl;
+    }
+    .nlp-textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(14,159,142,.1);
+    }
+    .nlp-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .nlp-hint { font-size: .78rem; color: var(--text-muted); }
+    .nlp-btn {
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: .75rem 2rem;
+      font-family: 'Heebo', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 4px 14px rgba(14,159,142,.35);
+    }
+    .nlp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(14,159,142,.4); }
+    .nlp-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* thinking dots */
+    .thinking {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #f0fdf9, #ccfbf1);
+      border-radius: var(--radius);
+      border: 1px solid #99f6e4;
+      margin-bottom: 1.5rem;
+    }
+    .thinking.show { display: flex; animation: fadeIn .3s ease; }
+    .thinking-text { font-weight: 700; color: var(--teal-dark); font-size: .92rem; }
+    .dots { display: flex; gap: 5px; }
+    .dots span {
+      width: 8px; height: 8px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .dots span:nth-child(2) { animation-delay: .2s; }
+    .dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce {
+      0%,80%,100% { transform: scale(1); opacity: .5; }
+      40%          { transform: scale(1.3); opacity: 1; }
+    }
+
+    /* ─── NLP RESULTS ─── */
+    .nlp-results { display: none; }
+    .nlp-results.show { display: block; animation: fadeIn .4s ease; }
+
+    .params-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .params-card-header {
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      color: #fff;
+      padding: 1.1rem 1.6rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .params-card-header h4 { font-size: .95rem; font-weight: 800; }
+
+    table.params-table {
+      width: 100%; border-collapse: collapse; font-size: .875rem;
+    }
+    table.params-table th {
+      background: #f8fafc; color: var(--text-muted); font-weight: 700;
+      padding: .8rem 1.2rem; text-align: right;
+      border-bottom: 2px solid var(--border); font-size: .78rem;
+    }
+    table.params-table td { padding: .85rem 1.2rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    table.params-table tr:last-child td { border-bottom: none; }
+    table.params-table tr:hover td { background: #f8fafc; }
+    .param-key { font-weight: 700; color: var(--text); }
+    .param-val { color: var(--primary-dark); font-weight: 600; }
+    .confidence-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .conf-high   { background: #d1fae5; color: #065f46; }
+    .conf-medium { background: #fef3c7; color: #92400e; }
+    .conf-low    { background: #fee2e2; color: #991b1b; }
+
+    /* AI Insights */
+    .insights-card {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .insights-card h4 { font-size: .95rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .insight-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: .7rem 0;
+      border-bottom: 1px solid rgba(191,219,254,.5);
+      font-size: .875rem; color: var(--primary-dark);
+    }
+    .insight-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .insight-icon { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+    .insight-text { line-height: 1.6; font-weight: 500; }
+
+    /* ─── BACK BUTTON ─── */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-family: 'Heebo', sans-serif;
+      font-size: .85rem; font-weight: 600; padding: 0;
+      margin-bottom: 1.2rem;
+      transition: var(--transition);
+    }
+    .back-btn:hover { color: var(--primary); }
+
+    /* ─── RESET BUTTON ─── */
+    .reset-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f1f5f9; border: 1px solid var(--border);
+      border-radius: 50px; padding: 8px 18px;
+      cursor: pointer; color: var(--text-muted);
+      font-family: 'Heebo', sans-serif; font-size: .82rem; font-weight: 600;
+      transition: var(--transition);
+    }
+    .reset-btn:hover { background: #e2e8f0; color: var(--text); }
+
+    /* ─── CARD SECTION LABEL ─── */
+    .step-label {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .step-label h2 { font-size: 1.15rem; font-weight: 800; color: var(--text); }
+    .step-label p  { font-size: .82rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ─── Q PROGRESS ─── */
+    .q-progress-wrap { margin-bottom: 1.5rem; }
+    .q-progress-label {
+      display: flex; justify-content: space-between;
+      font-size: .78rem; color: var(--text-muted); font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .q-progress-bar {
+      height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .q-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 3px;
+      transition: width .4s ease;
+    }
+
+    /* ─── PATH DISPLAY ─── */
+    .path-display {
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      padding: .8rem 1.2rem;
+      font-size: .8rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .path-crumb { color: var(--primary); font-weight: 700; }
+    .path-sep   { color: var(--text-light); }
+
+    @media (max-width: 700px) {
+      .mode-grid { grid-template-columns: 1fr; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .topbar-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────── TOP BAR ─────────── -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">📋</div>
+    <div>
+      <div class="topbar-title">ספר חיתום אינטראקטיבי</div>
+      <div class="topbar-subtitle">דמו - מערכת חיתום חכמה מבוססת AI</div>
+    </div>
+  </div>
+  <div class="topbar-badge">מערכת AI פעילה</div>
+</header>
+
+<!-- ─────────── MAIN ─────────── -->
+<div class="main">
+
+  <!-- Demo notice -->
+  <div class="demo-notice">
+    ⚠️ &nbsp;כל הנתונים סינתטיים לצורכי הדגמה בלבד — אין לראות בדמו זה החלטה חיתומית מחייבת
+  </div>
+
+  <!-- ─── MODE SELECTION ─── -->
+  <div class="section-title">בחר מצב עבודה</div>
+  <div class="mode-grid">
+    <div class="mode-card interactive" id="card-interactive" onclick="selectMode('interactive')">
+      <div class="mode-icon">🌳</div>
+      <div class="mode-info">
+        <h3>מצב אינטראקטיבי</h3>
+        <p>בחר מחלה ועבור שאלון מובנה שלב אחר שלב, על בסיס עץ ההחלטות של ספר החיתום</p>
+        <span class="mode-tag">שאלון מובנה</span>
+      </div>
+    </div>
+    <div class="mode-card nlp" id="card-nlp" onclick="selectMode('nlp')">
+      <div class="mode-icon">🧠</div>
+      <div class="mode-info">
+        <h3>מצב חכם – NLP</h3>
+        <p>תאר את מצב המבוטח במילים שלך — ה-AI יזהה את הפרמטרים הרלוונטיים ויציג החלטה</p>
+        <span class="mode-tag">עיבוד שפה טבעית</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── INTERACTIVE PANEL ─── -->
+  <div class="panel" id="panel-interactive">
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="interactive-progress">
+      <div class="progress-step active" id="ps1"><span class="step-num">1</span>קטגוריה</div>
+      <div class="progress-sep" id="sep1"></div>
+      <div class="progress-step" id="ps2"><span class="step-num">2</span>מחלה</div>
+      <div class="progress-sep" id="sep2"></div>
+      <div class="progress-step" id="ps3"><span class="step-num">3</span>שאלון</div>
+      <div class="progress-sep" id="sep3"></div>
+      <div class="progress-step" id="ps4"><span class="step-num">4</span>החלטה</div>
+    </div>
+
+    <!-- STEP 1: Categories -->
+    <div id="step1">
+      <div class="step-label">
+        <div>
+          <h2>בחר קטגוריית מחלה</h2>
+          <p>6 קטגוריות זמינות בספר החיתום</p>
+        </div>
+      </div>
+      <div class="categories-grid">
+        <div class="cat-card" onclick="selectCategory('autoimmune')">
+          <span class="cat-icon">🔴</span>
+          <div class="cat-name">מחלות אוטואימוניות</div>
+          <div class="cat-en">Autoimmune Diseases</div>
+        </div>
+        <div class="cat-card" onclick="selectCategory('cardio')">
+          <span class="cat-icon">❤️</span>
+          <div class="cat-name">מחלות לב וכלי דם</div>
+          <div class="cat-en">Cardiovascular Diseases</div>
+        </div>
+        <div class="cat-card" onclick="selectCategory('endocrine')">
+          <span class="cat-icon">⚗️</span>
+          <div class="cat-name">מחלות אנדוקריניות</div>
+          <div class="cat-en">Endocrine Diseases</div>
+        </div>
+        <div class="cat-card" onclick="selectCategory('ortho')">
+          <span class="cat-icon">🦴</span>
+          <div class="cat-name">מחלות אורתופדיות</div>
+          <div class="cat-en">Orthopedic Diseases</div>
+        </div>
+        <div class="cat-card" onclick="selectCategory('mental')">
+          <span class="cat-icon">🧬</span>
+          <div class="cat-name">מחלות נפשיות</div>
+          <div class="cat-en">Mental Health</div>
+        </div>
+        <div class="cat-card" onclick="selectCategory('derm')">
+          <span class="cat-icon">🩺</span>
+          <div class="cat-name">מחלות עור</div>
+          <div class="cat-en">Dermatology</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Conditions -->
+    <div id="step2" style="display:none;">
+      <button class="back-btn" onclick="goToStep(1)">← חזרה לקטגוריות</button>
+      <div class="step-label">
+        <div>
+          <h2 id="step2-title">בחר מחלה ספציפית</h2>
+          <p>מחלות אוטואימוניות — 4 מחלות זמינות</p>
+        </div>
+      </div>
+      <div class="cond-list" id="conditions-list"></div>
+    </div>
+
+    <!-- STEP 3: Questionnaire -->
+    <div id="step3" style="display:none;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">
+        <button class="back-btn" onclick="goToStep(2)" style="margin:0">← חזרה לרשימת המחלות</button>
+        <button class="reset-btn" onclick="resetQuestionnaire()">↺ התחל מחדש</button>
+      </div>
+      <div class="path-display" id="path-display"></div>
+      <div class="q-progress-wrap">
+        <div class="q-progress-label">
+          <span id="q-prog-label">שאלה 1 מתוך 4</span>
+          <span id="q-prog-pct">25%</span>
+        </div>
+        <div class="q-progress-bar"><div class="q-progress-fill" id="q-prog-fill" style="width:25%"></div></div>
+      </div>
+      <div id="question-container"></div>
+    </div>
+
+    <!-- STEP 4: Results -->
+    <div id="step4" style="display:none;">
+      <button class="back-btn" onclick="goToStep(1)" style="margin-bottom:1.5rem">← התחל הערכה חדשה</button>
+
+      <div class="results-card">
+        <div class="results-header">
+          <div class="results-icon">✅</div>
+          <div>
+            <h3>החלטת חיתום — FMF (קדחת ים תיכונית)</h3>
+            <p>על בסיס תשובות השאלון — הפרופיל סווג כסיכון נמוך-בינוני</p>
+          </div>
+        </div>
+        <table class="decisions-table">
+          <thead>
+            <tr>
+              <th>כיסוי ביטוחי</th>
+              <th>החלטה</th>
+              <th>תנאים / הערות</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="coverage-name">ביטוח חיים</div><div style="font-size:.75rem;color:var(--text-muted)">Life Insurance</div></td>
+              <td><span class="decision-badge badge-green">✓ קבלה רגילה</span></td>
+              <td class="conditions-text">ללא תוספת פרמיה או החרגה</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">אובדן כושר עבודה</div><div style="font-size:.75rem;color:var(--text-muted)">Disability</div></td>
+              <td><span class="decision-badge badge-yellow">⚠ קבלה עם החרגה</span></td>
+              <td class="conditions-text">החרגת FMF וסיבוכיה</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">ביטוח בריאות</div><div style="font-size:.75rem;color:var(--text-muted)">Health Insurance</div></td>
+              <td><span class="decision-badge badge-orange">↑ קבלה עם תוספת</span></td>
+              <td class="conditions-text">תוספת פרמיה 25%</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">ביטוח סיעודי</div><div style="font-size:.75rem;color:var(--text-muted)">Long-term Care</div></td>
+              <td><span class="decision-badge badge-yellow">⚠ קבלה עם החרגה</span></td>
+              <td class="conditions-text">החרגת FMF, עמילואידוזיס, פגיעה כלייתית</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Decision Tree Visual -->
+      <div class="tree-card">
+        <h4>🌲 מסלול עץ ההחלטות — הנתיב שנבחר</h4>
+        <div class="tree-visual">
+          <div class="tree-row">
+            <div class="tree-node highlighted">האם מאובחן עם FMF?</div>
+            <div class="tree-line highlighted" style="max-width:80px;">
+              <div class="tree-line-label">כן ✓</div>
+            </div>
+            <div class="tree-node highlighted">טיפול בקולכיצין?</div>
+            <div class="tree-line highlighted" style="max-width:80px;">
+              <div class="tree-line-label">כן ✓</div>
+            </div>
+            <div class="tree-node highlighted">סיבוכים?</div>
+            <div class="tree-line highlighted" style="max-width:80px;">
+              <div class="tree-line-label">לא ✓</div>
+            </div>
+            <div class="tree-node highlighted">תדירות התקפים</div>
+          </div>
+          <div style="display:flex; width:100%; justify-content:flex-start; padding-right:0;">
+            <div class="tree-connector highlighted" style="margin-right:5%;"></div>
+          </div>
+          <div class="tree-row" style="justify-content:flex-start;">
+            <div style="width:5%;"></div>
+            <div class="tree-node highlighted">נדיר</div>
+            <div class="tree-line highlighted" style="max-width:60px;"></div>
+            <div class="tree-node result-node">סיכון נמוך-בינוני<br><span style="font-size:.72rem;font-weight:400">קבלה עם תנאים</span></div>
+            <div class="tree-line" style="max-width:40px;"></div>
+            <div class="tree-node" style="opacity:.4;">בינוני</div>
+            <div class="tree-line" style="max-width:40px;opacity:.4;"></div>
+            <div class="tree-node" style="opacity:.4;">תכוף</div>
+          </div>
+        </div>
+        <div style="margin-top:1.2rem; padding:.8rem 1rem; background:#f0fdf4; border-radius:8px; font-size:.8rem; color:#065f46; border:1px solid #bbf7d0;">
+          <strong>💡 נתיב מסומן:</strong> אבחון FMF ✓ → טיפול קולכיצין ✓ → ללא סיבוכים ✓ → תדירות נדירה ✓ → <strong>סיכון נמוך-בינוני</strong>
+        </div>
+      </div>
+
+      <div class="insights-card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0;">
+        <h4 style="color:#065f46;">🤖 תובנות AI נוספות</h4>
+        <div class="insight-item"><span class="insight-icon">📊</span><span class="insight-text">הפרופיל מתאים למבוטח בסיכון נמוך-בינוני עם FMF מאוזן ומטופל</span></div>
+        <div class="insight-item"><span class="insight-icon">📄</span><span class="insight-text">מומלץ לבקש אישור רופא מטפל על יציבות המחלה ומינון הקולכיצין</span></div>
+        <div class="insight-item"><span class="insight-icon">✅</span><span class="insight-text">ללא צורך בבדיקות מעבדה נוספות — המחלה ב-remission לפי הדיווח</span></div>
+      </div>
+    </div>
+
+    <!-- Generic step for non-FMF categories -->
+    <div id="step-generic" style="display:none;">
+      <button class="back-btn" onclick="goToStep(1)">← חזרה לקטגוריות</button>
+      <div class="q-card" style="text-align:center;padding:3rem 2rem;">
+        <div style="font-size:3rem;margin-bottom:1rem;">🚧</div>
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:.5rem;" id="generic-title">מחלות לב וכלי דם</h3>
+        <p style="color:var(--text-muted);font-size:.875rem;">מודול זה יהיה זמין בגרסה המלאה של המערכת.<br>בדמו זה ניתן לנסות את מסלול <strong>מחלות אוטואימוניות → FMF</strong>.</p>
+        <button class="nlp-btn" style="margin:1.5rem auto 0;background:linear-gradient(135deg,var(--primary-dark),var(--primary));box-shadow:0 4px 14px rgba(26,95,168,.35);" onclick="goToStep(1)">← חזור ובחר מחלות אוטואימוניות</button>
+      </div>
+    </div>
+
+  </div><!-- /panel-interactive -->
+
+  <!-- ─── NLP PANEL ─── -->
+  <div class="panel" id="panel-nlp">
+
+    <div class="nlp-input-card">
+      <h3>🧠 תיאור חופשי של מצב המבוטח</h3>
+      <textarea class="nlp-textarea" id="nlp-input"
+        placeholder="תאר את מצב המבוטח... לדוגמה: מבוטח בן 35, מאובחן עם FMF מגיל 12, מטופל בקולכיצין 1 מ״ג ליום, ללא סיבוכים, ללא התקפים בשנה האחרונה"></textarea>
+      <div class="nlp-footer">
+        <span class="nlp-hint">💡 ניתן לכתוב בצורה חופשית — ה-AI יזהה את הפרמטרים הרלוונטיים</span>
+        <button class="nlp-btn" id="nlp-analyze-btn" onclick="analyzeNLP()">🔍 נתח</button>
+      </div>
+    </div>
+
+    <!-- Fill example button -->
+    <div style="margin-bottom:1.5rem;">
+      <button class="reset-btn" onclick="fillExample()">← הכנס טקסט לדוגמה</button>
+    </div>
+
+    <!-- Thinking animation -->
+    <div class="thinking" id="nlp-thinking">
+      <div>
+        <div class="thinking-text">מנתח טקסט ומחלץ פרמטרים...</div>
+        <div style="font-size:.78rem;color:var(--teal-dark);margin-top:4px;">מפעיל מודל שפה גדול (LLM) על ספר החיתום</div>
+      </div>
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- NLP Results -->
+    <div class="nlp-results" id="nlp-results">
+
+      <div class="params-card">
+        <div class="params-card-header">
+          <span style="font-size:1.3rem;">🔬</span>
+          <div>
+            <h4>פרמטרים שזוהו על-ידי ה-AI</h4>
+            <p style="font-size:.78rem;opacity:.8;margin-top:2px;">מיצוי אוטומטי מהטקסט החופשי</p>
+          </div>
+        </div>
+        <table class="params-table">
+          <thead>
+            <tr><th>פרמטר</th><th>ערך שזוהה</th><th>רמת ביטחון</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param-key">גיל מבוטח</td>
+              <td class="param-val">35</td>
+              <td><span class="confidence-badge conf-high">✓ גבוהה — 98%</span></td>
+            </tr>
+            <tr>
+              <td class="param-key">אבחנה</td>
+              <td class="param-val">FMF — קדחת ים תיכונית</td>
+              <td><span class="confidence-badge conf-high">✓ גבוהה — 99%</span></td>
+            </tr>
+            <tr>
+              <td class="param-key">גיל אבחנה</td>
+              <td class="param-val">12</td>
+              <td><span class="confidence-badge conf-high">✓ גבוהה — 97%</span></td>
+            </tr>
+            <tr>
+              <td class="param-key">טיפול נוכחי</td>
+              <td class="param-val">קולכיצין 1 מ"ג ליום</td>
+              <td><span class="confidence-badge conf-high">✓ גבוהה — 99%</span></td>
+            </tr>
+            <tr>
+              <td class="param-key">סיבוכים ידועים</td>
+              <td class="param-val">אין</td>
+              <td><span class="confidence-badge conf-high">✓ גבוהה — 96%</span></td>
+            </tr>
+            <tr>
+              <td class="param-key">תדירות התקפים</td>
+              <td class="param-val">ללא התקפים בשנה האחרונה (נדיר)</td>
+              <td><span class="confidence-badge conf-medium">~ בינונית — 87%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background:var(--surface);border-radius:var(--radius-lg);padding:1.2rem 1.6rem;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--shadow-sm);">
+        <div style="font-size:.85rem;font-weight:700;color:var(--text-muted);margin-bottom:.6rem;">🗺 מסלול שאלון שמופה אוטומטית:</div>
+        <div class="path-display" style="margin-bottom:0;">
+          <span class="path-crumb">מחלות אוטואימוניות</span>
+          <span class="path-sep">›</span>
+          <span class="path-crumb">FMF</span>
+          <span class="path-sep">›</span>
+          <span class="path-crumb">אבחון: כן</span>
+          <span class="path-sep">›</span>
+          <span class="path-crumb">קולכיצין: כן</span>
+          <span class="path-sep">›</span>
+          <span class="path-crumb">סיבוכים: לא</span>
+          <span class="path-sep">›</span>
+          <span class="path-crumb">תדירות: נדיר</span>
+        </div>
+      </div>
+
+      <div class="results-card">
+        <div class="results-header">
+          <div class="results-icon">✅</div>
+          <div>
+            <h3>החלטת חיתום — NLP Mode</h3>
+            <p>מופק אוטומטית על בסיס ניתוח הטקסט</p>
+          </div>
+        </div>
+        <table class="decisions-table">
+          <thead>
+            <tr><th>כיסוי ביטוחי</th><th>החלטה</th><th>תנאים / הערות</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="coverage-name">ביטוח חיים</div></td>
+              <td><span class="decision-badge badge-green">✓ קבלה רגילה</span></td>
+              <td class="conditions-text">ללא תוספת פרמיה או החרגה</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">אובדן כושר עבודה</div></td>
+              <td><span class="decision-badge badge-yellow">⚠ קבלה עם החרגה</span></td>
+              <td class="conditions-text">החרגת FMF וסיבוכיה</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">ביטוח בריאות</div></td>
+              <td><span class="decision-badge badge-orange">↑ קבלה עם תוספת</span></td>
+              <td class="conditions-text">תוספת פרמיה 25%</td>
+            </tr>
+            <tr>
+              <td><div class="coverage-name">ביטוח סיעודי</div></td>
+              <td><span class="decision-badge badge-yellow">⚠ קבלה עם החרגה</span></td>
+              <td class="conditions-text">החרגת FMF, עמילואידוזיס, פגיעה כלייתית</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights-card">
+        <h4>🤖 תובנות AI נוספות</h4>
+        <div class="insight-item"><span class="insight-icon">📊</span><span class="insight-text">הפרופיל מתאים למבוטח בסיכון נמוך-בינוני — FMF מאוזן תחת טיפול</span></div>
+        <div class="insight-item"><span class="insight-icon">📄</span><span class="insight-text">מומלץ לבקש אישור רופא מטפל על יציבות המחלה ומינון הקולכיצין</span></div>
+        <div class="insight-item"><span class="insight-icon">✅</span><span class="insight-text">ללא צורך בבדיקות נוספות — המחלה ב-remission לפי הדיווח</span></div>
+        <div class="insight-item"><span class="insight-icon">🔄</span><span class="insight-text">יש לוודא בעוד 12 חודשים כי אין שינוי בתדירות ההתקפים</span></div>
+      </div>
+
+    </div><!-- /nlp-results -->
+  </div><!-- /panel-nlp -->
+
+</div><!-- /main -->
+
+<script>
+  // ─────────────────────────────────────────────
+  //  STATE
+  // ─────────────────────────────────────────────
+  let currentStep     = 0;
+  let currentCategory = null;
+  let currentAnswers  = {};
+  let currentQIndex   = 0;
+
+  const CONDITIONS = {
+    autoimmune: [
+      { id:'fmf',    name:'FMF — קדחת ים תיכונית', sub:'Familial Mediterranean Fever' },
+      { id:'lupus',  name:'לופוס',                  sub:'Systemic Lupus Erythematosus (SLE)' },
+      { id:'crohn',  name:'קרוהן',                  sub:'Crohn\'s Disease' },
+      { id:'dm1',    name:'סוכרת סוג 1',            sub:'Type 1 Diabetes Mellitus' },
+    ],
+    cardio:    [{ id:'_generic', name:'יתר לחץ דם',       sub:'Hypertension' }, { id:'_generic2', name:'מחלת לב כלילית', sub:'Coronary Artery Disease' }],
+    endocrine: [{ id:'_generic', name:'תת-פעילות בלוטת התריס', sub:'Hypothyroidism' }, { id:'_generic2', name:'סוכרת סוג 2', sub:'Type 2 Diabetes Mellitus' }],
+    ortho:     [{ id:'_generic', name:'בקע דיסק', sub:'Herniated Disc' }, { id:'_generic2', name:'דלקת מפרקים שגרונית', sub:'Rheumatoid Arthritis' }],
+    mental:    [{ id:'_generic', name:'דיכאון', sub:'Major Depressive Disorder' }, { id:'_generic2', name:'חרדה', sub:'Anxiety Disorder' }],
+    derm:      [{ id:'_generic', name:'פסוריאזיס', sub:'Psoriasis' }, { id:'_generic2', name:'אקזמה', sub:'Atopic Dermatitis' }],
+  };
+
+  const CAT_NAMES = {
+    autoimmune:'מחלות אוטואימוניות', cardio:'מחלות לב וכלי דם',
+    endocrine:'מחלות אנדוקריניות',   ortho:'מחלות אורתופדיות',
+    mental:'מחלות נפשיות',           derm:'מחלות עור',
+  };
+
+  const FMF_QUESTIONS = [
+    {
+      id: 'diagnosed',
+      text: 'האם המבוטח מאובחן עם FMF (קדחת ים תיכונית)?',
+      answers: [
+        { label: '✓ כן', value: 'yes' },
+        { label: '✗ לא', value: 'no' },
+      ]
+    },
+    {
+      id: 'colchicine',
+      text: 'האם המבוטח מטופל בקולכיצין?',
+      answers: [
+        { label: '✓ כן — קולכיצין', value: 'yes' },
+        { label: '✗ לא', value: 'no' },
+        { label: '⚙ טיפול אחר', value: 'other' },
+      ]
+    },
+    {
+      id: 'complications',
+      text: 'האם ישנם סיבוכים ידועים? (עמילואידוזיס, פגיעה כלייתית)',
+      answers: [
+        { label: '✓ כן — קיימים סיבוכים', value: 'yes' },
+        { label: '✗ לא', value: 'no' },
+      ]
+    },
+    {
+      id: 'frequency',
+      text: 'מה תדירות ההתקפים?',
+      answers: [
+        { label: '📉 נדיר — פחות מ-3 בשנה', value: 'rare' },
+        { label: '📊 בינוני — 3–6 בשנה',    value: 'moderate' },
+        { label: '📈 תכוף — מעל 6 בשנה',    value: 'frequent' },
+      ]
+    },
+  ];
+
+  // ─────────────────────────────────────────────
+  //  MODE SELECTION
+  // ─────────────────────────────────────────────
+  function selectMode(mode) {
+    document.getElementById('card-interactive').classList.toggle('active', mode === 'interactive');
+    document.getElementById('card-nlp').classList.toggle('active', mode === 'nlp');
+    document.getElementById('panel-interactive').classList.toggle('active', mode === 'interactive');
+    document.getElementById('panel-nlp').classList.toggle('active', mode === 'nlp');
+
+    if (mode === 'interactive' && currentStep === 0) goToStep(1);
+  }
+
+  // ─────────────────────────────────────────────
+  //  INTERACTIVE STEPS
+  // ─────────────────────────────────────────────
+  function goToStep(n) {
+    ['step1','step2','step3','step4','step-generic'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    currentStep = n;
+    updateProgressBar(n);
+
+    if (n === 1) { document.getElementById('step1').style.display = 'block'; }
+    else if (n === 2) { document.getElementById('step2').style.display = 'block'; }
+    else if (n === 3) { document.getElementById('step3').style.display = 'block'; }
+    else if (n === 4) { document.getElementById('step4').style.display = 'block'; }
+  }
+
+  function showGeneric(catName) {
+    ['step1','step2','step3','step4'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    document.getElementById('generic-title').textContent = catName;
+    document.getElementById('step-generic').style.display = 'block';
+  }
+
+  function updateProgressBar(step) {
+    for (let i = 1; i <= 4; i++) {
+      const ps  = document.getElementById('ps' + i);
+      const sep = document.getElementById('sep' + i);
+      ps.classList.remove('active','done');
+      if (sep) sep.classList.remove('done');
+      if (i < step)  { ps.classList.add('done'); if (sep) sep.classList.add('done'); }
+      if (i === step) ps.classList.add('active');
+    }
+  }
+
+  function selectCategory(cat) {
+    currentCategory = cat;
+    currentAnswers  = {};
+    currentQIndex   = 0;
+    if (cat === 'autoimmune') {
+      renderConditions(cat);
+      goToStep(2);
+    } else {
+      showGeneric(CAT_NAMES[cat]);
+    }
+  }
+
+  function renderConditions(cat) {
+    document.getElementById('step2-title').textContent = 'בחר מחלה — ' + CAT_NAMES[cat];
+    const list = document.getElementById('conditions-list');
+    list.innerHTML = '';
+    (CONDITIONS[cat] || []).forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'cond-item';
+      div.innerHTML = `<div><div class="cond-item-name">${c.name}</div><div class="cond-item-sub">${c.sub}</div></div><span class="cond-arrow">›</span>`;
+      div.onclick = () => selectCondition(c.id, c.name);
+      list.appendChild(div);
+    });
+  }
+
+  function selectCondition(id, name) {
+    if (id === 'fmf') {
+      currentAnswers = {};
+      currentQIndex  = 0;
+      updatePath();
+      renderQuestion(0);
+      goToStep(3);
+    } else {
+      showGeneric(name);
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  //  QUESTIONNAIRE
+  // ─────────────────────────────────────────────
+  function updatePath() {
+    const path = document.getElementById('path-display');
+    const crumbs = [CAT_NAMES[currentCategory] || '', 'FMF'];
+    const ansLabels = { diagnosed:'כן', colchicine:'כן — קולכיצין', complications:'לא', frequency:'נדיר' };
+    Object.entries(currentAnswers).forEach(([k, v]) => {
+      const q = FMF_QUESTIONS.find(x => x.id === k);
+      const a = q && q.answers.find(x => x.value === v);
+      crumbs.push(a ? a.label : v);
+    });
+    path.innerHTML = crumbs.map((c, i) => i === 0 ? `<span class="path-crumb">${c}</span>` : `<span class="path-sep">›</span><span class="path-crumb">${c}</span>`).join('');
+  }
+
+  function renderQuestion(idx) {
+    const total = FMF_QUESTIONS.length;
+    const q     = FMF_QUESTIONS[idx];
+    currentQIndex = idx;
+
+    // progress
+    document.getElementById('q-prog-label').textContent  = `שאלה ${idx + 1} מתוך ${total}`;
+    document.getElementById('q-prog-pct').textContent    = `${Math.round(((idx + 1) / total) * 100)}%`;
+    document.getElementById('q-prog-fill').style.width   = `${((idx + 1) / total) * 100}%`;
+
+    const container = document.getElementById('question-container');
+    container.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-counter">שאלה ${idx + 1} מתוך ${total}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-answers" id="q-answers-${idx}"></div>
+    `;
+    container.appendChild(card);
+
+    const answersDiv = document.getElementById('q-answers-' + idx);
+    q.answers.forEach(a => {
+      const btn = document.createElement('button');
+      btn.className = 'q-btn';
+      btn.textContent = a.label;
+      btn.onclick = () => answerQuestion(q.id, a.value, idx);
+      answersDiv.appendChild(btn);
+    });
+  }
+
+  function answerQuestion(qId, value, idx) {
+    currentAnswers[qId] = value;
+    updatePath();
+
+    // Highlight selected
+    const answersDiv = document.getElementById('q-answers-' + idx);
+    if (answersDiv) {
+      answersDiv.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
+      const q   = FMF_QUESTIONS[idx];
+      const ans = q.answers.find(a => a.value === value);
+      if (ans) {
+        [...answersDiv.querySelectorAll('.q-btn')].find(b => b.textContent === ans.label)?.classList.add('selected');
+      }
+    }
+
+    // Short delay then advance
+    setTimeout(() => {
+      const next = idx + 1;
+      if (next < FMF_QUESTIONS.length) {
+        renderQuestion(next);
+      } else {
+        goToStep(4);
+      }
+    }, 380);
+  }
+
+  function resetQuestionnaire() {
+    currentAnswers = {};
+    currentQIndex  = 0;
+    updatePath();
+    renderQuestion(0);
+  }
+
+  // ─────────────────────────────────────────────
+  //  NLP
+  // ─────────────────────────────────────────────
+  function fillExample() {
+    document.getElementById('nlp-input').value =
+      'מבוטח בן 35, מאובחן עם FMF מגיל 12, מטופל בקולכיצין 1 מ״ג ליום, ללא סיבוכים, ללא התקפים בשנה האחרונה';
+  }
+
+  function analyzeNLP() {
+    const text = document.getElementById('nlp-input').value.trim();
+    if (!text) { document.getElementById('nlp-input').focus(); return; }
+
+    document.getElementById('nlp-analyze-btn').disabled = true;
+    document.getElementById('nlp-results').classList.remove('show');
+    document.getElementById('nlp-thinking').classList.add('show');
+
+    setTimeout(() => {
+      document.getElementById('nlp-thinking').classList.remove('show');
+      document.getElementById('nlp-results').classList.add('show');
+      document.getElementById('nlp-analyze-btn').disabled = false;
+      document.getElementById('nlp-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 2400);
+  }
+</script>
+</body>
+</html>
