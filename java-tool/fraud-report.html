@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>דוח זיהוי הונאות</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f1f5f9;color:#1e293b;padding:16px;line-height:1.6;max-width:1000px;margin:0 auto}
+h1{text-align:center;color:#dc2626;margin:16px 0;font-size:1.6em}
+h2{color:#0f172a;margin:24px 0 10px;font-size:1.2em;border-bottom:2px solid #e2e8f0;padding-bottom:6px}
+.card{background:#fff;border-radius:12px;padding:14px;margin:8px 0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.stat{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+.stat .num{font-size:1.6em;font-weight:bold;color:#2563eb;display:block}
+.stat .label{font-size:0.8em;color:#64748b}
+.alert{border-radius:10px;padding:14px;margin:8px 0;border-right:5px solid}
+.alert-high{background:#fef2f2;border-color:#dc2626}
+.alert-med{background:#fffbeb;border-color:#f59e0b}
+.alert h4{color:#0f172a;margin-bottom:4px}
+.alert p{font-size:0.85em;color:#64748b}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.75em;font-weight:bold}
+.tag-h{background:#dc2626;color:#fff}.tag-m{background:#f59e0b;color:#fff}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85em;background:#fff}
+th{background:#f8fafc;padding:8px;text-align:right;color:#64748b;border-bottom:2px solid #e2e8f0}
+td{padding:8px;border-bottom:1px solid #f1f5f9}
+</style>
+</head>
+<body>
+<h1>🔍 דוח זיהוי הונאות - ביטוח בריאות</h1>
+<div class="card" style="text-align:center"><p>נותח אוטומטית | 1870 תביעות | 17 התראות</p></div>
+<h2>📊 סטטיסטיקות</h2>
+<div class="stat-grid">
+<div class="stat"><span class="num">1,870</span><span class="label">תביעות</span></div>
+<div class="stat"><span class="num">2,713,050₪</span><span class="label">נתבע</span></div>
+<div class="stat"><span class="num">2,323,333₪</span><span class="label">שולם</span></div>
+<div class="stat"><span class="num">467</span><span class="label">מבוטחים</span></div>
+<div class="stat"><span class="num">16</span><span class="label">נותני שירות</span></div>
+<div class="stat" style="border-color:#dc2626"><span class="num" style="color:#dc2626">5</span><span class="label">🔴 גבוהות</span></div>
+</div>
+<h2>🚨 התראות</h2>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 תדירות_חריגה</span> אברהם סבג - 50 תביעות</h4>
+<p>ממוצע: 4. מבוטח: 50. סה"כ: 10,350 ₪</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> מרכז דיקור סיני - 150 תביעות (8.0%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (21 תביעות, 14%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 ריכוז_נותן_שירות</span> קליניקת שלום - 192 תביעות (10.3%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (96 תביעות, 50%)</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת גולדשטיין - 41 מבוטחים, 41 תביעות</h4>
+<p>עיר: הרצליה, נותן שירות: קליניקת טבע</p>
+</div>
+<div class="alert alert-high">
+<h4><span class="tag tag-h">🔴 אשכול_משפחתי</span> משפחת סבג - 3 מבוטחים, 52 תביעות</h4>
+<p>עיר: תל אביב, נותן שירות: מרכז רפואה משלימה אור</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר מזרחי רונית - 126 תביעות (6.7%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (20 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר פרידמן אלי - 99 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת גב ומפרקים - 96 תביעות (5.1%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת החלמה - 104 תביעות (5.6%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (19 תביעות, 18%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר כהן יוסף - 100 תביעות (5.3%)</h4>
+<p>מעסיק דומיננטי: חברת ביטוח ב (18 תביעות, 18%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מרכז רפואה משלימה אור - 148 תביעות (7.9%)</h4>
+<p>מעסיק דומיננטי: עצמאי (60 תביעות, 40%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> קליניקת טבע - 135 תביעות (7.2%)</h4>
+<p>מעסיק דומיננטי: עצמאי (54 תביעות, 40%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון שיקום הדר - 119 תביעות (6.4%)</h4>
+<p>מעסיק דומיננטי: חברת הייטק א (20 תביעות, 16%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> פיזיו פלוס - 97 תביעות (5.2%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (15 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר אברהם דוד - 106 תביעות (5.7%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (16 תביעות, 15%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> מכון MRI צפון - 110 תביעות (5.9%)</h4>
+<p>מעסיק דומיננטי: חברת תקשורת (16 תביעות, 14%)</p>
+</div>
+<div class="alert alert-med">
+<h4><span class="tag tag-m">🟡 ריכוז_נותן_שירות</span> דר לוי שרה - 113 תביעות (6.0%)</h4>
+<p>מעסיק דומיננטי: משרד הבריאות (17 תביעות, 15%)</p>
+</div>
+</body></html>
