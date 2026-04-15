@@ -24,18 +24,18 @@
       --gray-200: #e2e5ec;
       --gray-100: #f4f5f8;
       --gray-50:  #fafbfc;
-      --red:    #d9253b;
-      --red-bg: #fff1f2;
-      --orange: #d96a0a;
-      --orange-bg: #fff7ed;
-      --yellow: #c4990a;
-      --yellow-bg: #fffbeb;
-      --green:  #1a7f4b;
+      --red:      #d9253b;
+      --red-bg:   #fff1f2;
+      --orange:   #d96a0a;
+      --orange-bg:#fff7ed;
+      --yellow:   #c4990a;
+      --yellow-bg:#fffbeb;
+      --green:    #1a7f4b;
       --green-bg: #f0fdf4;
       --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
       --shadow-md: 0 4px 12px rgba(0,0,0,.10);
       --shadow-lg: 0 8px 28px rgba(0,0,0,.13);
-      --radius: 10px;
+      --radius:    10px;
       --radius-lg: 14px;
     }
 
@@ -50,1068 +50,1072 @@
       flex-direction: column;
     }
 
-    /* ── TOP BAR ─────────────────────────────────── */
-    .topbar {
+    /* ── HEADER ───────────────────────────────────── */
+    .header {
       background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
       color: #fff;
-      padding: 0 32px;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+      box-shadow: var(--shadow-lg);
       position: sticky;
       top: 0;
       z-index: 100;
     }
-    .topbar-brand { display: flex; align-items: center; gap: 14px; }
-    .topbar-icon {
-      width: 38px; height: 38px; border-radius: 9px;
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-icon {
+      width: 44px;
+      height: 44px;
       background: rgba(255,255,255,.15);
-      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .header-title {
       font-size: 20px;
-    }
-    .topbar-title { font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
-    .topbar-sub   { font-size: 12px; font-weight: 300; opacity: .75; margin-top: 1px; }
-    .topbar-badges { display: flex; gap: 8px; }
-    .badge {
-      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
-      letter-spacing: .3px;
-    }
-    .badge.demo { background: rgba(255,200,50,.15); border-color: rgba(255,200,50,.4); color: #ffd966; }
-
-    /* ── MAIN LAYOUT ─────────────────────────────── */
-    .main { flex: 1; padding: 28px 32px; max-width: 1400px; margin: 0 auto; width: 100%; }
-
-    /* ── UPLOAD SECTION ──────────────────────────── */
-    .upload-section {
-      background: #fff;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      padding: 28px 32px;
-      margin-bottom: 24px;
-      border: 1px solid var(--gray-200);
-    }
-    .section-header {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 15px; font-weight: 700; color: var(--blue-800);
-      margin-bottom: 18px;
-    }
-    .section-header .icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: var(--blue-100); display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
-    }
-    .upload-row { display: flex; gap: 18px; align-items: flex-start; }
-    .dropzone {
-      flex: 1; border: 2px dashed var(--gray-200); border-radius: var(--radius-lg);
-      padding: 36px 24px; text-align: center; cursor: pointer;
-      background: var(--gray-50); transition: all .2s;
-      min-width: 0;
-    }
-    .dropzone:hover { border-color: var(--blue-500); background: var(--blue-50); }
-    .dropzone .dz-icon { font-size: 36px; margin-bottom: 10px; opacity: .5; }
-    .dropzone .dz-label { font-size: 14px; font-weight: 600; color: var(--gray-700); }
-    .dropzone .dz-hint  { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
-    .sample-panel { width: 260px; flex-shrink: 0; }
-    .sample-label { font-size: 12px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-    .sample-btn {
-      display: flex; align-items: center; gap: 10px;
-      width: 100%; padding: 11px 14px; border-radius: var(--radius);
-      border: 1.5px solid var(--gray-200); background: #fff;
-      cursor: pointer; transition: all .18s; margin-bottom: 8px;
-      font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; font-weight: 500;
-      color: var(--gray-800); text-align: right;
-    }
-    .sample-btn:hover  { border-color: var(--blue-500); background: var(--blue-50); color: var(--blue-700); }
-    .sample-btn.active { border-color: var(--blue-600); background: var(--blue-100); color: var(--blue-800); font-weight: 700; }
-    .sample-btn .sb-icon { font-size: 18px; }
-    .sample-btn .sb-tag {
-      margin-right: auto; font-size: 10px; padding: 2px 7px;
-      border-radius: 10px; background: var(--gray-100); color: var(--gray-600);
-    }
-
-    /* ── SPLIT VIEW ──────────────────────────────── */
-    .split-view {
-      display: none; gap: 20px; align-items: flex-start;
-      animation: fadeIn .35s ease;
-    }
-    .split-view.visible { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-
-    /* ── RECEIPT PREVIEW ─────────────────────────── */
-    .preview-col { width: 38%; flex-shrink: 0; position: sticky; top: 80px; align-self: flex-start; }
-    .preview-card {
-      background: #fff;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--gray-200);
-      overflow: hidden;
-    }
-    .preview-card .card-header {
-      background: var(--blue-800); color: #fff;
-      padding: 12px 16px; font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .receipt-wrap { padding: 18px; background: var(--gray-100); }
-    .receipt {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
-      overflow: hidden;
-      font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-      position: relative;
-    }
-    .receipt::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, #1a3560, #3b72cc);
-    }
-    .receipt-head {
-      padding: 22px 20px 14px;
-      text-align: center;
-      border-bottom: 1px dashed #ddd;
-    }
-    .receipt-clinic-name {
-      font-size: 15px; font-weight: 800; color: var(--blue-900);
+      font-weight: 700;
       letter-spacing: -.3px;
     }
-    .receipt-clinic-sub {
-      font-size: 11px; color: var(--gray-600); margin-top: 2px;
+    .header-subtitle {
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+      margin-top: 2px;
     }
-    .receipt-num {
-      display: inline-block; background: var(--blue-50); border: 1px solid var(--blue-100);
-      border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 700;
-      color: var(--blue-700); margin-top: 10px;
-    }
-    .receipt-body { padding: 14px 20px; }
-    .receipt-row {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 12.5px;
-    }
-    .receipt-row:last-child { border-bottom: none; }
-    .receipt-key { color: var(--gray-600); font-weight: 500; }
-    .receipt-val { font-weight: 600; color: var(--gray-900); text-align: left; }
-    .receipt-val.anomaly {
-      color: var(--red);
-      background: var(--red-bg);
-      padding: 1px 6px; border-radius: 4px;
-      position: relative;
-    }
-    .receipt-val.anomaly-orange {
-      color: var(--orange);
-      background: var(--orange-bg);
-      padding: 1px 6px; border-radius: 4px;
-    }
-    .receipt-total {
-      margin-top: 12px; padding: 12px 20px;
-      background: var(--gray-50); border-top: 2px solid var(--gray-200);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .receipt-total-label { font-size: 13px; font-weight: 700; color: var(--gray-700); }
-    .receipt-amount {
-      font-size: 22px; font-weight: 800; color: var(--blue-800);
-      font-family: monospace; letter-spacing: -1px;
-    }
-    .receipt-amount.anomaly-font {
-      /* Simulate slight font inconsistency */
-      font-family: Arial, sans-serif;
-      color: var(--red);
-    }
-    .receipt-foot {
-      padding: 10px 20px; text-align: center;
-      border-top: 1px dashed #ddd;
-      font-size: 10px; color: var(--gray-400);
-    }
-    .receipt-stamp {
-      display: inline-block; border: 2px solid #ccc; border-radius: 50%;
-      width: 52px; height: 52px; line-height: 52px;
-      font-size: 10px; color: #ccc; font-weight: 700;
-      transform: rotate(-20deg); margin: 8px auto 0;
-      opacity: .6;
-    }
-    .highlight-box {
-      margin-top: 14px; padding: 10px 14px;
-      background: var(--red-bg); border: 1px solid #fca5a5;
-      border-radius: 8px; font-size: 11.5px; color: var(--red);
-      display: flex; gap: 8px; align-items: flex-start;
-    }
-    .highlight-box .hb-icon { flex-shrink: 0; margin-top: 1px; }
-
-    /* ── ANALYSIS COL ────────────────────────────── */
-    .analysis-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
-
-    /* ── ANALYSIS CARD ───────────────────────────── */
-    .analysis-card {
-      background: #fff; border-radius: var(--radius-lg);
-      border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    .ac-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 16px; cursor: pointer;
-      border-bottom: 1px solid transparent;
-      transition: background .15s;
-      user-select: none;
-    }
-    .ac-header:hover { background: var(--gray-50); }
-    .ac-header.open { border-bottom-color: var(--gray-200); }
-    .ac-left  { display: flex; align-items: center; gap: 10px; }
-    .ac-badge {
-      width: 26px; height: 26px; border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-    }
-    .ac-badge.blue   { background: var(--blue-100); }
-    .ac-badge.red    { background: var(--red-bg); }
-    .ac-badge.gray   { background: var(--gray-100); }
-    .ac-badge.orange { background: var(--orange-bg); }
-    .ac-badge.green  { background: var(--green-bg); }
-    .ac-title { font-size: 13.5px; font-weight: 700; color: var(--gray-900); }
-    .ac-meta  { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
-    .ac-arrow {
-      font-size: 12px; color: var(--gray-400); transition: transform .25s;
-      flex-shrink: 0;
-    }
-    .ac-arrow.open { transform: rotate(180deg); }
-    .ac-body { padding: 16px; display: none; animation: fadeIn .2s ease; }
-    .ac-body.open { display: block; }
-
-    /* ── EXTRACTED INFO TABLE ────────────────────── */
-    .info-table { width: 100%; border-collapse: collapse; }
-    .info-table th {
-      text-align: right; font-size: 11px; font-weight: 600;
-      color: var(--gray-400); text-transform: uppercase; letter-spacing: .4px;
-      padding: 0 10px 8px; border-bottom: 1px solid var(--gray-200);
-    }
-    .info-table td {
-      padding: 9px 10px; border-bottom: 1px solid var(--gray-100);
-      font-size: 13px; vertical-align: middle;
-    }
-    .info-table tr:last-child td { border-bottom: none; }
-    .info-table .field-name { font-weight: 600; color: var(--gray-800); }
-    .info-table .field-val  { color: var(--gray-700); }
-    .confidence {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11px; font-weight: 700;
-    }
-    .conf-bar {
-      width: 46px; height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden;
-    }
-    .conf-fill { height: 100%; border-radius: 3px; background: var(--green); }
-    .conf-fill.med { background: var(--yellow); }
-    .conf-fill.low { background: var(--red); }
-
-    /* ── FINDINGS ────────────────────────────────── */
-    .finding {
-      border-radius: 9px; margin-bottom: 10px; overflow: hidden;
-      border: 1.5px solid var(--gray-200); transition: border-color .15s;
-    }
-    .finding:last-child { margin-bottom: 0; }
-    .finding.sev-red    { border-color: #fca5a5; }
-    .finding.sev-orange { border-color: #fdba74; }
-    .finding.sev-yellow { border-color: #fcd34d; }
-    .finding-head {
-      display: flex; align-items: center; gap: 10px;
-      padding: 11px 14px; cursor: pointer;
-      transition: background .15s; user-select: none;
-    }
-    .finding.sev-red    .finding-head:hover { background: #fff5f5; }
-    .finding.sev-orange .finding-head:hover { background: #fffaf5; }
-    .finding.sev-yellow .finding-head:hover { background: #fffef0; }
-    .finding-icon { font-size: 15px; flex-shrink: 0; }
-    .finding-text { flex: 1; font-size: 13px; font-weight: 600; color: var(--gray-900); }
-    .finding-tag {
-      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px;
-      flex-shrink: 0;
-    }
-    .sev-red    .finding-tag { background: var(--red-bg);    color: var(--red); }
-    .sev-orange .finding-tag { background: var(--orange-bg); color: var(--orange); }
-    .sev-yellow .finding-tag { background: var(--yellow-bg); color: var(--yellow); }
-    .finding-arrow { font-size: 11px; color: var(--gray-400); transition: transform .22s; }
-    .finding-arrow.open { transform: rotate(180deg); }
-    .finding-body {
-      display: none; padding: 12px 14px 13px; font-size: 12.5px; color: var(--gray-700);
-      border-top: 1px solid var(--gray-100); line-height: 1.7;
-      animation: fadeIn .18s ease;
-    }
-    .finding-body.open { display: block; }
-    .finding-body strong { color: var(--gray-900); }
-
-    /* ── METADATA TABLE ──────────────────────────── */
-    .meta-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .meta-cell {
-      background: var(--gray-50); border: 1px solid var(--gray-200);
-      border-radius: 8px; padding: 11px 13px;
-    }
-    .meta-cell .mc-label { font-size: 10.5px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
-    .meta-cell .mc-val   { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-top: 3px; }
-    .meta-cell .mc-val.anomaly { color: var(--red); }
-    .meta-cell .mc-sub   { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
-
-    /* ── RISK GAUGE ──────────────────────────────── */
-    .risk-section { display: flex; gap: 22px; align-items: center; }
-    .gauge-wrap { position: relative; width: 130px; height: 130px; flex-shrink: 0; }
-    .gauge-svg { width: 130px; height: 130px; transform: rotate(-90deg); }
-    .gauge-bg   { fill: none; stroke: #f0f0f0; stroke-width: 10; }
-    .gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1); }
-    .gauge-text {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      text-align: center;
-    }
-    .gauge-score { font-size: 30px; font-weight: 800; color: var(--red); line-height: 1; }
-    .gauge-max   { font-size: 12px; color: var(--gray-400); }
-    .gauge-label { font-size: 10px; font-weight: 600; color: var(--red); margin-top: 2px; letter-spacing: .3px; }
-    .risk-details { flex: 1; }
-    .risk-bar-row { margin-bottom: 10px; }
-    .rbar-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-    .rbar-label { font-weight: 600; color: var(--gray-700); }
-    .rbar-score { font-weight: 700; }
-    .rbar-score.high { color: var(--red); }
-    .rbar-score.med  { color: var(--orange); }
-    .rbar-track { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
-    .rbar-fill  { height: 100%; border-radius: 3px; }
-    .rbar-fill.high { background: var(--red); }
-    .rbar-fill.med  { background: var(--orange); }
-    .rbar-fill.low  { background: var(--green); }
-    .risk-verdict {
-      margin-top: 14px; padding: 12px 14px;
-      border-radius: 9px; background: var(--red-bg); border: 1px solid #fca5a5;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .risk-verdict-icon { font-size: 22px; }
-    .risk-verdict-text { font-size: 13px; font-weight: 700; color: var(--red); }
-    .risk-verdict-sub  { font-size: 11.5px; color: #9b1c1c; margin-top: 2px; }
-
-    /* ── COMPARISON TABLE ────────────────────────── */
-    .cmp-intro {
-      font-size: 12.5px; color: var(--gray-700); margin-bottom: 12px;
-      padding: 10px 13px; background: var(--orange-bg); border-radius: 8px;
-      border-right: 3px solid var(--orange);
-    }
-    .cmp-table { width: 100%; border-collapse: collapse; }
-    .cmp-table th {
-      text-align: right; font-size: 11px; font-weight: 700; color: var(--gray-500);
-      text-transform: uppercase; letter-spacing: .4px;
-      padding: 0 10px 8px; border-bottom: 2px solid var(--gray-200);
-    }
-    .cmp-table td {
-      padding: 9px 10px; border-bottom: 1px solid var(--gray-100);
-      font-size: 12.5px; vertical-align: middle;
-    }
-    .cmp-table tr:last-child td { border-bottom: none; }
-    .cmp-table .claim-id { font-weight: 700; color: var(--blue-700); font-size: 12px; }
-    .status-pill {
-      display: inline-block; padding: 2px 9px; border-radius: 20px;
-      font-size: 10.5px; font-weight: 700;
-    }
-    .status-pill.suspect { background: var(--red-bg); color: var(--red); }
-    .status-pill.review  { background: var(--orange-bg); color: var(--orange); }
-    .pattern-match {
-      font-size: 11px; color: var(--gray-600);
-      display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px;
-    }
-    .pm-tag {
-      background: var(--gray-100); border: 1px solid var(--gray-200);
-      border-radius: 4px; padding: 1px 6px; font-size: 10.5px;
-    }
-
-    /* ── BOTTOM ACTION BAR ───────────────────────── */
-    .action-bar {
-      background: #fff; border-top: 1px solid var(--gray-200);
-      box-shadow: 0 -2px 8px rgba(0,0,0,.06);
-      padding: 14px 32px;
-      display: flex; align-items: center; justify-content: space-between;
+    .header-right {
+      display: flex;
+      align-items: center;
       gap: 12px;
     }
-    .action-bar-left  { display: flex; gap: 10px; align-items: center; }
-    .action-bar-right { display: flex; gap: 10px; align-items: center; }
+    .badge-demo {
+      background: #f59e0b;
+      color: #1a1a00;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .risk-badge {
+      background: var(--red);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    /* ── BANNER ───────────────────────────────────── */
+    .banner {
+      background: #fffbeb;
+      border-bottom: 2px solid #f59e0b;
+      padding: 11px 32px;
+      font-size: 13px;
+      color: #7c5600;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── MAIN CONTENT ─────────────────────────────── */
+    .main {
+      flex: 1;
+      padding: 24px 32px 40px;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ── SIMULATED UPLOAD AREA ────────────────────── */
+    .upload-area {
+      background: #fff;
+      border: 2px dashed var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .upload-area-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .upload-area-file {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue-50);
+      border: 1.5px solid var(--blue-100);
+      border-radius: var(--radius);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-700);
+    }
+    .upload-area-file .file-icon { font-size: 18px; }
+    .upload-status {
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+    }
+    .dot-green {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── SPLIT GRID ───────────────────────────────── */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── RECEIPT CARD ─────────────────────────────── */
+    .receipt-wrap {
+      position: sticky;
+      top: 100px;
+    }
+    .receipt-card {
+      background: #fefefe;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,.04);
+      overflow: hidden;
+    }
+    .receipt-header-bar {
+      background: var(--blue-800);
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .receipt-paper {
+      padding: 28px 28px 24px;
+      font-family: 'Courier New', monospace;
+      background: #fffdf8;
+      border-top: 3px dashed var(--gray-200);
+      position: relative;
+    }
+    .receipt-paper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(90deg,
+        #fffdf8 0px, #fffdf8 8px,
+        var(--gray-200) 8px, var(--gray-200) 10px);
+    }
+    .receipt-clinic {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .receipt-clinic-name {
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      color: var(--gray-900);
+    }
+    .receipt-clinic-sub {
+      font-size: 12px;
+      color: var(--gray-600);
+      margin-top: 4px;
+    }
+    .receipt-divider {
+      border: none;
+      border-top: 1.5px dashed var(--gray-300, #ccc);
+      margin: 14px 0;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--gray-800);
+    }
+    .receipt-label {
+      color: var(--gray-600);
+    }
+    .receipt-value {
+      font-weight: 600;
+    }
+    .receipt-value.red {
+      color: var(--red);
+      font-weight: 700;
+    }
+    .receipt-amount-row {
+      background: var(--red-bg);
+      border: 1.5px solid #fca5a5;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 14px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .receipt-amount-label { font-size: 13px; color: var(--gray-700); }
+    .receipt-amount-value {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--red);
+      font-family: 'Arial Black', Arial, sans-serif;
+      letter-spacing: -1px;
+    }
+    .receipt-footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 18px;
+      border-top: 1px dashed var(--gray-200);
+      padding-top: 12px;
+    }
+    .receipt-warning-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--red);
+      margin-top: 6px;
+    }
+
+    /* ── ANALYSIS COLUMN ──────────────────────────── */
+    .analysis-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* ── SECTION CARD ─────────────────────────────── */
+    .section-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 14px 20px;
+      background: var(--gray-50);
+      border-bottom: 1.5px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-header-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .icon-blue  { background: var(--blue-100); }
+    .icon-red   { background: var(--red-bg); }
+    .icon-meta  { background: #f3f0ff; }
+    .icon-risk  { background: #fff1f2; }
+    .icon-comp  { background: var(--blue-50); }
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .section-title-sub {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 1px;
+    }
+    .section-body {
+      padding: 18px 20px;
+    }
+
+    /* ── EXTRACTED INFO TABLE ─────────────────────── */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .info-table tr:not(:last-child) td {
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .info-table td {
+      padding: 9px 6px;
+      vertical-align: middle;
+    }
+    .info-key {
+      color: var(--gray-600);
+      font-size: 12px;
+      font-weight: 500;
+      width: 180px;
+      white-space: nowrap;
+    }
+    .info-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    .info-val.warn { color: var(--red); }
+    .conf-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 130px;
+    }
+    .conf-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--gray-100);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .conf-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--blue-500);
+    }
+    .conf-bar-fill.high  { background: var(--green); }
+    .conf-bar-fill.med   { background: var(--blue-500); }
+    .conf-bar-fill.low-c { background: var(--orange); }
+    .conf-pct {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray-600);
+      min-width: 30px;
+      text-align: left;
+    }
+
+    /* ── FINDINGS ─────────────────────────────────── */
+    .finding-card {
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border-right: 4px solid transparent;
+    }
+    .finding-card:last-child { margin-bottom: 0; }
+    .finding-card.sev-high   { background: var(--red-bg);    border-color: var(--red); }
+    .finding-card.sev-med    { background: var(--orange-bg); border-color: var(--orange); }
+    .finding-card.sev-low    { background: var(--yellow-bg); border-color: var(--yellow); }
+
+    .finding-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .finding-icon { font-size: 18px; flex-shrink: 0; }
+    .finding-title {
+      font-size: 13px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .sev-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: .4px;
+      white-space: nowrap;
+    }
+    .sev-high-tag  { background: var(--red);    color: #fff; }
+    .sev-med-tag   { background: var(--orange);  color: #fff; }
+    .sev-low-tag   { background: var(--yellow);  color: #fff; }
+
+    .finding-body {
+      font-size: 12px;
+      color: var(--gray-700);
+      line-height: 1.65;
+      padding-right: 28px;
+    }
+
+    /* ── META DATA GRID ───────────────────────────── */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .meta-box {
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+    .meta-box.warn-box {
+      background: var(--orange-bg);
+      border-color: #fdba74;
+    }
+    .meta-box.danger-box {
+      background: var(--red-bg);
+      border-color: #fca5a5;
+    }
+    .meta-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      font-weight: 600;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .meta-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .meta-value.warn-val { color: var(--orange); }
+    .meta-value.danger-val { color: var(--red); }
+    .meta-note {
+      font-size: 11px;
+      color: var(--orange);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* ── RISK GAUGE ───────────────────────────────── */
+    .risk-section-body {
+      padding: 22px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+    }
+    .gauge-wrap {
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .gauge-svg { display: block; margin: 0 auto; }
+    .gauge-score-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      font-weight: 600;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .risk-details { flex: 1; }
+    .risk-rec {
+      background: var(--red-bg);
+      border: 1.5px solid #fca5a5;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sub-bar-row {
+      margin-bottom: 10px;
+    }
+    .sub-bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .sub-bar-name { color: var(--gray-700); font-weight: 500; }
+    .sub-bar-pct  { color: var(--gray-600); font-weight: 700; }
+    .sub-bar-bg {
+      height: 7px;
+      background: var(--gray-100);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .sub-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+    }
+    .fill-green  { background: var(--green); }
+    .fill-blue   { background: var(--blue-500); }
+    .fill-orange { background: var(--orange); }
+    .fill-red    { background: var(--red); }
+
+    /* ── COMPARISON TABLE ─────────────────────────── */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .comp-table thead tr {
+      background: var(--blue-50);
+    }
+    .comp-table th {
+      padding: 9px 12px;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue-700);
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--blue-100);
+    }
+    .comp-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-800);
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:hover td { background: var(--gray-50); }
+    .comp-tag {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid #fdba74;
+      border-radius: 6px;
+      padding: 2px 7px;
+    }
+
+    /* ── ACTION BAR ───────────────────────────────── */
+    .action-bar {
+      background: #fff;
+      border-top: 2px solid var(--gray-200);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .action-bar-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 600;
+      margin-left: 8px;
+    }
     .btn {
-      padding: 9px 18px; border-radius: 8px; font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-      font-size: 13px; font-weight: 600; cursor: pointer;
-      border: 1.5px solid transparent; transition: all .18s;
-      display: flex; align-items: center; gap: 6px;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: default;
+      letter-spacing: .2px;
     }
-    .btn-danger  { background: var(--red); color: #fff; border-color: var(--red); }
-    .btn-danger:hover { background: #b91c1c; border-color: #b91c1c; }
-    .btn-warning { background: var(--orange); color: #fff; border-color: var(--orange); }
-    .btn-warning:hover { background: #b45309; border-color: #b45309; }
-    .btn-success { background: var(--green); color: #fff; border-color: var(--green); }
-    .btn-success:hover { background: #15643b; border-color: #15643b; }
-    .btn-outline { background: #fff; color: var(--gray-700); border-color: var(--gray-300); }
-    .btn-outline:hover { background: var(--gray-100); }
-    .btn-primary { background: var(--blue-600); color: #fff; border-color: var(--blue-600); }
-    .btn-primary:hover { background: var(--blue-700); }
-    .action-bar-note { font-size: 11.5px; color: var(--gray-400); display: flex; align-items: center; gap: 5px; }
+    .btn-danger  { background: var(--red);    color: #fff; }
+    .btn-primary { background: var(--blue-600); color: #fff; }
+    .btn-success { background: var(--green);  color: #fff; }
+    .btn-ghost   {
+      background: transparent;
+      color: var(--gray-600);
+      border: 1.5px solid var(--gray-200);
+    }
+    .btn-disabled {
+      opacity: .5;
+    }
 
-    /* ── FOOTER NOTE ─────────────────────────────── */
+    /* ── FOOTER NOTE ──────────────────────────────── */
     .footer-note {
-      text-align: center; font-size: 11px; color: var(--gray-400);
-      padding: 10px; background: var(--gray-100); border-top: 1px solid var(--gray-200);
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray-400);
+      padding: 12px;
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
     }
 
-    /* ── MISC ────────────────────────────────────── */
-    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
-    .dot.red    { background: var(--red); }
-    .dot.orange { background: var(--orange); }
-    .dot.yellow { background: var(--yellow); }
-    .dot.green  { background: var(--green); }
-    .col-gray { color: var(--gray-400); }
-
-    @media (max-width: 900px) {
-      .split-view { flex-direction: column; }
-      .preview-col { width: 100%; }
-      .meta-grid { grid-template-columns: 1fr; }
-      .risk-section { flex-direction: column; align-items: flex-start; }
+    /* ── MISC UTILS ───────────────────────────────── */
+    .warn-inline {
+      color: var(--red);
+      font-weight: 700;
+    }
+    .tag-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--red-bg);
+      border: 1px solid #fca5a5;
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      margin-right: 6px;
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     TOP BAR
-═══════════════════════════════════════════ -->
-<header class="topbar">
-  <div class="topbar-brand">
-    <div class="topbar-icon">🔍</div>
-    <div>
-      <div class="topbar-title">מערכת ניתוח מסמכים וזיהוי זיופים</div>
-      <div class="topbar-sub">דמו – בינה מלאכותית לניתוח מסמכים תפעוליים</div>
-    </div>
-  </div>
-  <div class="topbar-badges">
-    <span class="badge demo">DEMO</span>
-    <span class="badge">AI Powered</span>
-    <span class="badge">חוקר: דוד לוי</span>
-  </div>
-</header>
-
-<!-- ══════════════════════════════════════════
-     MAIN
-═══════════════════════════════════════════ -->
-<main class="main">
-
-  <!-- ── UPLOAD SECTION ───────────────────── -->
-  <section class="upload-section">
-    <div class="section-header">
-      <div class="icon">📄</div>
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="header-icon">🔍</div>
       <div>
-        <div>העלאת מסמך לניתוח</div>
-        <div style="font-size:11px;font-weight:400;color:var(--gray-400);margin-top:1px;">PDF, JPEG, PNG · עד 50MB</div>
+        <div class="header-title">מערכת ניתוח מסמכים וזיהוי זיופים</div>
+        <div class="header-subtitle">דמו - בינה מלאכותית לניתוח מסמכים תפעוליים</div>
       </div>
     </div>
-    <div class="upload-row">
-      <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
-        <div class="dz-icon">☁️</div>
-        <div class="dz-label">גרור מסמך לכאן, או לחץ להעלאה</div>
-        <div class="dz-hint">PDF · JPEG · PNG · מוצפן בתעבורה ואחסון</div>
-        <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" style="display:none" />
-      </div>
-      <div class="sample-panel">
-        <div class="sample-label">טען מסמך לדוגמה</div>
-        <button class="sample-btn" id="btn-receipt"   onclick="loadSample('receipt')">
-          <span class="sb-icon">🧾</span>
-          קבלה רפואית
-          <span class="sb-tag">PDF</span>
-        </button>
-        <button class="sample-btn" id="btn-cert"      onclick="loadSample('cert')">
-          <span class="sb-icon">📋</span>
-          אישור רפואי
-          <span class="sb-tag">PDF</span>
-        </button>
-        <button class="sample-btn" id="btn-invoice"   onclick="loadSample('invoice')">
-          <span class="sb-icon">📊</span>
-          חשבונית
-          <span class="sb-tag">JPEG</span>
-        </button>
-      </div>
+    <div class="header-right">
+      <span class="badge-demo">DEMO</span>
+      <span class="risk-badge">⚠️ סיכון גבוה: 78/100</span>
     </div>
-  </section>
+  </header>
 
-  <!-- ── SPLIT VIEW ────────────────────────── -->
-  <div class="split-view" id="splitView">
+  <!-- ═══════════════════════════════════════════════
+       YELLOW BANNER
+  ════════════════════════════════════════════════ -->
+  <div class="banner">
+    ⚠️ דמו סטטי - מציג ניתוח של מסמך לדוגמה. הכלי האמיתי יאפשר העלאה של כל מסמך לניתוח בזמן אמת.
+  </div>
 
-    <!-- LEFT: RECEIPT PREVIEW -->
-    <div class="preview-col">
-      <div class="preview-card">
-        <div class="card-header">
-          🖼 תצוגה מקדימה – קבלה רפואית
-          <span style="margin-right:auto;font-size:11px;opacity:.7;font-weight:400">מס׳ קובץ: IMG_8847.pdf</span>
-        </div>
-        <div class="receipt-wrap">
-          <div class="receipt">
-            <div class="receipt-head">
-              <div class="receipt-clinic-name">מרפאת שלום</div>
-              <div class="receipt-clinic-sub">ד"ר יוסף כהן | רפואה כללית ופיזיותרפיה</div>
-              <div class="receipt-clinic-sub" style="margin-top:3px;font-size:10px">רח׳ הרצל 42, תל אביב | טל׳: 03-555-1234</div>
-              <div class="receipt-num">קבלה מס׳ 8847</div>
-            </div>
-            <div class="receipt-body">
-              <div class="receipt-row">
-                <span class="receipt-key">תאריך</span>
-                <span class="receipt-val anomaly" title="חל ביום שבת">15/01/2026</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">שם מטופל</span>
-                <span class="receipt-val">ישראל ישראלי</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">מס׳ ת.ז.</span>
-                <span class="receipt-val">0123****78</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">טיפול</span>
-                <span class="receipt-val">פיזיותרפיה – 4 טיפולים</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">אבחנה</span>
-                <span class="receipt-val">כאבי גב תחתון – M54.5</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">רופא מטפל</span>
-                <span class="receipt-val">ד"ר יוסף כהן</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-key">אמצעי תשלום</span>
-                <span class="receipt-val anomaly-orange">מזומן</span>
-              </div>
-            </div>
-            <div class="receipt-total">
-              <span class="receipt-total-label">סה"כ לתשלום</span>
-              <span class="receipt-amount anomaly-font">₪2,400</span>
-            </div>
-            <div class="receipt-foot">
-              <div>קבלה זו מהווה אסמכתה לתשלום</div>
-              <div class="receipt-stamp">חתימה<br/>וחותמת</div>
-            </div>
-          </div>
-          <div class="highlight-box">
-            <div class="hb-icon">⚠️</div>
-            <div><strong>3 אנומליות ויזואליות זוהו</strong> – ראה ניתוח מפורט בצד הימני. שדות מסומנים באדום/כתום.</div>
-          </div>
-        </div>
+  <!-- ═══════════════════════════════════════════════
+       MAIN
+  ════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- Simulated upload area (decorative) -->
+    <div class="upload-area">
+      <span class="upload-area-label">מסמך נבחר</span>
+      <div class="upload-area-file">
+        <span class="file-icon">📄</span>
+        קבלה רפואית – IMG_8847.pdf
+      </div>
+      <div class="upload-status">
+        <span class="dot-green"></span>
+        ניתוח הושלם
       </div>
     </div>
 
-    <!-- RIGHT: ANALYSIS RESULTS -->
-    <div class="analysis-col">
+    <!-- 2-column split -->
+    <div class="split-grid">
 
-      <!-- ── A: EXTRACTED INFO ─────────────── -->
-      <div class="analysis-card">
-        <div class="ac-header open" onclick="toggleCard(this)">
-          <div class="ac-left">
-            <div class="ac-badge blue">📝</div>
-            <div>
-              <div class="ac-title">א. מידע שזוהה</div>
-              <div class="ac-meta">חילוץ אוטומטי · 8 שדות · זמן עיבוד 1.2 שנ׳</div>
-            </div>
+      <!-- ══════════════════════════════
+           RIGHT: SIMULATED RECEIPT
+      ══════════════════════════════ -->
+      <div class="receipt-wrap">
+        <div class="receipt-card">
+          <div class="receipt-header-bar">
+            📑 מסמך מקור – קבלה רפואית
           </div>
-          <div class="ac-arrow open">▼</div>
-        </div>
-        <div class="ac-body open">
-          <table class="info-table">
-            <thead>
-              <tr>
-                <th>שדה</th>
-                <th>ערך שחולץ</th>
-                <th>ביטחון</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="field-name">שם מוסד</td>
-                <td class="field-val">מרפאת שלום – ד"ר יוסף כהן</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:97%"></div></div>
-                    <span style="color:var(--green);font-size:11px">97%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">תאריך</td>
-                <td class="field-val" style="color:var(--red);font-weight:700">15/01/2026 (שבת ⚠)</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:99%"></div></div>
-                    <span style="color:var(--green);font-size:11px">99%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">שם מטופל</td>
-                <td class="field-val">ישראל ישראלי</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:95%"></div></div>
-                    <span style="color:var(--green);font-size:11px">95%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">סוג טיפול</td>
-                <td class="field-val">פיזיותרפיה – 4 טיפולים</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:91%"></div></div>
-                    <span style="color:var(--green);font-size:11px">91%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">מספר קבלה</td>
-                <td class="field-val" style="color:var(--orange);font-weight:700">8847 (חשוד ⚠)</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:98%"></div></div>
-                    <span style="color:var(--green);font-size:11px">98%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">סכום</td>
-                <td class="field-val" style="color:var(--red);font-weight:700">₪2,400 (פונט שונה ⚠)</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill med" style="width:87%"></div></div>
-                    <span style="color:var(--yellow);font-size:11px">87%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">אמצעי תשלום</td>
-                <td class="field-val">מזומן</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill" style="width:94%"></div></div>
-                    <span style="color:var(--green);font-size:11px">94%</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="field-name">חתימה / חותמת</td>
-                <td class="field-val" style="color:var(--gray-400)">לא זוהתה</td>
-                <td>
-                  <div class="confidence">
-                    <div class="conf-bar"><div class="conf-fill low" style="width:30%"></div></div>
-                    <span style="color:var(--red);font-size:11px">30%</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <div class="receipt-paper">
+            <div class="receipt-clinic">
+              <div class="receipt-clinic-name">מרפאת שלום – ד״ר יוסף כהן</div>
+              <div class="receipt-clinic-sub">רח׳ הרצל 14, תל-אביב | טל׳ 03-5550000</div>
+            </div>
 
-      <!-- ── B: SUSPICIOUS FINDINGS ────────── -->
-      <div class="analysis-card">
-        <div class="ac-header open" onclick="toggleCard(this)">
-          <div class="ac-left">
-            <div class="ac-badge red">🚨</div>
-            <div>
-              <div class="ac-title">ב. ממצאים חשודים</div>
-              <div class="ac-meta">2 חומרה גבוהה · 2 בינונית · 1 נמוכה</div>
-            </div>
-          </div>
-          <div class="ac-arrow open">▼</div>
-        </div>
-        <div class="ac-body open">
+            <hr class="receipt-divider">
 
-          <div class="finding sev-red">
-            <div class="finding-head" onclick="toggleFinding(this)">
-              <span class="finding-icon">🔴</span>
-              <span class="finding-text">תאריך הקבלה חל ביום שבת</span>
-              <span class="finding-tag">חומרה גבוהה</span>
-              <span class="finding-arrow">▼</span>
+            <div class="receipt-row">
+              <span class="receipt-label">תאריך:</span>
+              <span class="receipt-value red">
+                15/01/2026
+                <span class="tag-inline">⚠️ שבת</span>
+              </span>
             </div>
-            <div class="finding-body open">
-              המסמך נושא תאריך <strong>15/01/2026</strong>, שהינו <strong>יום שבת</strong>. ממסד הנתונים של המרפאה ומפרטי רישיון העסק עולה כי המרפאה <strong>אינה פועלת בשבת</strong>. לא נמצאה כל תוספת שכר לעבודה בשבת המתאימה לסכום הנדרש, ואין אינדיקציה לפעילות חירום שעשויה להצדיק פתיחה.
+            <div class="receipt-row">
+              <span class="receipt-label">מספר קבלה:</span>
+              <span class="receipt-value">8847</span>
             </div>
-          </div>
+            <div class="receipt-row">
+              <span class="receipt-label">שם מטופל:</span>
+              <span class="receipt-value">ישראל ישראלי</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">ת.ז.:</span>
+              <span class="receipt-value">000-000-0000</span>
+            </div>
 
-          <div class="finding sev-orange">
-            <div class="finding-head" onclick="toggleFinding(this)">
-              <span class="finding-icon">🟠</span>
-              <span class="finding-text">מספר קבלה רציף – דפוס חוזר בתביעות</span>
-              <span class="finding-tag">חומרה בינונית</span>
-              <span class="finding-arrow">▼</span>
-            </div>
-            <div class="finding-body">
-              מספר הקבלה <strong>8847</strong> מופיע ב-3 תביעות נוספות ממספרי קבלה צמודים (8844, 8845, 8846) שהוגשו על-ידי מבוטחים שונים באותו שבוע. הסתברות לרצף כזה בנסיבות רגילות: <strong>פחות מ-0.3%</strong>. ייתכן שנעשה שימוש בתבנית קבלה חוזרת עם שינוי ידני של מספר ושם.
-            </div>
-          </div>
+            <hr class="receipt-divider">
 
-          <div class="finding sev-red">
-            <div class="finding-head" onclick="toggleFinding(this)">
-              <span class="finding-icon">🔴</span>
-              <span class="finding-text">פונט לא אחיד בשדה הסכום – עדות לעריכה</span>
-              <span class="finding-tag">חומרה גבוהה</span>
-              <span class="finding-arrow">▼</span>
+            <div class="receipt-row">
+              <span class="receipt-label">טיפול:</span>
+              <span class="receipt-value">פיזיותרפיה</span>
             </div>
-            <div class="finding-body">
-              ניתוח OCR מתקדם זיהה כי הסכום <strong>₪2,400</strong> נכתב בפונט שונה (Arial 11pt) מיתר שדות המסמך (Heebo 11pt, embedding vector #3F2). ניתוח מצביע על <strong>שינוי ידני אפשרי</strong> של ערך שדה זה לאחר הפקת המסמך המקורי. רמת ביטחון: 89%.
+            <div class="receipt-row">
+              <span class="receipt-label">מספר טיפולים:</span>
+              <span class="receipt-value">4</span>
             </div>
-          </div>
+            <div class="receipt-row">
+              <span class="receipt-label">מטפל:</span>
+              <span class="receipt-value">ד״ר יוסף כהן</span>
+            </div>
 
-          <div class="finding sev-orange">
-            <div class="finding-head" onclick="toggleFinding(this)">
-              <span class="finding-icon">🟠</span>
-              <span class="finding-text">סכום חריג ביחס לטיפול המדווח</span>
-              <span class="finding-tag">חומרה בינונית</span>
-              <span class="finding-arrow">▼</span>
+            <div class="receipt-amount-row">
+              <span class="receipt-amount-label">סה״כ לתשלום</span>
+              <span class="receipt-amount-value">₪2,400</span>
             </div>
-            <div class="finding-body">
-              ₪2,400 ל-4 טיפולי פיזיותרפיה שווה <strong>₪600 לטיפול</strong>. ממוצע עלות פיזיותרפיה בתל אביב (מתוך 1,247 תביעות מאומתות): <strong>₪260 לטיפול</strong>. הסכום המדווח גבוה ב-<strong>2.3×</strong> מהממוצע ומעל האחוזון ה-97 של ההתפלגות. לא זוהה כל אינדיקטור המצדיק תוספת מחיר (מומחה בכיר, ציוד מיוחד, ביקור בית).
-            </div>
-          </div>
 
-          <div class="finding sev-yellow">
-            <div class="finding-head" onclick="toggleFinding(this)">
-              <span class="finding-icon">🟡</span>
-              <span class="finding-text">חתימה דיגיטלית וחותמת – לא זוהו</span>
-              <span class="finding-tag">חומרה נמוכה</span>
-              <span class="finding-arrow">▼</span>
+            <div class="receipt-row">
+              <span class="receipt-label">אמצעי תשלום:</span>
+              <span class="receipt-value">מזומן</span>
             </div>
-            <div class="finding-body">
-              לא נמצאה <strong>חתימה דיגיטלית מאומתת</strong> ולא חותמת רשמית בפורמט PDF/A. ניתוח גרפי מצביע על חותמת שהודפסה וסרקה – שיטה הניתנת לזיוף בקלות. מומלץ לדרוש מהמרפאה אסמכתת מסמך דיגיטלי מקורי חתום.
-            </div>
-          </div>
 
-        </div>
-      </div>
+            <hr class="receipt-divider">
 
-      <!-- ── C: METADATA ────────────────────── -->
-      <div class="analysis-card">
-        <div class="ac-header" onclick="toggleCard(this)">
-          <div class="ac-left">
-            <div class="ac-badge gray">🗄</div>
-            <div>
-              <div class="ac-title">ג. ניתוח מטא-דאטה</div>
-              <div class="ac-meta">PDF metadata · EXIF · hash integrity</div>
-            </div>
-          </div>
-          <div class="ac-arrow">▼</div>
-        </div>
-        <div class="ac-body">
-          <div class="meta-grid">
-            <div class="meta-cell">
-              <div class="mc-label">תאריך יצירת קובץ</div>
-              <div class="mc-val">14/01/2026 · 22:47</div>
-              <div class="mc-sub">יום לפני תאריך הקבלה</div>
-            </div>
-            <div class="meta-cell">
-              <div class="mc-label">תאריך שינוי אחרון</div>
-              <div class="mc-val anomaly">16/01/2026 · 08:13</div>
-              <div class="mc-sub" style="color:var(--red)">יום לאחר תאריך הקבלה</div>
-            </div>
-            <div class="meta-cell">
-              <div class="mc-label">תוכנת יצירה</div>
-              <div class="mc-val">Adobe Acrobat DC 2023</div>
-              <div class="mc-sub">גרסה מסחרית</div>
-            </div>
-            <div class="meta-cell">
-              <div class="mc-label">תוכנת עריכה אחרונה</div>
-              <div class="mc-val anomaly">Adobe Acrobat · שכבה 2</div>
-              <div class="mc-sub" style="color:var(--red)">זוהתה עריכה חוזרת</div>
-            </div>
-            <div class="meta-cell">
-              <div class="mc-label">נתוני GPS</div>
-              <div class="mc-val col-gray">לא זמין</div>
-              <div class="mc-sub">לא נכלל במסמך</div>
-            </div>
-            <div class="meta-cell">
-              <div class="mc-label">תקינות Hash (SHA-256)</div>
-              <div class="mc-val anomaly">⚠ אי-התאמה</div>
-              <div class="mc-sub" style="color:var(--red)">Hash שונה מהמקור המוצהר</div>
-            </div>
-            <div class="meta-cell" style="grid-column:1/-1">
-              <div class="mc-label">מזהה מסמך PDF</div>
-              <div class="mc-val" style="font-size:11px;font-family:monospace;letter-spacing:-.3px">3f8a2c1b-e4d9-47f2-a0b5-9c3e6d1f8a4e</div>
-              <div class="mc-sub">לא נמצא במאגר מרפאה · ייתכן מסמך שנוצר ממקור חיצוני</div>
+            <div class="receipt-footer">
+              קבלה מס׳ 8847 | הופקה: 15/01/2026
+              <br>
+              <span class="receipt-warning-tag">⚠️ ניתוח AI זיהה חריגות</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── D: RISK SCORE ───────────────────── -->
-      <div class="analysis-card">
-        <div class="ac-header open" onclick="toggleCard(this)">
-          <div class="ac-left">
-            <div class="ac-badge red">🎯</div>
+      <!-- ══════════════════════════════
+           LEFT: ANALYSIS RESULTS
+      ══════════════════════════════ -->
+      <div class="analysis-col">
+
+        <!-- ── SECTION A: Extracted Information ── -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-header-icon icon-blue">📋</div>
             <div>
-              <div class="ac-title">ד. ציון סיכון כולל</div>
-              <div class="ac-meta">מודל ML · 23 פרמטרים · עודכן 04/2026</div>
+              <div class="section-title">א. מידע שזוהה</div>
+              <div class="section-title-sub">שדות שחולצו מהמסמך על-ידי OCR ו-AI</div>
             </div>
           </div>
-          <div class="ac-arrow open">▼</div>
+          <div class="section-body">
+            <table class="info-table">
+              <tbody>
+                <tr>
+                  <td class="info-key">שם מוסד</td>
+                  <td class="info-val">מרפאת שלום – ד"ר יוסף כהן</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill high" style="width:97%"></div></div>
+                      <span class="conf-pct">97%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="info-key">תאריך</td>
+                  <td class="info-val warn">15/01/2026 &nbsp;⚠️ שבת</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill high" style="width:99%"></div></div>
+                      <span class="conf-pct">99%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="info-key">שם מטופל</td>
+                  <td class="info-val">ישראל ישראלי</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill high" style="width:95%"></div></div>
+                      <span class="conf-pct">95%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="info-key">סוג טיפול</td>
+                  <td class="info-val">פיזיותרפיה – 4 טיפולים</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill med" style="width:91%"></div></div>
+                      <span class="conf-pct">91%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="info-key">סכום</td>
+                  <td class="info-val warn">₪2,400</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill low-c" style="width:87%"></div></div>
+                      <span class="conf-pct">87%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="info-key">מספר קבלה</td>
+                  <td class="info-val">8847</td>
+                  <td>
+                    <div class="conf-wrap">
+                      <div class="conf-bar-bg"><div class="conf-bar-fill high" style="width:99%"></div></div>
+                      <span class="conf-pct">99%</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="ac-body open">
-          <div class="risk-section">
+
+        <!-- ── SECTION B: Suspicious Findings ── -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-header-icon icon-red">🚨</div>
+            <div>
+              <div class="section-title">ב. ממצאים חשודים</div>
+              <div class="section-title-sub">5 חריגות זוהו – כולן מוצגות</div>
+            </div>
+          </div>
+          <div class="section-body">
+
+            <div class="finding-card sev-high">
+              <div class="finding-top">
+                <span class="finding-icon">🔴</span>
+                <span class="finding-title">תאריך הקבלה חל ביום שבת</span>
+                <span class="sev-tag sev-high-tag">גבוהה</span>
+              </div>
+              <div class="finding-body">
+                המסמך נושא תאריך 15/01/2026, שהינו יום שבת. מרפאת שלום סגורה בימי שבת לפי שעות הפעילות הרשומות. נדרש אימות.
+              </div>
+            </div>
+
+            <div class="finding-card sev-med">
+              <div class="finding-top">
+                <span class="finding-icon">🟠</span>
+                <span class="finding-title">מספר קבלה רציף – דפוס חוזר בתביעות</span>
+                <span class="sev-tag sev-med-tag">בינונית</span>
+              </div>
+              <div class="finding-body">
+                מספר הקבלה 8847 מופיע ב-3 תביעות נוספות ממבוטחים שונים באותו חודש, המצביע על אפשרות להעתקה.
+              </div>
+            </div>
+
+            <div class="finding-card sev-high">
+              <div class="finding-top">
+                <span class="finding-icon">🔴</span>
+                <span class="finding-title">פונט לא אחיד בשדה הסכום – עדות לעריכה</span>
+                <span class="sev-tag sev-high-tag">גבוהה</span>
+              </div>
+              <div class="finding-body">
+                ניתוח OCR מתקדם זיהה כי הסכום ₪2,400 מופיע בפונט שונה מהשאר. ייתכן שהסכום נערך דיגיטלית.
+              </div>
+            </div>
+
+            <div class="finding-card sev-med">
+              <div class="finding-top">
+                <span class="finding-icon">🟠</span>
+                <span class="finding-title">סכום חריג ביחס לטיפול המדווח</span>
+                <span class="sev-tag sev-med-tag">בינונית</span>
+              </div>
+              <div class="finding-body">
+                ₪2,400 ל-4 טיפולי פיזיותרפיה שווה ₪600 לטיפול – 2.3x יותר מהממוצע בענף של ₪260.
+              </div>
+            </div>
+
+            <div class="finding-card sev-low">
+              <div class="finding-top">
+                <span class="finding-icon">🟡</span>
+                <span class="finding-title">חתימה דיגיטלית וחותמת – לא זוהו</span>
+                <span class="sev-tag sev-low-tag">נמוכה</span>
+              </div>
+              <div class="finding-body">
+                לא נמצאה חתימה דיגיטלית מאומתת ולא חותמת של המרפאה על הקבלה.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── SECTION C: Metadata ── -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-header-icon icon-meta">🗂️</div>
+            <div>
+              <div class="section-title">ג. ניתוח מטא-דאטה</div>
+              <div class="section-title-sub">נתוני הקובץ הדיגיטלי</div>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="meta-grid">
+              <div class="meta-box">
+                <div class="meta-label">תאריך יצירה</div>
+                <div class="meta-value">14/01/2026</div>
+              </div>
+              <div class="meta-box warn-box">
+                <div class="meta-label">תאריך שינוי</div>
+                <div class="meta-value warn-val">20/01/2026</div>
+                <div class="meta-note">⚠️ שונה לאחר היצירה</div>
+              </div>
+              <div class="meta-box warn-box">
+                <div class="meta-label">תוכנה שיצרה</div>
+                <div class="meta-value warn-val">Adobe Photoshop</div>
+                <div class="meta-note">⚠️ חשוד לקבלה רפואית</div>
+              </div>
+              <div class="meta-box danger-box">
+                <div class="meta-label">Hash Integrity</div>
+                <div class="meta-value danger-val">❌ נכשל</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION D: Risk Score ── -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-header-icon icon-risk">🎯</div>
+            <div>
+              <div class="section-title">ד. ציון סיכון כולל</div>
+              <div class="section-title-sub">ניתוח מצטבר של כל הממצאים</div>
+            </div>
+          </div>
+          <div class="risk-section-body">
+
+            <!-- SVG gauge -->
             <div class="gauge-wrap">
-              <svg class="gauge-svg" viewBox="0 0 36 36">
-                <circle class="gauge-bg" cx="18" cy="18" r="13" />
-                <circle class="gauge-fill" id="gaugeFill" cx="18" cy="18" r="13"
+              <svg class="gauge-svg" width="140" height="140" viewBox="0 0 140 140">
+                <!-- Background track -->
+                <circle cx="70" cy="70" r="54"
+                  fill="none"
+                  stroke="#e2e5ec"
+                  stroke-width="13"
+                  stroke-dasharray="270 69"
+                  stroke-dashoffset="-135"
+                  stroke-linecap="round"
+                  transform="rotate(0, 70, 70)"
+                />
+                <!-- Red fill: 78% of 270 = 210.6 -->
+                <circle cx="70" cy="70" r="54"
+                  fill="none"
                   stroke="#d9253b"
-                  stroke-dasharray="81.68 100"
-                  stroke-dashoffset="0" />
+                  stroke-width="13"
+                  stroke-dasharray="210.6 128.4"
+                  stroke-dashoffset="-135"
+                  stroke-linecap="round"
+                />
+                <!-- Score text -->
+                <text x="70" y="65" text-anchor="middle"
+                  font-size="32" font-weight="900"
+                  font-family="Heebo, Arial, sans-serif"
+                  fill="#d9253b">78</text>
+                <text x="70" y="83" text-anchor="middle"
+                  font-size="12" font-weight="600"
+                  font-family="Heebo, Arial, sans-serif"
+                  fill="#9ea3b0">מתוך 100</text>
               </svg>
-              <div class="gauge-text">
-                <div class="gauge-score" id="gaugeScore">78</div>
-                <div class="gauge-max">/100</div>
-                <div class="gauge-label">סיכון גבוה</div>
-              </div>
+              <div class="gauge-score-label">ציון סיכון</div>
             </div>
+
             <div class="risk-details">
-              <div class="risk-bar-row">
-                <div class="rbar-header">
-                  <span class="rbar-label">עקביות מסמך</span>
-                  <span class="rbar-score high">91 / 100</span>
-                </div>
-                <div class="rbar-track"><div class="rbar-fill high" style="width:91%"></div></div>
+              <div class="risk-rec">
+                🚨 מומלץ לבדיקה ידנית מעמיקה
               </div>
-              <div class="risk-bar-row">
-                <div class="rbar-header">
-                  <span class="rbar-label">חריגת מחיר</span>
-                  <span class="rbar-score high">85 / 100</span>
+
+              <div class="sub-bar-row">
+                <div class="sub-bar-label-row">
+                  <span class="sub-bar-name">עקביות מסמך</span>
+                  <span class="sub-bar-pct">85%</span>
                 </div>
-                <div class="rbar-track"><div class="rbar-fill high" style="width:85%"></div></div>
+                <div class="sub-bar-bg"><div class="sub-bar-fill fill-blue" style="width:85%"></div></div>
               </div>
-              <div class="risk-bar-row">
-                <div class="rbar-header">
-                  <span class="rbar-label">דפוס תביעה חוזר</span>
-                  <span class="rbar-score med">68 / 100</span>
+              <div class="sub-bar-row">
+                <div class="sub-bar-label-row">
+                  <span class="sub-bar-name">חריגת מחיר</span>
+                  <span class="sub-bar-pct">72%</span>
                 </div>
-                <div class="rbar-track"><div class="rbar-fill med" style="width:68%"></div></div>
+                <div class="sub-bar-bg"><div class="sub-bar-fill fill-orange" style="width:72%"></div></div>
               </div>
-              <div class="risk-bar-row">
-                <div class="rbar-header">
-                  <span class="rbar-label">תקינות מטא-דאטה</span>
-                  <span class="rbar-score high">80 / 100</span>
+              <div class="sub-bar-row">
+                <div class="sub-bar-label-row">
+                  <span class="sub-bar-name">דפוס תביעה חוזר</span>
+                  <span class="sub-bar-pct">68%</span>
                 </div>
-                <div class="rbar-track"><div class="rbar-fill high" style="width:80%"></div></div>
+                <div class="sub-bar-bg"><div class="sub-bar-fill fill-red" style="width:68%"></div></div>
               </div>
-              <div class="risk-bar-row">
-                <div class="rbar-header">
-                  <span class="rbar-label">אותנטיות ספק</span>
-                  <span class="rbar-score med">55 / 100</span>
+              <div class="sub-bar-row">
+                <div class="sub-bar-label-row">
+                  <span class="sub-bar-name">תקינות מטא-דאטה</span>
+                  <span class="sub-bar-pct">92%</span>
                 </div>
-                <div class="rbar-track"><div class="rbar-fill med" style="width:55%"></div></div>
+                <div class="sub-bar-bg"><div class="sub-bar-fill fill-green" style="width:92%"></div></div>
               </div>
-              <div class="risk-verdict">
-                <div class="risk-verdict-icon">🔴</div>
-                <div>
-                  <div class="risk-verdict-text">מומלץ לבדיקה ידנית מעמיקה</div>
-                  <div class="risk-verdict-sub">ניתן גם להעביר לצוות חקירות SIU לטיפול מיידי</div>
+              <div class="sub-bar-row">
+                <div class="sub-bar-label-row">
+                  <span class="sub-bar-name">אותנטיות ספק</span>
+                  <span class="sub-bar-pct">73%</span>
                 </div>
+                <div class="sub-bar-bg"><div class="sub-bar-fill fill-orange" style="width:73%"></div></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- ── E: COMPARISON ──────────────────── -->
-      <div class="analysis-card">
-        <div class="ac-header" onclick="toggleCard(this)">
-          <div class="ac-left">
-            <div class="ac-badge orange">🔗</div>
+        <!-- ── SECTION E: Comparison ── -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-header-icon icon-comp">📊</div>
             <div>
-              <div class="ac-title">ה. השוואה למסמכים דומים</div>
-              <div class="ac-meta">3 תביעות קשורות · מאותו ספק · 60 ימים אחרונים</div>
+              <div class="section-title">ה. השוואה למסמכים דומים</div>
+              <div class="section-title-sub">תביעות קודמות מאותו ספק</div>
             </div>
           </div>
-          <div class="ac-arrow">▼</div>
-        </div>
-        <div class="ac-body">
-          <div class="cmp-intro">
-            זוהו <strong>3 תביעות נוספות</strong> ממרפאת שלום – ד"ר יוסף כהן עם דפוסים דומים. שיעור החשד הממוצע לספק זה בשנה האחרונה: <strong>34%</strong> (ממוצע מדגם: 4.1%).
+          <div class="section-body" style="padding:0;">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>מספר תביעה</th>
+                  <th>תאריך</th>
+                  <th>סכום</th>
+                  <th>הערה</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#15234</td>
+                  <td>22/12/2025</td>
+                  <td><strong>₪2,400</strong></td>
+                  <td><span class="comp-tag">אותו ספק</span></td>
+                </tr>
+                <tr>
+                  <td>#15891</td>
+                  <td>05/01/2026</td>
+                  <td><strong>₪2,400</strong></td>
+                  <td><span class="comp-tag">אותו ספק</span></td>
+                </tr>
+                <tr>
+                  <td>#16102</td>
+                  <td>08/01/2026</td>
+                  <td><strong>₪2,400</strong></td>
+                  <td><span class="comp-tag">אותו ספק</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <table class="cmp-table">
-            <thead>
-              <tr>
-                <th>מס׳ תביעה</th>
-                <th>תאריך</th>
-                <th>מבוטח</th>
-                <th>סכום</th>
-                <th>דפוסים משותפים</th>
-                <th>סטטוס</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="claim-id">CLM-2026-0412</td>
-                <td>09/01/2026</td>
-                <td>מ. לוי</td>
-                <td>₪2,200</td>
-                <td>
-                  <div class="pattern-match">
-                    <span class="pm-tag">שבת</span>
-                    <span class="pm-tag">מזומן</span>
-                    <span class="pm-tag">קבלה 8844</span>
-                  </div>
-                </td>
-                <td><span class="status-pill suspect">חשוד</span></td>
-              </tr>
-              <tr>
-                <td class="claim-id">CLM-2026-0389</td>
-                <td>11/01/2026</td>
-                <td>ר. כהן</td>
-                <td>₪1,950</td>
-                <td>
-                  <div class="pattern-match">
-                    <span class="pm-tag">פונט שונה</span>
-                    <span class="pm-tag">מזומן</span>
-                    <span class="pm-tag">קבלה 8845</span>
-                  </div>
-                </td>
-                <td><span class="status-pill suspect">חשוד</span></td>
-              </tr>
-              <tr>
-                <td class="claim-id">CLM-2026-0401</td>
-                <td>13/01/2026</td>
-                <td>ד. אברהם</td>
-                <td>₪2,600</td>
-                <td>
-                  <div class="pattern-match">
-                    <span class="pm-tag">שבת</span>
-                    <span class="pm-tag">סכום חריג</span>
-                    <span class="pm-tag">קבלה 8846</span>
-                  </div>
-                </td>
-                <td><span class="status-pill review">בבדיקה</span></td>
-              </tr>
-            </tbody>
-          </table>
         </div>
+
       </div>
-
-    </div><!-- end analysis-col -->
-  </div><!-- end split-view -->
-
-</main>
-
-<!-- ══════════════════════════════════════════
-     BOTTOM ACTION BAR
-═══════════════════════════════════════════ -->
-<div class="action-bar" id="actionBar" style="display:none">
-  <div class="action-bar-left">
-    <button class="btn btn-danger"   onclick="showToast('התביעה סומנה כחשודה ✓')">🚩 סמן כחשוד</button>
-    <button class="btn btn-warning"  onclick="showToast('הועבר לחוקר בכיר ✓')">🔎 העבר לחוקר</button>
-    <button class="btn btn-success"  onclick="showToast('התביעה אושרה כתקינה ✓')">✅ סגור תקין</button>
-    <button class="btn btn-outline"  onclick="showToast('פתח חלון הערות')">💬 הוסף הערה</button>
-  </div>
-  <div class="action-bar-right">
-    <div class="action-bar-note">
-      <span class="dot red"></span>
-      ניתוח הושלם · 15/04/2026 · 09:34
+      <!-- /analysis-col -->
     </div>
-    <button class="btn btn-primary"  onclick="showToast('דוח PDF מופק...')">📥 ייצא דוח PDF</button>
+    <!-- /split-grid -->
+  </main>
+
+  <!-- ═══════════════════════════════════════════════
+       ACTION BAR (decorative)
+  ════════════════════════════════════════════════ -->
+  <div class="action-bar">
+    <span class="action-bar-label">פעולות:</span>
+    <span class="btn btn-danger btn-disabled">🚩 סמן כחשוד</span>
+    <span class="btn btn-primary btn-disabled">📤 העבר לחוקר</span>
+    <span class="btn btn-success btn-disabled">✅ סגור תקין</span>
+    <span class="btn btn-ghost btn-disabled">✏️ הוסף הערה</span>
   </div>
-</div>
 
-<!-- FOOTER NOTE -->
-<div class="footer-note">כל הנתונים סינתטיים לצורכי הדגמה בלבד · Demo Environment · לא מחובר לנתוני ייצור</div>
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer class="footer-note">
+    כל הנתונים סינתטיים לצורכי הדגמה בלבד — אין כל קשר לאנשים או מקרים אמיתיים
+  </footer>
 
-<!-- TOAST -->
-<div id="toast" style="
-  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(20px);
-  background:var(--blue-900); color:#fff; padding:11px 22px; border-radius:8px;
-  font-size:13px; font-weight:600; font-family:'Heebo',sans-serif;
-  box-shadow:var(--shadow-lg); opacity:0; transition:all .3s; z-index:999;
-  pointer-events:none; white-space:nowrap;
-"></div>
-
-<script>
-  /* ── CARD TOGGLE ─────────────────────────── */
-  function toggleCard(header) {
-    const body  = header.nextElementSibling;
-    const arrow = header.querySelector('.ac-arrow');
-    const isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    arrow.classList.toggle('open', !isOpen);
-    header.classList.toggle('open', !isOpen);
-  }
-
-  /* ── FINDING TOGGLE ──────────────────────── */
-  function toggleFinding(head) {
-    const body  = head.nextElementSibling;
-    const arrow = head.querySelector('.finding-arrow');
-    const isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    arrow.classList.toggle('open', !isOpen);
-  }
-
-  /* ── LOAD SAMPLE ─────────────────────────── */
-  function loadSample(type) {
-    // Reset all buttons
-    ['receipt','cert','invoice'].forEach(t => {
-      document.getElementById('btn-' + t).classList.remove('active');
-    });
-    const btn = document.getElementById('btn-' + type);
-    btn.classList.add('active');
-
-    // Show split view & action bar only for receipt (full demo)
-    const splitView = document.getElementById('splitView');
-    const actionBar = document.getElementById('actionBar');
-
-    if (type === 'receipt') {
-      splitView.classList.add('visible');
-      actionBar.style.display = 'flex';
-      // Animate gauge
-      setTimeout(() => animateGauge(78), 400);
-    } else {
-      // For cert / invoice show a placeholder message
-      splitView.classList.remove('visible');
-      actionBar.style.display = 'none';
-      showToast(type === 'cert' ? 'אישור רפואי – בפיתוח בגרסה הבאה' : 'חשבונית – בפיתוח בגרסה הבאה');
-    }
-  }
-
-  /* ── GAUGE ANIMATION ─────────────────────── */
-  function animateGauge(score) {
-    const circumference = 2 * Math.PI * 13; // 81.68
-    const fill = document.getElementById('gaugeFill');
-    const scoreEl = document.getElementById('gaugeScore');
-    const pct = score / 100;
-    fill.style.strokeDasharray = (circumference * pct).toFixed(2) + ' ' + circumference.toFixed(2);
-    // Count up
-    let cur = 0;
-    const interval = setInterval(() => {
-      cur = Math.min(cur + 2, score);
-      scoreEl.textContent = cur;
-      if (cur >= score) clearInterval(interval);
-    }, 18);
-  }
-
-  /* ── TOAST ───────────────────────────────── */
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.opacity = '1';
-    t.style.transform = 'translateX(-50%) translateY(0)';
-    setTimeout(() => {
-      t.style.opacity = '0';
-      t.style.transform = 'translateX(-50%) translateY(10px)';
-    }, 2400);
-  }
-
-  /* ── DROPZONE DRAG FEEDBACK ──────────────── */
-  const dz = document.getElementById('dropzone');
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = 'var(--blue-500)'; dz.style.background = 'var(--blue-50)'; });
-  dz.addEventListener('dragleave', () => { dz.style.borderColor = ''; dz.style.background = ''; });
-  dz.addEventListener('drop', e => {
-    e.preventDefault();
-    dz.style.borderColor = ''; dz.style.background = '';
-    const file = e.dataTransfer.files[0];
-    if (file) showToast('קובץ "' + file.name + '" הועלה – מנתח...');
-  });
-
-  /* Auto-load receipt on page load for best demo experience */
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => loadSample('receipt'), 600);
-  });
-</script>
 </body>
 </html>
