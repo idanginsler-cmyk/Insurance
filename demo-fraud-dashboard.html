@@ -116,7 +116,8 @@ body {
 #r-trends:checked     ~ .tabs-wrapper .tab-nav label[for="r-trends"],
 #r-finance:checked    ~ .tabs-wrapper .tab-nav label[for="r-finance"],
 #r-networks:checked   ~ .tabs-wrapper .tab-nav label[for="r-networks"],
-#r-receipts:checked   ~ .tabs-wrapper .tab-nav label[for="r-receipts"] {
+#r-receipts:checked   ~ .tabs-wrapper .tab-nav label[for="r-receipts"],
+#r-personas:checked   ~ .tabs-wrapper .tab-nav label[for="r-personas"] {
   background: white;
   color: #1a3a5c;
   border-color: #e2e8f0;
@@ -145,9 +146,54 @@ body {
 #r-trends:checked     ~ .tabs-wrapper .tab-panel[data-tab="trends"],
 #r-finance:checked    ~ .tabs-wrapper .tab-panel[data-tab="finance"],
 #r-networks:checked   ~ .tabs-wrapper .tab-panel[data-tab="networks"],
-#r-receipts:checked   ~ .tabs-wrapper .tab-panel[data-tab="receipts"] {
+#r-receipts:checked   ~ .tabs-wrapper .tab-panel[data-tab="receipts"],
+#r-personas:checked   ~ .tabs-wrapper .tab-panel[data-tab="personas"] {
   display: block;
 }
+
+/* ===== PERSONAS CARDS ===== */
+.persona-card {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  border-right: 5px solid #3182ce;
+}
+.persona-card.red    { border-right-color: #e53e3e; }
+.persona-card.orange { border-right-color: #dd6b20; }
+.persona-card.green  { border-right-color: #38a169; }
+.persona-card h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #1a3a5c;
+}
+.persona-card.red    h3 { color: #c53030; }
+.persona-card.orange h3 { color: #c05621; }
+.persona-card.green  h3 { color: #276749; }
+.persona-card p { font-size: 0.85rem; margin: 6px 0; color: #2d3748; line-height: 1.65; }
+.persona-card p strong { color: #1a3a5c; }
+.persona-card table { margin: 8px 0 10px; }
+.persona-note {
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #2c5282;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+.score-box {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+.score-high { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+.score-med  { background: #fffaf0; color: #c05621; border: 1px solid #fbd38d; }
+.score-low  { background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; }
 
 /* ===== COMMON COMPONENTS ===== */
 .section-title {
@@ -307,6 +353,7 @@ body {
 <input type="radio" class="tab-radio" name="tabs" id="r-finance">
 <input type="radio" class="tab-radio" name="tabs" id="r-networks">
 <input type="radio" class="tab-radio" name="tabs" id="r-receipts">
+<input type="radio" class="tab-radio" name="tabs" id="r-personas">
 
 <!-- ===== DEMO BANNER ===== -->
 <div class="demo-banner">
@@ -363,6 +410,7 @@ body {
     <label for="r-finance">ניתוח כספי</label>
     <label for="r-networks">רשתות וקשרים</label>
     <label for="r-receipts">ניתוח קבלות</label>
+    <label for="r-personas">&#127917; פרופילי הונאה</label>
   </nav>
 
   <!-- ============================================================
@@ -1508,6 +1556,103 @@ body {
         </table>
       </div>
     </div>
+  </div>
+
+  <!-- ============================================================
+       TAB 13: פרופילי הונאה (Fraud Personas)
+  ============================================================ -->
+  <div class="tab-panel" data-tab="personas">
+    <div class="section-title">&#127917; פרופילי הונאה (Fraud Personas)</div>
+
+    <div class="persona-note">
+      סיווג מבוטחים חשודים לפי דפוס התנהגות. כל פרופיל מייצג שיטת הונאה שונה, עם דגלים אופייניים והמלצות לטיפול.
+    </div>
+
+    <!-- Persona 1: הממקסם -->
+    <div class="persona-card red">
+      <h3>&#127947; "הממקסם" – Max Utilizer</h3>
+      <p><strong>מאפיינים:</strong> מנצל כל כיסוי עד התקרה, כל שנה. מכיר את הפוליסה בעל פה.</p>
+      <p><strong>דגלים:</strong> ניצול 90%+ מהתקרה · כל הכיסויים מנוצלים · תביעות שוטפות קבועות</p>
+      <p><strong>דוגמה בנתונים:</strong></p>
+      <table class="data-table">
+        <thead>
+          <tr><th>מבוטח</th><th>תביעות</th><th>ניצול תקרה</th><th>כיסויים</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>אברהם סבג</strong></td><td>50</td><td>95%</td><td>רפ. משלימה + פיזיו + התייעצות</td></tr>
+        </tbody>
+      </table>
+      <p><strong>איך לטפל:</strong> בקרה רפואית · אימות טיפולים בדיעבד · שיחת בירור</p>
+    </div>
+
+    <!-- Persona 2: המארגן -->
+    <div class="persona-card red">
+      <h3>&#128101; "המארגן" – Ring Leader</h3>
+      <p><strong>מאפיינים:</strong> מגייס חברים, משפחה, או עמיתים לתבוע דרך נותן שירות ספציפי. לפעמים מקבל עמלה.</p>
+      <p><strong>דגלים:</strong> קבוצת מבוטחים מאותו מעסיק/משפחה · אותו נותן שירות · סכומים דומים</p>
+      <p><strong>דוגמאות בנתונים:</strong></p>
+      <table class="data-table">
+        <thead>
+          <tr><th>רשת</th><th>מבוטחים</th><th>נ. שירות</th><th>תביעות</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>חברת הייטק א'</strong></td><td>96 עובדים</td><td>קליניקת שלום</td><td>96</td></tr>
+          <tr><td><strong>משפחת גולדשטיין</strong></td><td>41 בני משפחה</td><td>קליניקת טבע</td><td>41</td></tr>
+        </tbody>
+      </table>
+      <p><strong>איך לטפל:</strong> חקירת נותן השירות · בדיקת קשר לארגון · דגימת מבוטחים לאימות</p>
+    </div>
+
+    <!-- Persona 3: הצמוד -->
+    <div class="persona-card orange">
+      <h3>&#129309; "הצמוד" – Provider Collusion</h3>
+      <p><strong>מאפיינים:</strong> קשר חשוד עם נותן שירות. הנותן מנפח סכומים או מנפיק קבלות פיקטיביות.</p>
+      <p><strong>דגלים:</strong> 100% תביעות אצל נ.ש. אחד · סכום אחיד · מרווחים קבועים · קבלות בשבת</p>
+      <p><strong>דוגמאות בנתונים:</strong></p>
+      <table class="data-table">
+        <thead>
+          <tr><th>מבוטח</th><th>נ. שירות</th><th>% תביעות שם</th><th>סכום קבוע</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>אברהם סבג</strong></td><td>מרכז רפ. משלימה אור</td><td>100%</td><td>&#8362;200</td></tr>
+          <tr><td>עובדי הייטק א'</td><td>קליניקת שלום</td><td>100%</td><td>&#8362;350</td></tr>
+        </tbody>
+      </table>
+      <p><strong>איך לטפל:</strong> ביקור פתע בקליניקה · דגימת קבלות · חקירת נותן השירות</p>
+    </div>
+
+    <!-- Persona 4: הרוכב -->
+    <div class="persona-card orange">
+      <h3>&#127939; "הרוכב" – Hit &amp; Run</h3>
+      <p><strong>מאפיינים:</strong> מצטרף לפוליסה, תובע מיד סכומים גבוהים, ומבטל אחרי כמה חודשים.</p>
+      <p><strong>דגלים:</strong> תביעה תוך 60 יום · סכום גבוה מהממוצע · עצמאי · ביטול מוקדם</p>
+      <p><strong>בנתונים:</strong> 77 תביעות מפוליסות ינואר 2026, ממוצע &#8362;2,097 (כפול מהרגיל)</p>
+      <p><strong>איך לטפל:</strong> תקופת אכשרה · אישור מראש לתביעות בחודשים הראשונים · מעקב ביטולים</p>
+    </div>
+
+    <!-- Persona 5: המפצל -->
+    <div class="persona-card green">
+      <h3>&#9986; "המפצל" – Under the Radar</h3>
+      <p><strong>מאפיינים:</strong> תביעות קטנות מתחת לסף בקרה. כל תביעה בודדת נראית תקינה, אבל הצטברות חריגה.</p>
+      <p><strong>דגלים:</strong> הרבה תביעות קטנות · תמיד מתחת לסף · נותני שירות מתחלפים</p>
+      <p><strong>בנתונים:</strong> 12 מבוטחים עם 8+ תביעות קטנות (עד &#8362;300 כל אחת)</p>
+      <p><strong>איך לטפל:</strong> ניתוח מצטבר · הורדת סף בקרה · דגימה אקראית</p>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="section-title" style="margin-top: 28px;">&#128202; סיכום פרופילים</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>פרופיל</th><th>מבוטחים</th><th>תביעות</th><th>סכום</th><th>ציון סיכון</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&#127947; הממקסם</td><td>1</td><td>50</td><td>&#8362;10,350</td><td><span class="score-box score-high">92</span></td></tr>
+        <tr><td>&#128101; המארגן</td><td>137</td><td>137</td><td>&#8362;46,250</td><td><span class="score-box score-high">88</span></td></tr>
+        <tr><td>&#129309; הצמוד</td><td>3</td><td>52</td><td>&#8362;10,750</td><td><span class="score-box score-med">72</span></td></tr>
+        <tr><td>&#127939; הרוכב</td><td>30</td><td>77</td><td>&#8362;161,477</td><td><span class="score-box score-med">65</span></td></tr>
+        <tr><td>&#9986; המפצל</td><td>12</td><td>96</td><td>&#8362;24,800</td><td><span class="score-box score-low">45</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
 </div><!-- /tabs-wrapper -->
