@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Research Platform</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">&#9696;</span>
+      <span>Stock Research</span>
+    </div>
+    <form id="searchForm" class="search">
+      <input id="tickerInput" name="ticker" type="text" placeholder="Ticker (e.g. AAPL)" autocomplete="off" />
+      <button type="submit">Analyze</button>
+    </form>
+    <div id="llmBadge" class="badge">LLM: checking...</div>
+  </header>
+
+  <main>
+    <section id="header" class="card header-card" hidden>
+      <div class="header-top">
+        <div>
+          <h1 id="name">—</h1>
+          <div class="subtitle"><span id="ticker"></span> · <span id="exchange"></span> · <span id="sector"></span></div>
+        </div>
+        <div class="price-block">
+          <div class="price" id="price">—</div>
+          <div class="change" id="change">—</div>
+        </div>
+      </div>
+      <p id="summary" class="summary"></p>
+    </section>
+
+    <section id="score" class="card" hidden>
+      <h2>Composite Score</h2>
+      <div class="score-grid">
+        <div class="score-main">
+          <div class="score-number" id="scoreNumber">—</div>
+          <div class="score-label" id="scoreLabel">—</div>
+        </div>
+        <div class="score-bars" id="scoreBars"></div>
+      </div>
+      <p class="disclaimer">Research tool only. Not investment advice.</p>
+    </section>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="chart">Chart</button>
+      <button class="tab" data-tab="fundamentals">Fundamentals</button>
+      <button class="tab" data-tab="filing">Filing Analysis</button>
+      <button class="tab" data-tab="news">News &amp; Sentiment</button>
+    </div>
+
+    <section id="tab-chart" class="tab-panel card">
+      <div class="chart-controls">
+        <div class="range-group" id="rangeGroup">
+          <button data-period="3mo">3M</button>
+          <button data-period="6mo">6M</button>
+          <button data-period="1y" class="active">1Y</button>
+          <button data-period="2y">2Y</button>
+          <button data-period="5y">5Y</button>
+        </div>
+        <label class="toggle"><input type="checkbox" id="toggleSma50" checked /> SMA50</label>
+        <label class="toggle"><input type="checkbox" id="toggleSma200" checked /> SMA200</label>
+        <label class="toggle"><input type="checkbox" id="toggleBB" /> Bollinger</label>
+      </div>
+      <div id="priceChart" class="chart"></div>
+      <div id="rsiChart" class="chart chart-sub"></div>
+      <div id="macdChart" class="chart chart-sub"></div>
+      <div id="techSnapshot" class="kvgrid"></div>
+    </section>
+
+    <section id="tab-fundamentals" class="tab-panel card" hidden>
+      <div id="fundGrid" class="kvgrid"></div>
+    </section>
+
+    <section id="tab-filing" class="tab-panel card" hidden>
+      <div class="filing-controls">
+        <select id="filingForm">
+          <option value="10-Q">Latest 10-Q</option>
+          <option value="10-K">Latest 10-K</option>
+        </select>
+        <button id="runFiling">Analyze latest filing</button>
+        <span id="filingStatus" class="muted"></span>
+      </div>
+      <div id="filingOutput"></div>
+    </section>
+
+    <section id="tab-news" class="tab-panel card" hidden>
+      <div id="sentimentBox"></div>
+      <ul id="newsList" class="news-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <small>Data: Yahoo Finance &amp; SEC EDGAR. Analysis: Claude. Not investment advice.</small>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
