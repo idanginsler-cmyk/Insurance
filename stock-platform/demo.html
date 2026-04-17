@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Research Platform - Demo (AAPL)</title>
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    :root {
+      --bg: #0b0f17; --panel: #121824; --panel-alt: #1a2333;
+      --border: #222d40; --text: #e6ebf2; --muted: #8aa0bd;
+      --accent: #4c8bf5; --green: #2ecc71; --red: #e74c3c; --yellow: #f1c40f;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; }
+    a { color: var(--accent); }
+    .topbar { display: flex; align-items: center; gap: 20px; padding: 12px 20px;
+      background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .brand { font-size: 16px; font-weight: 600; display: flex; gap: 8px; align-items: center; }
+    .brand .logo { color: var(--accent); font-size: 22px; }
+    .search { display: flex; gap: 8px; flex: 1; max-width: 420px; }
+    .search input { flex: 1; background: var(--panel-alt); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 14px; }
+    .search button { background: var(--accent); color: white; border: none;
+      padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+    .badge { font-size: 12px; color: var(--muted); padding: 4px 10px;
+      border: 1px solid var(--border); border-radius: 12px; }
+    .badge.ok { color: var(--green); border-color: var(--green); }
+    .demo-banner { background: #2a1f00; color: var(--yellow); padding: 10px 20px;
+      text-align: center; font-size: 12px; border-bottom: 1px solid var(--border); }
+    main { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .card { background: var(--panel); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+    .header-card h1 { margin: 0 0 4px 0; font-size: 22px; }
+    .subtitle { color: var(--muted); font-size: 13px; }
+    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+    .price-block { text-align: right; }
+    .price { font-size: 28px; font-weight: 600; }
+    .change { font-size: 14px; }
+    .change.up { color: var(--green); } .change.down { color: var(--red); }
+    .summary { color: var(--muted); line-height: 1.5; margin-top: 10px; font-size: 13px; }
+    .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+    .tab { background: transparent; border: none; color: var(--muted);
+      padding: 10px 18px; cursor: pointer; border-bottom: 2px solid transparent; font-size: 14px; }
+    .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+    .chart-controls { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+    .range-group { display: flex; gap: 2px; }
+    .range-group button { background: var(--panel-alt); color: var(--muted);
+      border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; font-size: 12px; }
+    .range-group button:first-child { border-radius: 5px 0 0 5px; }
+    .range-group button:last-child { border-radius: 0 5px 5px 0; }
+    .range-group button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .toggle { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+    .chart { width: 100%; height: 380px; background: var(--panel-alt); border-radius: 6px; }
+    .chart-sub { height: 120px; margin-top: 10px; }
+    .kvgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px 20px; margin-top: 12px; }
+    .kv { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+    .kv .k { color: var(--muted); font-size: 12px; }
+    .kv .v { font-weight: 500; }
+    .kvsection { grid-column: 1 / -1; margin-top: 14px; }
+    .kvsection h3 { margin: 0 0 8px 0; font-size: 13px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px; }
+    .score-grid { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: center; }
+    .score-number { font-size: 56px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .score-label { font-size: 14px; color: var(--muted); margin-top: 4px; text-transform: uppercase; }
+    .score-bars { display: flex; flex-direction: column; gap: 10px; }
+    .bar-row { display: grid; grid-template-columns: 120px 1fr 50px; gap: 10px; align-items: center; font-size: 13px; }
+    .bar { background: var(--panel-alt); border-radius: 4px; overflow: hidden; height: 10px; }
+    .bar > span { display: block; height: 100%; background: var(--accent); }
+    .bar > span.good { background: var(--green); }
+    .bar > span.bad { background: var(--red); }
+    .bar > span.warn { background: var(--yellow); }
+    .disclaimer { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 12px; }
+    .muted { color: var(--muted); }
+    .filing-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .filing-controls select, .filing-controls button { background: var(--panel-alt);
+      color: var(--text); border: 1px solid var(--border); padding: 7px 12px; border-radius: 5px; }
+    .filing-controls button { background: var(--accent); color: white; border-color: var(--accent); cursor: pointer; }
+    .filing-block { margin-top: 12px; padding: 12px; background: var(--panel-alt);
+      border-radius: 6px; border-left: 3px solid var(--accent); }
+    .filing-block h4 { margin: 0 0 8px 0; font-size: 13px; color: var(--muted); text-transform: uppercase; }
+    .filing-block.risks { border-left-color: var(--yellow); }
+    .filing-block.red { border-left-color: var(--red); }
+    .filing-block.good { border-left-color: var(--green); }
+    .filing-block ul { margin: 0; padding-left: 20px; }
+    .filing-block li { margin: 4px 0; line-height: 1.5; }
+    .news-list { list-style: none; padding: 0; margin: 0; }
+    .news-list li { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .news-list a { color: var(--text); text-decoration: none; font-weight: 500; }
+    .news-list a:hover { color: var(--accent); }
+    .news-meta { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    footer { text-align: center; padding: 20px; color: var(--muted); font-size: 11px; }
+    .tab-panel[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <div class="demo-banner">
+    &#9888; DEMO MODE - נתוני AAPL סינטטיים להמחשה בלבד. פותח ישירות בדפדפן, ללא שרת.
+  </div>
+  <header class="topbar">
+    <div class="brand"><span class="logo">&#9696;</span><span>Stock Research</span></div>
+    <form class="search" onsubmit="event.preventDefault()">
+      <input type="text" placeholder="Ticker (e.g. AAPL)" value="AAPL" disabled />
+      <button type="submit" disabled>Analyze</button>
+    </form>
+    <div class="badge ok">LLM: on (demo)</div>
+  </header>
+
+  <main>
+    <section class="card header-card">
+      <div class="header-top">
+        <div>
+          <h1>Apple Inc.</h1>
+          <div class="subtitle">AAPL &middot; USD &middot; Technology &middot; Consumer Electronics</div>
+        </div>
+        <div class="price-block">
+          <div class="price">192.47 USD</div>
+          <div class="change up">+2.18 (+1.15%)</div>
+        </div>
+      </div>
+      <p class="summary">Apple Inc. designs, manufactures, and markets smartphones, personal computers,
+        tablets, wearables, and accessories worldwide. It offers iPhone, Mac, iPad, AirPods, Apple Watch,
+        Apple TV, HomePod, and various services including the App Store, Apple Music, iCloud, Apple Pay,
+        and Apple TV+. The company was founded in 1976 and is headquartered in Cupertino, California.</p>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0">Composite Score</h2>
+      <div class="score-grid">
+        <div class="score-main">
+          <div class="score-number">68</div>
+          <div class="score-label">favorable</div>
+        </div>
+        <div class="score-bars">
+          <div class="bar-row"><span>Technical</span>
+            <span class="bar"><span class="good" style="width:72%"></span></span><span>72</span></div>
+          <div class="bar-row"><span>Fundamental</span>
+            <span class="bar"><span class="good" style="width:65%"></span></span><span>65</span></div>
+          <div class="bar-row"><span>Sentiment</span>
+            <span class="bar"><span class="good" style="width:70%"></span></span><span>70</span></div>
+        </div>
+      </div>
+      <p class="disclaimer">Research tool only. Not investment advice.</p>
+    </section>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="chart">Chart</button>
+      <button class="tab" data-tab="fundamentals">Fundamentals</button>
+      <button class="tab" data-tab="filing">Filing Analysis</button>
+      <button class="tab" data-tab="news">News &amp; Sentiment</button>
+    </div>
+
+    <section id="tab-chart" class="tab-panel card">
+      <div class="chart-controls">
+        <div class="range-group">
+          <button>3M</button><button>6M</button>
+          <button class="active">1Y</button><button>2Y</button><button>5Y</button>
+        </div>
+        <label class="toggle"><input type="checkbox" id="toggleSma50" checked /> SMA50</label>
+        <label class="toggle"><input type="checkbox" id="toggleSma200" checked /> SMA200</label>
+        <label class="toggle"><input type="checkbox" id="toggleBB" /> Bollinger</label>
+      </div>
+      <div id="priceChart" class="chart"></div>
+      <div id="rsiChart" class="chart chart-sub"></div>
+      <div id="macdChart" class="chart chart-sub"></div>
+      <div class="kvgrid" id="techSnapshot"></div>
+    </section>
+
+    <section id="tab-fundamentals" class="tab-panel card" hidden>
+      <div class="kvgrid" id="fundGrid"></div>
+    </section>
+
+    <section id="tab-filing" class="tab-panel card" hidden>
+      <div class="filing-controls">
+        <select><option>Latest 10-Q</option><option>Latest 10-K</option></select>
+        <button>Analyze latest filing</button>
+        <span class="muted">Showing pre-computed demo summary</span>
+      </div>
+      <div id="filingOutput"></div>
+    </section>
+
+    <section id="tab-news" class="tab-panel card" hidden>
+      <div id="sentimentBox"></div>
+      <ul class="news-list" id="newsList"></ul>
+    </section>
+  </main>
+  <footer>
+    <small>Demo build - synthetic data. Real version uses Yahoo Finance + SEC EDGAR + Claude.</small>
+  </footer>
+  <script src="demo-data.js"></script>
+  <script src="demo-render.js"></script>
+</body>
+</html>
