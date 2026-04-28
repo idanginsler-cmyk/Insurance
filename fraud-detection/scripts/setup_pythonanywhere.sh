@@ -45,8 +45,13 @@ echo "==> Project dir:  $PROJECT_DIR"
 
 # 1. Install the package + extras.
 echo "==> Installing Python dependencies (--user)..."
-"$PIPBIN" install --user --upgrade pip --quiet
-"$PIPBIN" install --user --upgrade -e . pytesseract --quiet
+$PIPBIN install --user --upgrade pip --quiet
+$PIPBIN install --user --upgrade -e . --quiet
+# pytesseract is the python wrapper for the (already installed) tesseract
+# binary. pdf2image bridges pypdf and poppler so PDF uploads can be
+# rasterised before OCR — without it the loader falls back to extracting
+# the first embedded image, which on text-only PDFs returns nothing.
+$PIPBIN install --user --upgrade pytesseract pdf2image --quiet
 
 # 2. Download the Hebrew Tesseract training file (~10 MB).
 TESSDATA_DIR="$HOME/tessdata"
