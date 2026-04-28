@@ -15,6 +15,13 @@ nohup uvicorn fraud_detection.api.server:app \
   --host 0.0.0.0 --port 8000 \
   > /tmp/fraud-detection-api.log 2>&1 &
 
+# Belt-and-suspenders: ensure the forwarded port is public so phones can
+# reach it without the GitHub auth bounce that breaks on mobile browsers.
+# `gh` is auto-authenticated inside Codespaces via GITHUB_TOKEN.
+if [ -n "$CODESPACE_NAME" ] && command -v gh >/dev/null 2>&1; then
+  gh codespace ports visibility 8000:public -c "$CODESPACE_NAME" >/dev/null 2>&1 || true
+fi
+
 # Give uvicorn a moment to bind the port.
 for i in 1 2 3 4 5 6 7 8; do
   if curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/ 2>/dev/null | grep -q "^[23]"; then
