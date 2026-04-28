@@ -17,6 +17,7 @@ from .duplicates.store import DocumentStore
 from .extraction.fields import extract_receipt_fields
 from .forensics.metadata import extract_metadata
 from .forensics.perceptual_hash import compute_hashes
+from .forensics.typography import analyze_typography
 from .ingestion.loader import load_document
 from .models import DocumentRecord, FraudScore, OCRResult, ReceiptFields
 from .scoring.ensemble import score_document
@@ -60,6 +61,7 @@ def analyze(
     metadata = extract_metadata(document, cfg=cfg)
     ocr = _run_ocr(document.image, cfg)
     fields: ReceiptFields = extract_receipt_fields(ocr)
+    typography = analyze_typography(document.image, ocr)
 
     record = DocumentRecord(
         document_id=document_id or str(uuid.uuid4()),
@@ -70,13 +72,14 @@ def analyze(
         hashes=hashes,
         fields=fields,
         metadata=metadata,
+        typography=typography,
         ingested_at=datetime.utcnow(),
     )
 
     matcher = DuplicateMatcher(store, cfg)
     duplicates = matcher.find(record, claim_id=claim_id)
 
-    score = score_document(duplicates, metadata)
+    score = score_document(duplicates, metadata, typography)
 
     if persist:
         store.add(record)

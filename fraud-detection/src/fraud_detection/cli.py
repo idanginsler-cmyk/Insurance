@@ -174,6 +174,27 @@ def _print_human(record, score, ocr) -> None:
             )
         console.print(d)
 
+    if record.typography and record.typography.anomalies:
+        t = Table(title=(
+            f"חריגות טיפוגרפיה — {len(record.typography.anomalies)} ב-"
+            f"{record.typography.chars_analyzed} תווים "
+            f"({record.typography.source})"
+        ))
+        for col in ("char", "line:idx", "metric", "z", "detail"):
+            t.add_column(col)
+        # Show the worst 8 anomalies, by |z|.
+        worst = sorted(record.typography.anomalies,
+                       key=lambda a: abs(a.z_score), reverse=True)[:8]
+        for a in worst:
+            t.add_row(
+                a.char or "?",
+                f"{a.line_index}:{a.char_index}",
+                a.metric,
+                f"{a.z_score:+.2f}",
+                a.detail,
+            )
+        console.print(t)
+
     if score.reasons:
         console.print(Panel("\n".join(f"• {r}" for r in score.reasons),
                             title="סיבות עיקריות", border_style=color))

@@ -82,6 +82,24 @@ class FraudScore(BaseModel):
     duplicates: list[DuplicateMatch] = Field(default_factory=list)
 
 
+class TypographyAnomaly(BaseModel):
+    char: str
+    line_index: int
+    char_index: int
+    bbox: tuple[int, int, int, int]
+    metric: str            # "height" | "baseline" | "kerning" | "sharpness" | "brightness"
+    z_score: float
+    detail: str = ""
+
+
+class TypographyReport(BaseModel):
+    lines_analyzed: int = 0
+    chars_analyzed: int = 0
+    anomalies: list[TypographyAnomaly] = Field(default_factory=list)
+    suspicion_score: float = 0.0   # 0..1, normalized
+    source: str = "none"           # "tesseract_chars" | "ocr_words_split" | "none"
+
+
 class DocumentRecord(BaseModel):
     document_id: str
     claim_id: Optional[str] = None
@@ -91,5 +109,6 @@ class DocumentRecord(BaseModel):
     hashes: HashSet
     fields: ReceiptFields
     metadata: MetadataReport
+    typography: Optional[TypographyReport] = None
     ingested_at: datetime
     embedding_id: Optional[int] = None

@@ -8,7 +8,9 @@ from typing import Iterator, Optional
 
 import numpy as np
 
-from ..models import DocumentRecord, HashSet, MetadataReport, ReceiptFields
+from ..models import (
+    DocumentRecord, HashSet, MetadataReport, ReceiptFields, TypographyReport,
+)
 
 
 SCHEMA = """
@@ -29,6 +31,7 @@ CREATE TABLE IF NOT EXISTS documents (
     receipt_number TEXT,
     raw_text      TEXT,
     metadata_json TEXT,
+    typography_json TEXT,
     ingested_at   TEXT NOT NULL,
     embedding     BLOB
 );
@@ -43,6 +46,10 @@ CREATE INDEX IF NOT EXISTS idx_documents_issue_date  ON documents(issue_date);
 
 
 def _row_to_record(row: sqlite3.Row) -> DocumentRecord:
+    keys = row.keys()
+    typography = None
+    if "typography_json" in keys and row["typography_json"]:
+        typography = TypographyReport.model_validate_json(row["typography_json"])
     return DocumentRecord(
         document_id=row["document_id"],
         claim_id=row["claim_id"],
@@ -62,6 +69,7 @@ def _row_to_record(row: sqlite3.Row) -> DocumentRecord:
             raw_text=row["raw_text"] or "",
         ),
         metadata=MetadataReport.model_validate_json(row["metadata_json"] or "{}"),
+        typography=typography,
         ingested_at=datetime.fromisoformat(row["ingested_at"]),
     )
 
@@ -79,6 +87,11 @@ class DocumentStore:
         self._conn = sqlite3.connect(self.db_path, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(SCHEMA)
+        # Forward-compatible upgrade for DBs created before typography:
+        try:
+            self._conn.execute("ALTER TABLE documents ADD COLUMN typography_json TEXT")
+        except sqlite3.OperationalError:
+            pass
         self._conn.commit()
 
     def close(self) -> None:
@@ -98,8 +111,9 @@ class DocumentStore:
                 document_id, claim_id, file_path, file_type, sha256,
                 phash, dhash, ahash, whash,
                 provider, issue_date, amount, currency, receipt_number,
-                raw_text, metadata_json, ingested_at, embedding
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                raw_text, metadata_json, typography_json,
+                ingested_at, embedding
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """,
             (
                 record.document_id, record.claim_id, record.file_path,
@@ -110,6 +124,7 @@ class DocumentStore:
                 record.fields.amount, record.fields.currency,
                 record.fields.receipt_number, record.fields.raw_text,
                 record.metadata.model_dump_json(),
+                record.typography.model_dump_json() if record.typography else None,
                 record.ingested_at.isoformat(),
                 emb_blob,
             ),

@@ -1,4 +1,4 @@
-.PHONY: install install-optional test demo run-api info clean
+.PHONY: install install-optional test demo demo-typography run-api info clean
 
 install:
 	pip install -e .
@@ -23,6 +23,9 @@ demo:
 	@echo "=== analyzing receipt_resubmitted as a fresh upload ==="
 	PYTHONPATH=src python -m fraud_detection.cli analyze \
 		data/samples/claim_001/receipt_resubmitted.png --claim claim_001
+
+demo-typography:
+	PYTHONPATH=src python scripts/demo_typography.py
 
 run-api:
 	PYTHONPATH=src uvicorn fraud_detection.api.server:app --reload --port 8000

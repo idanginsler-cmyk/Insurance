@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from ..models import (
     DuplicateMatch, FraudScore, FraudSignal, MetadataReport, RiskLevel,
+    TypographyReport,
 )
 
 
@@ -20,6 +21,8 @@ WEIGHTS = {
     "no_exif":               5.0,
     "missing_producer":      5.0,
     "unknown_producer":      3.0,
+    # Typography (single-document signal) — scaled by suspicion_score (0..1)
+    "typography_max":       60.0,
 }
 
 
@@ -34,6 +37,7 @@ def _level_for(score: float) -> RiskLevel:
 def score_document(
     duplicates: list[DuplicateMatch],
     metadata: MetadataReport,
+    typography: TypographyReport | None = None,
 ) -> FraudScore:
     signals: list[FraudSignal] = []
     reasons: list[str] = []
@@ -80,13 +84,35 @@ def score_document(
         else:
             signals.append(FraudSignal(name=s, weight=10.0, triggered=True, detail=s))
 
+    # --- Typography signals ----------------------------------------------
+    typo_weight = 0.0
+    if typography and typography.suspicion_score > 0:
+        typo_weight = WEIGHTS["typography_max"] * typography.suspicion_score
+        # Show up to 3 worst anomalies as concrete evidence.
+        worst = sorted(typography.anomalies,
+                       key=lambda a: abs(a.z_score), reverse=True)[:3]
+        for a in worst:
+            signals.append(FraudSignal(
+                name=f"typography:{a.metric}",
+                weight=typo_weight / max(1, len(worst)),
+                triggered=True,
+                detail=f"תו '{a.char}' (שורה {a.line_index}, מקום {a.char_index}) "
+                       f"z={a.z_score:.2f} — {a.detail}",
+            ))
+        reasons.append(
+            f"חוסר עקביות טיפוגרפית — {len(typography.anomalies)} חריגות "
+            f"({typography.chars_analyzed} תווים נבדקו). חשד מקומי לעריכה ידנית."
+        )
+
     # --- Aggregation ------------------------------------------------------
-    # Use the *max* weight for duplicates (single strong evidence is enough)
-    # and *sum* metadata weights, capped at 100.
+    # Duplicate evidence is "max" (one strong match is enough).
+    # Metadata + typography are summed (multiple weak signals compound).
     dup_weight = max((s.weight for s in signals if s.name.startswith("duplicate:")),
                      default=0.0)
-    meta_weight = sum(s.weight for s in signals if not s.name.startswith("duplicate:"))
-    score = min(100.0, dup_weight + meta_weight * 0.7)
+    meta_weight = sum(s.weight for s in signals
+                      if not s.name.startswith("duplicate:")
+                      and not s.name.startswith("typography:"))
+    score = min(100.0, dup_weight + meta_weight * 0.7 + typo_weight)
 
     return FraudScore(
         score=round(score, 2),
