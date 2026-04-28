@@ -78,15 +78,37 @@ fraud-detection list --claim claim_42
 fraud-detection analyze receipt.pdf --json
 ```
 
+### Web UI / העלאה מהנייד
+
+```bash
+make run-api-public        # מאזין על 0.0.0.0:8000 כדי שהנייד יוכל להתחבר
+make my-ip                 # מדפיס את הכתובת המקומית (LAN IP)
+# בנייד פתחו את הקישור שהודפס, למשל http://192.168.1.42:8000/
+```
+
+הדף תומך בגרירה והעלאה רגילה, מציג את הציון בצבע לפי רמת סיכון, ואת
+ההסבר המלא (סיבות, כפילויות, חריגות טיפוגרפיה, חשדות מטא-דאטה).
+
+לגישה חיצונית (כשהמחשב והטלפון לא באותה רשת), ניתן להשתמש ב־cloudflared:
+
+```bash
+sudo apt install cloudflared      # או brew install cloudflared
+make tunnel                       # יחזיר URL ציבורי של https://<random>.trycloudflare.com
+```
+
 ### REST API
 
 ```bash
 make run-api
-# → http://localhost:8000/docs (Swagger UI)
+# → http://localhost:8000/         (UI)
+# → http://localhost:8000/docs     (Swagger)
 
 curl -F "file=@receipt.pdf" -F "claim_id=claim_42" -F "persist=true" \
     http://localhost:8000/v1/analyze
 ```
+
+> ⚠️ **POC בלבד**: השרת ללא auth, ללא הצפנה במנוחה, ללא audit log.
+> אסור להעלות מסמכים עם נתוני לקוחות אמיתיים ללא אישור IT/DPO.
 
 ### דמו מקצה־לקצה עם דאטה סינתטי
 

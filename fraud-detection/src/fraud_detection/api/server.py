@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from ..config import Config
 from ..duplicates.store import DocumentStore
@@ -17,9 +19,26 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Permissive CORS so the page can be served via a tunnel (cloudflared,
+# ngrok) and accessed from a phone browser on a different origin.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+_INDEX_HTML = (Path(__file__).parent / "static" / "index.html").read_text(encoding="utf-8")
+
 
 def _store() -> DocumentStore:
     return DocumentStore(Config.from_env().db_path)
+
+
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def index() -> str:
+    """Mobile-friendly upload UI."""
+    return _INDEX_HTML
 
 
 @app.get("/health")

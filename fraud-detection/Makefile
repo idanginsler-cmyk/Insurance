@@ -1,4 +1,4 @@
-.PHONY: install install-optional test demo demo-typography run-api info clean
+.PHONY: install install-optional test demo demo-typography run-api run-api-public info clean tunnel my-ip
 
 install:
 	pip install -e .
@@ -27,8 +27,24 @@ demo:
 demo-typography:
 	PYTHONPATH=src python scripts/demo_typography.py
 
+# Local-only (127.0.0.1). Open in the desktop browser at http://localhost:8000/
 run-api:
 	PYTHONPATH=src uvicorn fraud_detection.api.server:app --reload --port 8000
+
+# LAN-accessible. Run this, then open http://<your-laptop-ip>:8000/ on your phone.
+# Use `make my-ip` to print the IP.
+run-api-public:
+	PYTHONPATH=src uvicorn fraud_detection.api.server:app --host 0.0.0.0 --port 8000
+
+my-ip:
+	@hostname -I 2>/dev/null | awk '{print "LAN IP: " $$1; print "Phone URL: http://" $$1 ":8000/"}' \
+		|| ipconfig getifaddr en0 2>/dev/null \
+		|| echo "Could not detect IP — run 'ifconfig' or 'ip addr' manually."
+
+# Public tunnel via cloudflared (no signup, no install of ngrok needed).
+# Requires: brew install cloudflared  /  apt install cloudflared
+tunnel:
+	cloudflared tunnel --url http://localhost:8000
 
 info:
 	PYTHONPATH=src python -m fraud_detection.cli info

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1d4ed8" />
+  <title>זיהוי זיופים — POC</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #6b7785;
+      --border: #d8dde3;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --soft: #eff6ff;
+      --clean: #16a34a;
+      --low: #2563eb;
+      --medium: #d97706;
+      --high: #dc2626;
+      --critical: #991b1b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Helvetica Neue", Arial, "Noto Sans Hebrew", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 40px;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 16px; }
+    header { padding: 12px 0 8px; }
+    h1 { font-size: 1.35rem; margin: 0 0 4px; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      margin-top: 16px;
+    }
+    .upload-card {
+      border: 2px dashed var(--border);
+      transition: border-color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+    .upload-card.dragover {
+      border-color: var(--primary);
+      background: var(--soft);
+    }
+    .upload-icon {
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .upload-text { text-align: center; font-weight: 500; }
+    .upload-sub  { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+    .filename {
+      margin: 8px 0 0;
+      padding: 8px 10px;
+      background: var(--soft);
+      border-radius: 8px;
+      direction: ltr;
+      text-align: center;
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+    input[type=file] { display: none; }
+    .form-row { margin-top: 14px; }
+    label { display:block; margin-bottom: 4px; font-size: 0.85rem; color: var(--muted); }
+    input[type=text] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      background: #fff;
+    }
+    input[type=text]:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+    .checkbox-row {
+      display: flex; gap: 8px; align-items: center;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 16px;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    button:hover, button:focus { background: var(--primary-dark); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .score-card { padding: 0; overflow: hidden; }
+    .score-banner {
+      padding: 26px 16px;
+      text-align: center;
+      color: #fff;
+    }
+    .score-banner.clean    { background: var(--clean); }
+    .score-banner.low      { background: var(--low); }
+    .score-banner.medium   { background: var(--medium); }
+    .score-banner.high     { background: var(--high); }
+    .score-banner.critical { background: var(--critical); }
+    .score-value {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .score-label {
+      font-size: 1rem;
+      opacity: 0.95;
+      letter-spacing: 1px;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .section { padding: 14px 16px; border-top: 1px solid #eef0f3; }
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .reasons { padding-inline-start: 20px; margin: 0; font-size: 0.9rem; }
+    .reasons li { margin: 4px 0; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f2f5;
+      font-size: 0.88rem;
+      align-items: center;
+    }
+    .row:last-child { border-bottom: none; }
+    .row .right { text-align: end; color: var(--muted); flex-shrink: 0; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #3730a3;
+      margin-inline-end: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 6px 12px;
+      font-size: 0.9rem;
+    }
+    .field-grid .key { color: var(--muted); }
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-inline-start: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error {
+      color: var(--high);
+      padding: 12px;
+      background: #fee2e2;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>זיהוי זיופים במסמכי תביעה</h1>
+      <p class="subtitle">POC — העלה קבלה / מסמך רפואי / PDF לבדיקה.</p>
+    </header>
+
+    <form id="form" class="card upload-card" onsubmit="return false;">
+      <div class="upload-icon">📄</div>
+      <div class="upload-text">לחצו כאן או גררו קובץ</div>
+      <div class="upload-sub">JPG / PNG / PDF — עד 20MB</div>
+      <input type="file" id="file" accept="image/*,.pdf,application/pdf" />
+      <div id="filename" class="filename" style="display:none"></div>
+
+      <div class="form-row">
+        <label for="claim">מזהה תיק תביעה (אופציונלי)</label>
+        <input type="text" id="claim" placeholder="claim_001" autocomplete="off" />
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="persist" />
+        <label for="persist" style="margin:0;">שמור במאגר (יאפשר השוואה לעלאות הבאות)</label>
+      </div>
+      <button id="submit" type="submit">בדוק מסמך</button>
+    </form>
+
+    <div id="result"></div>
+
+    <div class="footer-note">
+      POC מקומי. אין לעלות מסמכים עם נתוני לקוחות אמיתיים ללא אישור IT/DPO.
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const fileInput = document.getElementById('file');
+    const filename = document.getElementById('filename');
+    const claim = document.getElementById('claim');
+    const persist = document.getElementById('persist');
+    const submitBtn = document.getElementById('submit');
+    const result = document.getElementById('result');
+
+    function escape(s) {
+      const div = document.createElement('div');
+      div.textContent = s == null ? '' : String(s);
+      return div.innerHTML;
+    }
+
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files[0];
+      if (f) {
+        filename.textContent = f.name + '  (' + Math.round(f.size/1024) + ' KB)';
+        filename.style.display = 'block';
+      }
+    });
+
+    form.addEventListener('dragover', e => { e.preventDefault(); form.classList.add('dragover'); });
+    form.addEventListener('dragleave', () => form.classList.remove('dragover'));
+    form.addEventListener('drop', e => {
+      e.preventDefault();
+      form.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+      }
+    });
+
+    // Tap anywhere in the card (except inputs/button) opens the picker.
+    form.addEventListener('click', e => {
+      const t = e.target;
+      if (t === submitBtn) return;
+      if (t === claim || t === persist) return;
+      if (t.tagName === 'LABEL' && t.htmlFor) return;
+      fileInput.click();
+    });
+
+    submitBtn.addEventListener('click', async () => {
+      if (!fileInput.files.length) {
+        alert('יש לבחור קובץ');
+        return;
+      }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      if (claim.value.trim()) fd.append('claim_id', claim.value.trim());
+      fd.append('persist', persist.checked ? 'true' : 'false');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'מנתח... <span class="spinner"></span>';
+      result.innerHTML = '';
+
+      try {
+        const res = await fetch('/v1/analyze', { method: 'POST', body: fd });
+        if (!res.ok) {
+          let msg = 'הניתוח נכשל';
+          try { const j = await res.json(); msg = j.detail || msg; }
+          catch(_) { try { msg = await res.text(); } catch(_){} }
+          throw new Error(msg);
+        }
+        const data = await res.json();
+        renderResult(data);
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (e) {
+        result.innerHTML = `<div class="error">שגיאה: ${escape(e.message)}</div>`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'בדוק מסמך';
+      }
+    });
+
+    function renderResult(data) {
+      const { record, score, ocr } = data;
+      const level = (score.level || 'clean').toLowerCase();
+
+      let html = `
+        <div class="card score-card">
+          <div class="score-banner ${level}">
+            <div class="score-value">${Number(score.score).toFixed(1)}</div>
+            <div class="score-label">${escape(level)}</div>
+          </div>
+      `;
+
+      // Identified fields
+      const f = record.fields || {};
+      html += `
+        <div class="section">
+          <div class="section-title">שדות שזוהו</div>
+          <div class="field-grid">
+            <div class="key">ספק</div>     <div>${escape(f.provider) || '—'}</div>
+            <div class="key">תאריך</div>   <div>${escape(f.issue_date) || '—'}</div>
+            <div class="key">סכום</div>    <div>${f.amount != null ? f.amount : '—'} ${escape(f.currency || '')}</div>
+            <div class="key">מס׳ קבלה</div><div>${escape(f.receipt_number) || '—'}</div>
+            <div class="key">OCR</div>     <div>${escape(ocr.engine)} (${ocr.chars} תווים)</div>
+          </div>
+        </div>
+      `;
+
+      // Reasons
+      if (score.reasons && score.reasons.length) {
+        html += `
+          <div class="section">
+            <div class="section-title">סיבות עיקריות</div>
+            <ul class="reasons">
+              ${score.reasons.map(r => `<li>${escape(r)}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      // Duplicates
+      if (score.duplicates && score.duplicates.length) {
+        html += `
+          <div class="section">
+            <div class="section-title">כפילויות שנמצאו (${score.duplicates.length})</div>
+            ${score.duplicates.map(m => `
+              <div class="row">
+                <span><span class="badge">${escape(m.match_type)}</span>${escape(m.note || '')}</span>
+                <span class="right">${(m.similarity*100).toFixed(0)}%</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Typography anomalies
+      const typo = record.typography;
+      if (typo && typo.anomalies && typo.anomalies.length) {
+        const top = typo.anomalies.slice()
+          .sort((a,b) => Math.abs(b.z_score) - Math.abs(a.z_score))
+          .slice(0, 8);
+        html += `
+          <div class="section">
+            <div class="section-title">חריגות טיפוגרפיה — ${typo.anomalies.length} ב-${typo.chars_analyzed} תווים</div>
+            ${top.map(a => `
+              <div class="row">
+                <span><span class="badge">${escape(a.metric)}</span>תו '${escape(a.char)}' (שורה ${a.line_index})</span>
+                <span class="right">z=${a.z_score.toFixed(2)}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Metadata suspicions
+      const susp = (record.metadata && record.metadata.suspicions) || [];
+      if (susp.length) {
+        html += `
+          <div class="section">
+            <div class="section-title">חשדות מטא-דאטה</div>
+            ${susp.map(s => `<div class="row"><span class="badge">${escape(s)}</span></div>`).join('')}
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      result.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
