@@ -18,10 +18,29 @@ set -e
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
-PYBIN="$(command -v python3.11 || command -v python3.10 || command -v python3)"
-PIPBIN="$(command -v pip3.11 || command -v pip3.10 || command -v pip3 || command -v pip)"
+# Prefer the *newest* Python available — PythonAnywhere's web app
+# typically defaults to the latest version (3.13 as of this writing).
+# Installing under the wrong Python causes silent ImportError in the
+# web worker because each Python version has a separate --user site
+# (~/.local/lib/pythonX.Y/site-packages/).
+detect_python() {
+  for v in 3.13 3.12 3.11 3.10; do
+    if command -v "python$v" >/dev/null 2>&1; then
+      echo "python$v"
+      return
+    fi
+  done
+  command -v python3 || command -v python
+}
 
-echo "==> Using Python: $($PYBIN --version)"
+PYBIN="${FD_PYTHON:-$(detect_python)}"
+PIPBIN="${PYBIN/python/pip}"
+if ! command -v "$PIPBIN" >/dev/null 2>&1; then
+  PIPBIN="$PYBIN -m pip"
+fi
+
+echo "==> Using Python: $($PYBIN --version)  ($PYBIN)"
+echo "    Override with: FD_PYTHON=python3.X bash scripts/setup_pythonanywhere.sh"
 echo "==> Project dir:  $PROJECT_DIR"
 
 # 1. Install the package + extras.
