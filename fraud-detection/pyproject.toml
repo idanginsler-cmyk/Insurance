@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fraud-detection"
+version = "0.1.0"
+description = "POC for forgery + duplicate detection in Hebrew insurance claim documents"
+requires-python = ">=3.10"
+dependencies = [
+  "Pillow>=10.0",
+  "imagehash>=4.3",
+  "pypdf>=4.0",
+  "pydantic>=2.0",
+  "python-dateutil>=2.8",
+  "numpy>=1.24",
+  "typer>=0.12",
+  "rich>=13.0",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "python-multipart>=0.0.9",
+]
+
+[project.scripts]
+fraud-detection = "fraud_detection.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
