@@ -18,14 +18,28 @@ nohup uvicorn fraud_detection.api.server:app \
 # Give uvicorn a moment to bind the port.
 for i in 1 2 3 4 5 6 7 8; do
   if curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/ 2>/dev/null | grep -q "^[23]"; then
+    DOMAIN="${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}"
+    if [ -n "$CODESPACE_NAME" ]; then
+      PUBLIC_URL="https://${CODESPACE_NAME}-8000.${DOMAIN}"
+    else
+      PUBLIC_URL="(set CODESPACE_NAME or check the PORTS tab)"
+    fi
     echo ""
-    echo "✓ API server is running on port 8000."
+    echo "============================================================"
+    echo " ✓ Fraud Detection API is running on port 8000."
+    echo "============================================================"
     echo ""
-    echo "  → Click the PORTS tab below (next to TERMINAL)"
-    echo "  → Hover/right-click port 8000 → 'Open in Browser' (globe icon)"
+    echo "  Open this URL on your phone or any browser:"
+    echo ""
+    echo "    $PUBLIC_URL"
+    echo ""
+    echo "  (If it asks for GitHub login, sign in with the same account"
+    echo "   that owns this Codespace. To make the port public, open the"
+    echo "   PORTS tab → right-click 8000 → Port Visibility → Public.)"
     echo ""
     echo "  Server logs: tail -f /tmp/fraud-detection-api.log"
     echo "  Stop server: pkill -f 'uvicorn fraud_detection'"
+    echo ""
     exit 0
   fi
   sleep 1
