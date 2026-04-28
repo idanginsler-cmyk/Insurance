@@ -1,0 +1,16 @@
+# Optional dependencies — install only what you need.
+# OCR engines: install at least one
+pytesseract>=0.3.10        # requires `tesseract` system binary + heb.traineddata
+easyocr>=1.7.1             # heavier, includes Hebrew model out-of-the-box
+
+# PDF rendering (for first-page rasterization of PDFs without embedded images)
+pdf2image>=1.17.0          # requires `poppler` system binary
+
+# Deep embeddings for near-duplicate detection (heavy: torch ~2GB)
+sentence-transformers>=2.7
+torch>=2.1
+faiss-cpu>=1.8
+
+# Testing
+pytest>=8.0
+pytest-cov>=5.0
